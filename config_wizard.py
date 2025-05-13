@@ -448,6 +448,13 @@ class ConfigWizard:
         
         # Get all parameter values
         parameter_values = self._get_parameter_values()
+
+        if 'analytic_id' in parameter_values and parameter_values['analytic_id']:
+            try:
+                # Convert string ID to integer
+                parameter_values['analytic_id'] = int(parameter_values['analytic_id'])
+            except ValueError:
+                pass  # If conversion fails, keep as string
         
         # Apply template
         success, config, error = self.template_manager.apply_template(
@@ -509,17 +516,17 @@ class ConfigWizard:
             if not self.current_template_id:
                 messagebox.showinfo("Select Template", "Please select a template to continue")
                 return
-        
+
         elif current_tab == 1:  # From Step 2 to Step 3
             # Validate basic configuration
             if not self.analytics_id_var.get().strip():
                 messagebox.showinfo("Required Field", "Analytics ID is required")
                 return
-            
+
             if not self.analytics_name_var.get().strip():
                 messagebox.showinfo("Required Field", "Analytics Name is required")
                 return
-            
+
             # Update parameter fields for Step 3
             self._update_parameter_fields()
         

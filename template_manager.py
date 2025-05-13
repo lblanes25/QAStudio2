@@ -177,7 +177,7 @@ class TemplateManager:
         try:
             # Start with basic configuration (Comes up in a different order due to YAML likely.)
             config = {
-                'analytic_id': parameter_values.get('analytic_id', ''),
+                'analytic_id': int(parameter_values.get('analytic_id', '0')) if parameter_values.get('analytic_id', '').isdigit() else parameter_values.get('analytic_id', ''),
                 'analytic_name': parameter_values.get('analytic_name', ''),
                 'analytic_description': parameter_values.get('analytic_description', 
                                                           template.get('template_description', '')),
