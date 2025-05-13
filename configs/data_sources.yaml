@@ -8,6 +8,59 @@ settings:
 
 # Data sources definition
 data_sources:
+  key3p_data:
+    type: "report"
+    description: "Key Third Party Risk Assessment Data"
+    version: "1.0"
+    owner: "Your Team Name"
+    refresh_frequency: "Monthly"  # How often the data is updated
+    file_type: "xlsx"
+    file_pattern: "Key3P_*.xlsx"  # Pattern to match your files
+    key_columns: [ "Audit Entity ID" ]  # Primary key columns
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 10
+        description: "Should have at least 10 records"
+      - type: "required_columns"
+        columns: [ "Audit Entity ID", "Audit Entity Name", "Audit Leader",
+                   "PRIMARY TLM THIRD PARTY ENGAGEMENT", "Third Party Inherent Risk",
+                   "Helper-KPA Contains Key TLM Third Party" ]
+        description: "Critical columns that must be present"
+    columns_mapping:
+      - source: "Audit Entity ID"
+        aliases: [ "Entity ID", "ID" ]
+        target: "Audit Entity ID"
+        data_type: "string"
+      - source: "Audit Entity Name"
+        aliases: [ "Entity Name", "Name" ]
+        target: "Audit Entity Name"
+        data_type: "string"
+      - source: "Audit Leader"
+        aliases: [ "Leader", "Owner" ]
+        target: "Audit Leader"
+        data_type: "string"
+      - source: "PRIMARY TLM THIRD PARTY ENGAGEMENT"
+        aliases: [ "TLM ENGAGEMENT", "Third Party List" ]
+        target: "PRIMARY TLM THIRD PARTY ENGAGEMENT"
+        data_type: "string"
+      - source: "Third Party Inherent Risk"
+        aliases: [ "Risk Rating", "Inherent Risk" ]
+        target: "Third Party Inherent Risk"
+        data_type: "category"
+        valid_values: [ "Critical", "High", "Medium", "Low", "Not Applicable" ]
+      - source: "Helper-KPA Contains Key TLM Third Party"
+        aliases: [ "KPA Helper", "Contains TLM" ]
+        target: "Helper-KPA Contains Key TLM Third Party"
+        data_type: "string"
+      - source: "Next Audit Start Date"
+        aliases: [ "Start Date", "Planned Start" ]
+        target: "Next Audit Start Date"
+        data_type: "date"
+      - source: "Last Audit Report Issued Date"
+        aliases: [ "Report Date", "Last Issued" ]
+        target: "Last Audit Report Issued Date"
+        data_type: "date"
+
   audit_workpaper_approvals:
     type: "report"
     description: "Audit Test Workpaper Approvals"
@@ -186,6 +239,9 @@ analytics_mapping:
 
   - data_source: "third_party_risk"
     analytics: ["78"]
+
+  - data_source: : "key3p_data"
+    analytics: ["100"]
 
   - data_source: "risk_assessment_validation"
     analytics: ["10", "11", "12"]
