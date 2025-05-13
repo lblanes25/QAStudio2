@@ -148,3 +148,108 @@
 2025-05-13 11:12:19,047 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
 2025-05-13 11:12:19,067 - qa_analytics - ERROR - Error loading data source registry: mapping values are not allowed here
   in "configs/data_sources.yaml", line 243, column 18
+2025-05-13 11:13:04,892 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-13 11:13:04,940 - qa_analytics - ERROR - Error loading config data_sources.yaml: mapping values are not allowed here
+  in "configs\data_sources.yaml", line 243, column 18
+2025-05-13 11:13:04,942 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:13:04,943 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:13:04,944 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:13:04,945 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:13:04,946 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 11:13:04,954 - qa_analytics - ERROR - Error loading data source registry: mapping values are not allowed here
+  in "configs/data_sources.yaml", line 243, column 18
+2025-05-13 11:13:04,958 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 11:13:04,961 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 11:13:04,966 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 11:13:04,967 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 11:13:04,986 - qa_analytics - ERROR - Error loading data source registry: mapping values are not allowed here
+  in "configs/data_sources.yaml", line 243, column 18
+2025-05-13 11:18:10,504 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-13 11:18:10,550 - qa_analytics - ERROR - Error loading config data_sources.yaml: mapping values are not allowed here
+  in "configs\data_sources.yaml", line 243, column 18
+2025-05-13 11:18:10,552 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:18:10,553 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:18:10,555 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:18:10,555 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:18:10,557 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 11:18:10,566 - qa_analytics - ERROR - Error loading data source registry: mapping values are not allowed here
+  in "configs/data_sources.yaml", line 243, column 18
+2025-05-13 11:18:10,569 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 11:18:10,572 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 11:18:10,577 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 11:18:10,578 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 11:18:10,599 - qa_analytics - ERROR - Error loading data source registry: mapping values are not allowed here
+  in "configs/data_sources.yaml", line 243, column 18
+2025-05-13 11:19:53,356 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-13 11:19:53,403 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:19:53,405 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:19:53,406 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:19:53,408 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:19:53,408 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:19:53,410 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 11:19:53,418 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:19:53,419 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:19:53,422 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 11:19:53,425 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 11:19:53,431 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 11:19:53,431 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 11:19:53,452 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:19:53,452 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:20:33,502 - qa_analytics - INFO - Saved configuration to configs\qa_101.yaml
+2025-05-13 11:20:34,762 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:20:34,764 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:20:34,766 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:20:34,772 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:20:34,773 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:20:34,774 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:12,374 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-13 11:23:12,421 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:12,423 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:23:12,423 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:23:12,425 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:23:12,426 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:12,426 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:12,428 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 11:23:12,438 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:23:12,438 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:23:12,442 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 11:23:12,445 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 11:23:12,451 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 11:23:12,451 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 11:23:12,472 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:23:12,472 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:23:42,116 - qa_analytics - INFO - Saved configuration to configs\qa_102.yaml
+2025-05-13 11:23:43,425 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:43,427 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:23:43,428 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:23:43,429 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:23:43,436 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:23:43,437 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:23:43,438 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:17,884 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-13 11:30:17,932 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:17,934 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:30:17,935 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:30:17,937 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:30:17,938 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:30:17,939 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:17,939 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:17,941 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 11:30:17,951 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:30:17,951 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:30:17,954 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 11:30:17,957 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 11:30:17,963 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 11:30:17,963 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 11:30:17,987 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 11:30:17,987 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-13 11:30:55,415 - qa_analytics - INFO - Successfully generated configuration for template risk_assessment
+2025-05-13 11:30:57,190 - qa_analytics - INFO - Saved configuration to configs\qa_103.yaml
+2025-05-13 11:30:58,539 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:58,541 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 11:30:58,542 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-13 11:30:58,544 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:30:58,545 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-13 11:30:58,551 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-13 11:30:58,553 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 11:30:58,553 - qa_analytics - ERROR - Missing required config key: analytic_id

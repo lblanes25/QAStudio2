@@ -148,55 +148,76 @@ class TemplateManager:
             return {}
         
         return self.metadata['validation_rules']
-    
+
     def apply_template(self, template_id: str, parameter_values: Dict) -> Tuple[bool, Optional[Dict], Optional[str]]:
         """
         Apply a template with parameter values to generate a configuration
-        
+
         Args:
             template_id: Template identifier
             parameter_values: Dictionary of parameter values
-            
+
         Returns:
             Tuple of (success, config, error_message)
         """
         template = self.get_template(template_id)
         if not template:
             return False, None, f"Template '{template_id}' not found"
-        
+
         # Validate that all required parameters are provided
         missing_params = []
         for param in template.get('template_parameters', []):
             if param.get('required', False) and param['name'] not in parameter_values:
                 missing_params.append(param['name'])
-        
+
         if missing_params:
             return False, None, f"Missing required parameters: {', '.join(missing_params)}"
-        
+
         # Create the configuration
         try:
-            # Start with basic configuration (Comes up in a different order due to YAML likely.)
+            # Start with basic configuration
             config = {
-                'analytic_id': int(str(parameter_values.get('analytic_id', '0'))) if str(
-                    parameter_values.get('analytic_id', '0')).isdigit() else parameter_values.get('analytic_id', ''), 'analytic_name': parameter_values.get('analytic_name', ''),
-                'analytic_description': parameter_values.get('analytic_description', 
-                                                          template.get('template_description', '')),
+                'analytic_id': parameter_values.get('analytic_id', ''),
+                'analytic_name': parameter_values.get('analytic_name', ''),
+                'analytic_description': parameter_values.get('analytic_description',
+                                                             template.get('template_description', '')),
             }
-            
+
             # Add data source configuration
-            if 'data_source' in parameter_values:
-                config['data_source'] = {'name': parameter_values['data_source']}
-                
+            if 'data_source' in parameter_values and parameter_values['data_source']:
+                # Collect fields that will be used in validations
+                required_fields = []
+
+                # Identify fields from validation parameters
+                for validation in template.get('generated_validations', []):
+                    for param_name, param_template in validation.get('parameters_mapping', {}).items():
+                        if isinstance(param_template, str) and param_template.startswith(
+                                '{') and param_template.endswith('}'):
+                            # Extract the parameter name from {param_name}
+                            template_param = param_template[1:-1]
+                            if template_param in parameter_values:
+                                # If this parameter refers to a field name, add it to required fields
+                                if any(field_keyword in param_name.lower() for field_keyword in ['field', 'column']):
+                                    field_value = parameter_values[template_param]
+                                    if field_value and field_value not in required_fields:
+                                        required_fields.append(field_value)
+
+                config['data_source'] = {
+                    'name': parameter_values['data_source'],
+                    'required_fields': required_fields
+                }
+
             # Add reference data
-            reference_params = [p for p in template.get('template_parameters', []) 
-                             if p.get('data_type') == 'reference' and p['name'] in parameter_values]
-            
+            reference_params = [p for p in template.get('template_parameters', [])
+                                if p.get('data_type') == 'reference' and p['name'] in parameter_values]
+
             if reference_params:
                 config['reference_data'] = {}
                 for param in reference_params:
                     ref_name = parameter_values[param['name']]
-                    config['reference_data'][ref_name] = {}
-            
+                    if ref_name:  # Only add if not empty
+                        config['reference_data'][ref_name] = {}
+
             # Add validations
             config['validations'] = []
             for val in template.get('generated_validations', []):
@@ -219,48 +240,82 @@ class TemplateManager:
                                 template_param].startswith('['):
                                 try:
                                     validation['parameters'][param_name] = eval(parameter_values[template_param])
-                                except:
+                                except Exception as e:
+                                    logger.warning(f"Failed to evaluate parameter {template_param}: {e}")
                                     validation['parameters'][param_name] = parameter_values[template_param]
                             else:
                                 validation['parameters'][param_name] = parameter_values[template_param]
                     else:
                         # Handle static values or complex templates
                         validation['parameters'][param_name] = param_template
-                
+
                 config['validations'].append(validation)
-            
+
             # Add thresholds
             if 'threshold_percentage' in parameter_values:
-                config['thresholds'] = {
-                    'error_percentage': float(parameter_values['threshold_percentage']),
-                    'rationale': parameter_values.get('threshold_rationale', 
-                                                   template.get('default_thresholds', {}).get('rationale', ''))
-                }
+                try:
+                    threshold_value = float(parameter_values['threshold_percentage'])
+                    config['thresholds'] = {
+                        'error_percentage': threshold_value,
+                        'rationale': parameter_values.get('threshold_rationale',
+                                                          template.get('default_thresholds', {}).get('rationale', ''))
+                    }
+                except ValueError:
+                    # If conversion fails, use default
+                    config['thresholds'] = template.get('default_thresholds', {})
             else:
                 config['thresholds'] = template.get('default_thresholds', {})
-            
+
             # Add reporting config
-            if 'group_by' in parameter_values:
+            if 'group_by' in parameter_values and parameter_values['group_by']:
                 config['reporting'] = {
                     'group_by': parameter_values['group_by'],
-                    'summary_fields': template.get('default_reporting', {}).get('summary_fields', 
-                                                                             ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']),
+                    'summary_fields': template.get('default_reporting', {}).get('summary_fields',
+                                                                                ['GC', 'PC', 'DNC', 'Total',
+                                                                                 'DNC_Percentage']),
                     'detail_required': template.get('default_reporting', {}).get('detail_required', True)
                 }
             else:
                 report_config = template.get('default_reporting', {})
-                if 'group_by' in report_config and report_config['group_by'].startswith('{') and report_config['group_by'].endswith('}'):
-                    param_name = report_config['group_by'][1:-1]
-                    if param_name in parameter_values:
+                if 'group_by' in report_config:
+                    if isinstance(report_config['group_by'], str) and report_config['group_by'].startswith('{') and \
+                            report_config['group_by'].endswith('}'):
+                        param_name = report_config['group_by'][1:-1]
+                        if param_name in parameter_values and parameter_values[param_name]:
+                            config['reporting'] = {
+                                'group_by': parameter_values[param_name],
+                                'summary_fields': report_config.get('summary_fields',
+                                                                    ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']),
+                                'detail_required': report_config.get('detail_required', True)
+                            }
+                    else:
+                        # Use the literal value from the template
                         config['reporting'] = {
-                            'group_by': parameter_values[param_name],
-                            'summary_fields': report_config.get('summary_fields', 
-                                                            ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']),
+                            'group_by': report_config['group_by'],
+                            'summary_fields': report_config.get('summary_fields',
+                                                                ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']),
                             'detail_required': report_config.get('detail_required', True)
                         }
-            
+                else:
+                    # Default reporting if nothing specified
+                    config['reporting'] = {
+                        'group_by': 'Audit Leader',  # Safe default
+                        'summary_fields': ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage'],
+                        'detail_required': True
+                    }
+
+            # Ensure analytic_id is numeric if possible
+            if 'analytic_id' in config and config['analytic_id']:
+                try:
+                    config['analytic_id'] = int(config['analytic_id'])
+                except (ValueError, TypeError):
+                    # If it can't be converted to int, keep as is
+                    pass
+
+            # Log the generated configuration
+            logger.info(f"Successfully generated configuration for template {template_id}")
             return True, config, None
-            
+
         except Exception as e:
             logger.error(f"Error applying template: {e}")
             return False, None, f"Error applying template: {e}"

@@ -240,7 +240,7 @@ analytics_mapping:
   - data_source: "third_party_risk"
     analytics: ["78"]
 
-  - data_source: : "key3p_data"
+  - data_source: "key3p_data"
     analytics: ["100"]
 
   - data_source: "risk_assessment_validation"

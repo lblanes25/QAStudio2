@@ -159,12 +159,24 @@ class EnhancedQAAnalyticsApp:
 
     def _setup_config_wizard_tab(self):
         """Set up the configuration wizard tab"""
-        # Create the configuration wizard
+        # Create the configuration wizard with a callback
         self.config_wizard = ConfigWizard(
             parent_frame=self.config_wizard_tab,
             config_manager=self.config_manager,
-            template_manager=self.template_manager
+            template_manager=self.template_manager,
+            on_config_saved=self._refresh_available_analytics  # Add this callback
         )
+
+    def _refresh_available_analytics(self):
+        """Refresh the list of available analytics"""
+        # Reload available analytics
+        self.available_analytics = self.config_manager.get_available_analytics()
+
+        # Update the dropdown in the main tab
+        self.analytic_combo["values"] = [f"{id} - {name}" for id, name in self.available_analytics]
+
+        # Show a confirmation message
+        self.status_var.set("Analytics list refreshed with new configuration")
 
     def _setup_testing_tab(self):
         """Set up the testing tab"""

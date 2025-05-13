@@ -14,7 +14,7 @@ logger = logging.getLogger("qa_analytics")
 class ConfigWizard:
     """GUI wizard for creating and editing analytics configurations"""
 
-    def __init__(self, parent_frame, config_manager, template_manager=None):
+    def __init__(self, parent_frame, config_manager, template_manager=None, on_config_saved=None):
         """
         Initialize the configuration wizard
         
@@ -22,10 +22,12 @@ class ConfigWizard:
             parent_frame: Parent tkinter frame
             config_manager: ConfigManager instance for loading/saving configs
             template_manager: Optional TemplateManager instance
+            on_config_saved: Optional callback function to call when a config is saved
         """
         self.parent = parent_frame
         self.config_manager = config_manager
         self.template_manager = template_manager or TemplateManager()
+        self.on_config_saved = on_config_saved
         
         # Initialize state variables
         self.current_template_id = None
@@ -480,7 +482,7 @@ class ConfigWizard:
         # Convert to YAML for display
         config_yaml = yaml.dump(config, default_flow_style=False)
         self.preview_text.insert(tk.END, config_yaml)
-    
+
     def _save_configuration(self):
         """Save the configuration to file"""
         # Validate analytics ID
@@ -488,22 +490,27 @@ class ConfigWizard:
         if not analytics_id:
             messagebox.showerror("Error", "Analytics ID is required")
             return
-        
+
         # Generate configuration if needed
         if not self.current_config:
             self._refresh_preview()
             if not self.current_config:
                 return
-        
+
         # Save configuration
         success, result = self.template_manager.save_config(self.current_config, analytics_id)
-        
+
         if success:
             messagebox.showinfo("Success", f"Configuration saved to {result}")
-            
+
             # Reload configurations in the config manager
             if hasattr(self.config_manager, 'load_all_configs'):
                 self.config_manager.load_all_configs()
+
+            # Call the callback if provided
+            if self.on_config_saved:
+                self.on_config_saved()
+
         else:
             messagebox.showerror("Error", result)
     
