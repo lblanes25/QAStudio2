@@ -30,3 +30,11 @@ flake8>=4.0.1         # Code linting
 # Documentation (optional)
 Sphinx>=4.4.0         # Documentation generation
 sphinx-rtd-theme>=1.0.0  # Documentation theme
+
+# Create directories if they don't exist
+mkdir -p configs
+mkdir -p templates
+mkdir -p ref_data
+mkdir -p output
+mkdir -p logs
+mkdir -p temp
