@@ -1,0 +1,70 @@
+# Scheduler Configuration File
+# This file defines email settings, job configurations, and schedule settings
+
+# Email configuration
+email:
+  # Enable or disable email notifications
+  enabled: false
+  
+  # SMTP server settings
+  smtp_server: "smtp.example.com"
+  smtp_port: 587
+  use_tls: true
+  
+  # Authentication
+  username: "qa_notifications@example.com"
+  password: "your-smtp-password"
+  
+  # Email addresses
+  from_address: "qa_notifications@example.com"
+  admin_address: "qa_admin@example.com"
+
+# Schedule configuration
+schedule:
+  # Default time for scheduled jobs (24-hour format)
+  default_time: "08:00"
+  
+  # Default day for weekly jobs
+  default_day: "monday"
+  
+  # Output directory for automated runs
+  output_dir: "automated_output"
+
+# Scheduled jobs
+jobs:
+  # Example job 1: Daily audit workpaper validation
+  - job_id: "daily_workpaper_approvals"
+    analytics_id: "77"
+    schedule_type: "daily"
+    schedule_time: "07:30"
+    data_source_pattern: "data/daily/*.xlsx"
+    send_email: true
+    email_recipients:
+      - "audit_team@example.com"
+      - "qa_manager@example.com"
+    generate_individual_reports: true
+  
+  # Example job 2: Weekly risk assessment validation
+  - job_id: "weekly_risk_assessment"
+    analytics_id: "78"
+    schedule_type: "weekly"
+    schedule_day: "monday"
+    schedule_time: "09:00"
+    data_source_pattern: "data/weekly/risk_*.xlsx"
+    send_email: true
+    email_recipients:
+      - "risk_team@example.com"
+    generate_individual_reports: false
+  
+  # Example job 3: Monthly control testing validation
+  - job_id: "monthly_control_testing"
+    analytics_id: "79"
+    schedule_type: "monthly"
+    schedule_day: "1"
+    schedule_time: "06:00"
+    data_source_pattern: "data/monthly/controls_*.xlsx"
+    send_email: true
+    email_recipients:
+      - "control_office@example.com"
+      - "audit_management@example.com"
+    generate_individual_reports: true

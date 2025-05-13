@@ -1,0 +1,60 @@
+# configs/qa_01.yaml
+analytic_id: 01
+analytic_name: 'Audit Planning Approvals'
+analytic_description: 'Validates that audit planning documents are properly approved according to policy.'
+
+# Reference to data source from registry
+data_source:
+  name: 'audit_planning_approvals'
+  required_fields:
+    - 'Planning Document ID'
+    - 'Submitter'
+    - 'Manager Approver'
+    - 'Audit Leader Approver'
+    - 'Submit Date'
+    - 'Manager Approval Date'
+    - 'Audit Leader Approval Date'
+
+# Reference to reference data
+reference_data:
+  HR_Titles:
+    max_age_days: 90  # Override global setting for this analytic
+
+# Validation configuration
+validations:
+  - rule: 'segregation_of_duties'
+    description: 'Submitter cannot be an approver'
+    rationale: 'Ensures independent review by preventing self-approval.'
+    parameters:
+      submitter_field: 'Submitter'
+      approver_fields: ['Manager Approver', 'Audit Leader Approver']
+
+  - rule: 'approval_sequence'
+    description: 'Approvals must be in sequence: Submit -> Manager -> Audit Leader'
+    rationale: 'Maintains proper workflow and review hierarchy.'
+    parameters:
+      date_fields_in_order: ['Submit Date', 'Manager Approval Date', 'Audit Leader Approval Date']
+
+  - rule: 'title_based_approval'
+    description: 'Audit Leader must have appropriate title'
+    rationale: 'Ensures approval authority is limited to those with appropriate job titles.'
+    parameters:
+      approver_field: 'Audit Leader Approver'
+      allowed_titles: ['Audit Leader', 'Executive Auditor', 'Audit Director']
+      title_reference: 'HR_Titles'
+
+thresholds:
+  error_percentage: 5.0
+  rationale: 'Industry standard for planning document approvals allows for up to 5% error rate.'
+
+reporting:
+  group_by: 'Audit Leader Approver'
+  summary_fields: ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']
+  detail_required: True
+
+report_metadata:
+  owner: 'Quality Assurance Team'
+  review_frequency: 'Monthly'
+  last_revised: '2025-05-01'
+  version: '1.0'
+  contact_email: 'qa_analytics@example.com'

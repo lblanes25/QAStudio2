@@ -1,0 +1,14 @@
+email:
+  admin_address: ''
+  enabled: false
+  from_address: ''
+  password: ''
+  smtp_port: 587
+  smtp_server: ''
+  use_tls: true
+  username: ''
+jobs: []
+schedule:
+  default_day: monday
+  default_time: 08:00
+  output_dir: automated_output

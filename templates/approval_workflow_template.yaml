@@ -1,0 +1,115 @@
+# Approval Workflow Template
+# This template is designed for validating approval workflows with sequential approvals
+# and segregation of duties requirements.
+
+template_id: approval_workflow
+template_name: "Approval Workflow Validation"
+template_description: "Validates approval workflows with sequential approvals and segregation of duties"
+template_version: "1.0"
+template_category: "Workflow"
+
+# Parameters that need to be customized by the user
+template_parameters:
+  # Workflow fields
+  - name: submitter_field
+    description: "Field containing the submitter name"
+    required: true
+    example: "TW submitter"
+    data_type: "string"
+  
+  - name: first_approver_field
+    description: "Field containing the first approver name"
+    required: true
+    example: "TL approver"
+    data_type: "string"
+  
+  - name: second_approver_field
+    description: "Field containing the second approver name"
+    required: true
+    example: "AL approver"
+    data_type: "string"
+  
+  # Date fields
+  - name: submission_date_field
+    description: "Field containing the submission date"
+    required: true
+    example: "Submit Date"
+    data_type: "date"
+  
+  - name: first_approval_date_field
+    description: "Field containing the first approval date"
+    required: true
+    example: "TL Approval Date"
+    data_type: "date"
+  
+  - name: second_approval_date_field
+    description: "Field containing the second approval date"
+    required: true
+    example: "AL Approval Date"
+    data_type: "date"
+  
+  # Title validation
+  - name: title_reference
+    description: "Reference data containing employee titles"
+    required: true
+    example: "HR_Titles"
+    data_type: "reference"
+  
+  - name: second_approver_allowed_titles
+    description: "Allowed titles for the second approver"
+    required: true
+    example: "['Audit Leader', 'Executive Auditor', 'Audit Manager']"
+    data_type: "list"
+
+# The validation rules this template will generate
+generated_validations:
+  - rule: segregation_of_duties
+    description: "Submitter cannot be an approver"
+    parameters_mapping:
+      submitter_field: "{submitter_field}"
+      approver_fields: ["{first_approver_field}", "{second_approver_field}"]
+  
+  - rule: approval_sequence
+    description: "Approvals must be in proper sequence"
+    parameters_mapping:
+      date_fields_in_order: ["{submission_date_field}", "{first_approval_date_field}", "{second_approval_date_field}"]
+  
+  - rule: title_based_approval
+    description: "Final approver must have appropriate title"
+    parameters_mapping:
+      approver_field: "{second_approver_field}"
+      allowed_titles: "{second_approver_allowed_titles}"
+      title_reference: "{title_reference}"
+
+# Example field mappings for common data sources
+example_mappings:
+  workpaper_approvals:
+    submitter_field: "TW submitter"
+    first_approver_field: "TL approver"
+    second_approver_field: "AL approver"
+    submission_date_field: "Submit Date"
+    first_approval_date_field: "TL Approval Date"
+    second_approval_date_field: "AL Approval Date"
+    title_reference: "HR_Titles"
+    second_approver_allowed_titles: ["Audit Leader", "Executive Auditor", "Audit Manager"]
+  
+  issue_management:
+    submitter_field: "Issue Creator"
+    first_approver_field: "Issue Reviewer"
+    second_approver_field: "Issue Approver"
+    submission_date_field: "Issue Created Date"
+    first_approval_date_field: "Review Date"
+    second_approval_date_field: "Approval Date"
+    title_reference: "HR_Titles"
+    second_approver_allowed_titles: ["Audit Leader", "Issue Manager", "Risk Officer"]
+
+# Default thresholds for this template
+default_thresholds:
+  error_percentage: 5.0
+  rationale: "Industry standard for approval workflows allows for up to 5% error rate."
+
+# Default reporting configuration
+default_reporting:
+  group_by: "{second_approver_field}"
+  summary_fields: ["GC", "PC", "DNC", "Total", "DNC_Percentage"]
+  detail_required: true

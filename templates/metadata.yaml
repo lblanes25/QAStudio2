@@ -1,0 +1,158 @@
+# Template Metadata
+# This file contains metadata about all available templates
+
+templates:
+  approval_workflow:
+    name: "Approval Workflow Validation"
+    description: "Validates approval workflows with sequential approvals and segregation of duties"
+    version: "1.0"
+    category: "Workflow"
+    suitable_for:
+      - "Audit workpaper approvals"
+      - "Issue management approvals"
+      - "Document review processes"
+      - "Change management approvals"
+    validation_rules:
+      - "segregation_of_duties"
+      - "approval_sequence"
+      - "title_based_approval"
+    difficulty: "Medium"
+    parameter_count: 8
+    file_path: "templates/approval_workflow.yaml"
+  
+  risk_assessment:
+    name: "Risk Assessment Validation"
+    description: "Validates risk assessments to ensure proper risk ratings and completeness"
+    version: "1.0"
+    category: "Risk"
+    suitable_for:
+      - "Third party risk assessments"
+      - "Vendor risk management"
+      - "Project risk evaluations"
+      - "Control risk assessments"
+    validation_rules:
+      - "third_party_risk_validation"
+      - "enumeration_validation"
+    difficulty: "Easy"
+    parameter_count: 7
+    file_path: "templates/risk_assessment.yaml"
+  
+  control_testing:
+    name: "Control Testing Validation"
+    description: "Validates control testing processes and results"
+    version: "1.0"
+    category: "Controls"
+    suitable_for:
+      - "Control effectiveness testing"
+      - "Control design assessments"
+      - "Control evidence validation"
+    validation_rules:
+      - "control_effectiveness_validation"
+      - "evidence_completeness"
+      - "approval_sequence"
+    difficulty: "Medium"
+    parameter_count: 10
+    file_path: "templates/control_testing.yaml"
+  
+  issue_management:
+    name: "Issue Management Validation"
+    description: "Validates issue management processes and documentation"
+    version: "1.0"
+    category: "Issues"
+    suitable_for:
+      - "Audit issue tracking"
+      - "Remediation validation"
+      - "Issue closure verification"
+    validation_rules:
+      - "remediation_timeliness"
+      - "approval_sequence"
+      - "evidence_completeness"
+    difficulty: "Medium"
+    parameter_count: 9
+    file_path: "templates/issue_management.yaml"
+
+# Template categories
+categories:
+  Workflow:
+    description: "Templates for validating sequential workflow processes"
+    icon: "workflow_icon.png"
+  
+  Risk:
+    description: "Templates for validating risk assessments and ratings"
+    icon: "risk_icon.png"
+  
+  Controls:
+    description: "Templates for validating control testing and documentation"
+    icon: "controls_icon.png"
+  
+  Issues:
+    description: "Templates for validating issue management and remediation"
+    icon: "issues_icon.png"
+
+# Validation rules reference
+validation_rules:
+  segregation_of_duties:
+    description: "Ensures that the submitter is not also an approver"
+    parameters:
+      - "submitter_field"
+      - "approver_fields"
+    result_type: "boolean"
+  
+  approval_sequence:
+    description: "Verifies that approvals occurred in the correct sequence"
+    parameters:
+      - "date_fields_in_order"
+    result_type: "boolean"
+  
+  title_based_approval:
+    description: "Verifies that approvers have appropriate job titles"
+    parameters:
+      - "approver_field"
+      - "allowed_titles"
+      - "title_reference"
+    result_type: "boolean"
+  
+  third_party_risk_validation:
+    description: "Ensures risk ratings are assigned when third parties are present"
+    parameters:
+      - "third_party_field"
+      - "risk_level_field"
+    result_type: "boolean"
+  
+  enumeration_validation:
+    description: "Verifies that a field contains only allowed values"
+    parameters:
+      - "field_name"
+      - "valid_values"
+    result_type: "boolean"
+  
+  control_effectiveness_validation:
+    description: "Validates control effectiveness assessments"
+    parameters:
+      - "control_result_field"
+      - "evidence_field"
+      - "allowed_results"
+    result_type: "boolean"
+  
+  evidence_completeness:
+    description: "Checks that required evidence is documented"
+    parameters:
+      - "evidence_field"
+      - "result_field"
+      - "required_for_results"
+    result_type: "boolean"
+  
+  remediation_timeliness:
+    description: "Validates that remediation occurred within required timeframes"
+    parameters:
+      - "due_date_field"
+      - "completed_date_field"
+      - "extension_field"
+      - "max_days_overdue"
+    result_type: "boolean"
+
+# Version history
+version_history:
+  "1.0":
+    release_date: "2025-05-10"
+    changes: "Initial template library release"

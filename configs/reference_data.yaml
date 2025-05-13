@@ -1,0 +1,44 @@
+# configs/reference_data.yaml
+
+# Global settings
+default_max_age_days: 30
+audit_log_path: "logs/reference_data_audit.json"
+
+# Reference files
+reference_files:
+  HR_Titles:
+    path: "ref_data/hr_titles.xlsx"
+    description: "HR job titles and roles for approval validation"
+    format: "dictionary"
+    key_column: "Employee_Name"
+    value_column: "Title"
+    version: "2025-Q2"
+    max_age_days: 90  # HR titles change less frequently
+    owner: "HR Department"
+    refresh_schedule: "Quarterly"
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 5
+        description: "Should have at least 5 employees"
+      - type: "required_values"
+        column: "Title"
+        values: ["Audit Leader", "Audit Manager", "Auditor", "Audit Team Lead"]
+        description: "Must include core audit roles"
+
+  Risk_Categories:
+    path: "ref_data/risk_categories.xlsx"
+    description: "Risk categories and definitions"
+    format: "dataframe"
+    version: "2025-01"
+    max_age_days: 180  # Risk categories are fairly stable
+    owner: "Risk Management"
+    refresh_schedule: "Semi-annually"
+
+  Control_Standards:
+    path: "ref_data/control_standards.xlsx"
+    description: "Control standards and requirements"
+    format: "dataframe"
+    version: "2025-05"
+    max_age_days: 30  # Control standards change frequently
+    owner: "Control Office"
+    refresh_schedule: "Monthly"

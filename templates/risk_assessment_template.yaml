@@ -1,0 +1,98 @@
+# Risk Assessment Template
+# This template is designed for validating risk assessments, particularly for third party risk
+
+template_id: risk_assessment
+template_name: "Risk Assessment Validation"
+template_description: "Validates risk assessments to ensure proper risk ratings and completeness"
+template_version: "1.0"
+template_category: "Risk"
+
+# Parameters that need to be customized by the user
+template_parameters:
+  # Risk Assessment Fields
+  - name: entity_id_field
+    description: "Field containing the entity ID"
+    required: true
+    example: "Assessment ID"
+    data_type: "string"
+  
+  - name: entity_name_field
+    description: "Field containing the entity name"
+    required: true
+    example: "Assessment Name"
+    data_type: "string"
+  
+  - name: owner_field
+    description: "Field containing the assessment owner"
+    required: true
+    example: "Assessment Owner"
+    data_type: "string"
+  
+  - name: third_party_field
+    description: "Field containing third party information"
+    required: true
+    example: "Third Party Vendors"
+    data_type: "string"
+  
+  - name: risk_rating_field
+    description: "Field containing the risk rating"
+    required: true
+    example: "Vendor Risk Rating"
+    data_type: "string"
+  
+  - name: valid_risk_ratings
+    description: "Valid risk rating values"
+    required: true
+    example: "['Critical', 'High', 'Medium', 'Low', 'N/A']"
+    data_type: "list"
+
+  - name: risk_categories_reference
+    description: "Reference data containing risk categories"
+    required: false
+    example: "Risk_Categories"
+    data_type: "reference"
+
+# The validation rules this template will generate
+generated_validations:
+  - rule: third_party_risk_validation
+    description: "Risk rating must be assigned for entities with third parties"
+    parameters_mapping:
+      third_party_field: "{third_party_field}"
+      risk_level_field: "{risk_rating_field}"
+  
+  - rule: enumeration_validation
+    description: "Risk rating must be a valid value"
+    parameters_mapping:
+      field_name: "{risk_rating_field}"
+      valid_values: "{valid_risk_ratings}"
+
+# Example field mappings for common data sources
+example_mappings:
+  archer_risk_assessment:
+    entity_id_field: "Assessment ID"
+    entity_name_field: "Assessment Name"
+    owner_field: "Assessment Owner"
+    third_party_field: "Third Party Vendors"
+    risk_rating_field: "Vendor Risk Rating"
+    valid_risk_ratings: ["Critical", "High", "Medium", "Low", "N/A"]
+    risk_categories_reference: "Risk_Categories"
+  
+  vendor_management:
+    entity_id_field: "Vendor ID"
+    entity_name_field: "Vendor Name"
+    owner_field: "Relationship Manager"
+    third_party_field: "Subcontractors"
+    risk_rating_field: "Risk Level"
+    valid_risk_ratings: ["High", "Medium", "Low", "Not Applicable"]
+    risk_categories_reference: "Risk_Categories"
+
+# Default thresholds for this template
+default_thresholds:
+  error_percentage: 3.0
+  rationale: "Risk assessments require higher accuracy due to regulatory requirements."
+
+# Default reporting configuration
+default_reporting:
+  group_by: "{owner_field}"
+  summary_fields: ["GC", "PC", "DNC", "Total", "DNC_Percentage"]
+  detail_required: true

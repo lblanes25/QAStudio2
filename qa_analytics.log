@@ -1,0 +1,69 @@
+2025-05-13 09:09:11,832 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:09:11,834 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 09:09:11,836 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:09:11,837 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 09:09:11,844 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:09:11,844 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:09:11,848 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 09:09:11,851 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 09:09:11,857 - qa_analytics - WARNING - Template metadata file not found: templates\metadata.yaml
+2025-05-13 09:09:11,857 - qa_analytics - WARNING - Scheduler configuration not found at configs/scheduler.yaml, using defaults
+2025-05-13 09:09:11,878 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:09:11,878 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:09:37,950 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:09:37,953 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 09:09:37,954 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:09:37,955 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:09:37,956 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 09:09:37,963 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:09:37,963 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:09:37,967 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 09:09:37,969 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 09:09:37,975 - qa_analytics - WARNING - Template metadata file not found: templates\metadata.yaml
+2025-05-13 09:09:37,975 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 09:09:37,993 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:09:37,993 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:11:01,711 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:11:01,712 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 09:11:01,714 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:11:01,715 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:11:01,716 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 09:11:01,723 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:11:01,723 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:11:01,726 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 09:11:01,730 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 09:11:01,735 - qa_analytics - WARNING - Template metadata file not found: templates\metadata.yaml
+2025-05-13 09:11:01,735 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 09:11:01,755 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:11:01,755 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:13:27,947 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:13:27,949 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 09:13:27,950 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:13:27,951 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:13:27,952 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 09:13:27,959 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:13:27,960 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:13:27,963 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 09:13:27,966 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 09:13:27,971 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 09:13:27,971 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 09:13:27,990 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:13:27,990 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:17:52,746 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:17:52,748 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-13 09:17:52,749 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:17:52,750 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-13 09:17:52,751 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-13 09:17:52,759 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:17:52,759 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:17:52,762 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-13 09:17:52,765 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-13 09:17:52,770 - qa_analytics - INFO - Loaded template metadata
+2025-05-13 09:17:52,771 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-13 09:17:52,790 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-13 09:17:52,790 - qa_analytics - INFO - Found 4 data sources and 8 analytic mappings
+2025-05-13 09:18:32,518 - qa_analytics - ERROR - Error applying template: 'list' object has no attribute 'startswith'
+2025-05-13 09:18:42,265 - qa_analytics - ERROR - Error applying template: 'list' object has no attribute 'startswith'
+2025-05-13 09:18:53,331 - qa_analytics - ERROR - Error applying template: 'list' object has no attribute 'startswith'
+2025-05-13 09:18:59,422 - qa_analytics - ERROR - Error applying template: 'list' object has no attribute 'startswith'
+2025-05-13 09:19:01,112 - qa_analytics - ERROR - Error applying template: 'list' object has no attribute 'startswith'

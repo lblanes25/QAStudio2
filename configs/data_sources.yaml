@@ -1,0 +1,191 @@
+# configs/data_sources.yaml
+
+# Global settings
+settings:
+  default_refresh_frequency: 30  # Default days before reference data is considered stale
+  data_freshness_warning: 7      # Days before data source freshness warning
+  default_data_path: "data/"     # Default data file location
+
+# Data sources definition
+data_sources:
+  audit_workpaper_approvals:
+    type: "report"
+    description: "Audit Test Workpaper Approvals"
+    version: "1.0"
+    owner: "Quality Assurance Team"
+    refresh_frequency: "Monthly"
+    last_updated: "2025-05-01"
+    file_type: "xlsx"
+    file_pattern: "qa_77_*_{YYYY}{MM}*.xlsx"
+    key_columns: ["Audit TW ID"]
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 10
+        description: "Should have at least 10 records"
+      - type: "required_columns"
+        columns: ["Audit TW ID", "TW submitter", "TL approver", "AL approver", "Submit Date", "TL Approval Date", "AL Approval Date"]
+        description: "Critical columns that must be present"
+    columns_mapping:
+      - source: "Audit TW ID"
+        aliases: ["TW_ID", "Workpaper ID"]
+        target: "Audit TW ID"
+        data_type: "string"
+      - source: "TW submitter"
+        aliases: ["Submitter", "Prepared By"]
+        target: "TW submitter"
+        data_type: "string"
+      - source: "TL approver"
+        aliases: ["Team Lead", "TL"]
+        target: "TL approver"
+        data_type: "string"
+      - source: "AL approver"
+        aliases: ["Audit Leader", "AL"]
+        target: "AL approver"
+        data_type: "string"
+      - source: "Submit Date"
+        aliases: ["Submission Date", "Date Submitted"]
+        target: "Submit Date"
+        data_type: "date"
+      - source: "TL Approval Date"
+        aliases: ["TL Date"]
+        target: "TL Approval Date"
+        data_type: "date"
+      - source: "AL Approval Date"
+        aliases: ["AL Date"]
+        target: "AL Approval Date"
+        data_type: "date"
+
+  third_party_risk:
+    type: "report"
+    description: "Third Party Risk Assessment Validation"
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 10
+        description: "Should have at least 10 records"
+      - type: "required_columns"
+        columns: ["Assessment ID", "Assessment Name", "Assessment Owner", "Third Party Vendors", "Vendor Risk Rating"]
+        description: "Critical columns that must be present"
+    columns_mapping:
+      - source: "Assessment ID"
+        aliases: ["Entity ID", "Audit ID"]
+        target: "Audit Entity ID"
+        data_type: "string"
+      - source: "Assessment Name"
+        aliases: ["Entity Name"]
+        target: "Audit Name"
+        data_type: "string"
+      - source: "Assessment Owner"
+        aliases: ["AL", "Leader"]
+        target: "Audit Leader"
+        data_type: "string"
+      - source: "Third Party Vendors"
+        aliases: ["TP List", "3P List"]
+        target: "Third Parties"
+        data_type: "string"
+      - source: "Vendor Risk Rating"
+        aliases: ["TP Risk Level", "Third Party Risk"]
+        target: "L1 Third Party Risk"
+        data_type: "string"
+
+  audit_planning_approvals:
+    type: "report"
+    description: "Audit Planning Document Approvals"
+    version: "1.0"
+    owner: "QA Team"
+    refresh_frequency: "Monthly"
+    last_updated: "2025-05-01"
+    file_type: "xlsx"
+    file_pattern: "planning_approvals_*_{YYYY}{MM}*.xlsx"
+    sheet_name: "Sheet1"
+    key_columns: ["Planning Document ID"]
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 10
+        description: "Should have at least 10 records"
+      - type: "required_columns"
+        columns: ["Planning Document ID", "Submitter", "Manager Approver", "Audit Leader Approver", "Submit Date", "Manager Approval Date", "Audit Leader Approval Date"]
+        description: "Critical columns that must be present"
+    columns_mapping:
+      - source: "Document ID"
+        aliases: ["Planning ID", "Plan ID"]
+        target: "Planning Document ID"
+        data_type: "string"
+      - source: "Preparer"
+        aliases: ["Creator", "Submitted By"]
+        target: "Submitter"
+        data_type: "string"
+      - source: "Manager"
+        aliases: ["Mgr Approver", "Manager Review"]
+        target: "Manager Approver"
+        data_type: "string"
+      - source: "Audit Leader"
+        aliases: ["AL", "Audit Head"]
+        target: "Audit Leader Approver"
+        data_type: "string"
+      - source: "Submission Date"
+        aliases: ["Created Date", "Prepared Date"]
+        target: "Submit Date"
+        data_type: "date"
+      - source: "Manager Date"
+        aliases: ["Manager Approval"]
+        target: "Manager Approval Date"
+        data_type: "date"
+      - source: "AL Date"
+        aliases: ["Leader Approval"]
+        target: "Audit Leader Approval Date"
+        data_type: "date"
+
+  risk_assessment_validation:
+    type: "report"
+    description: "Risk Assessment Validation"
+    version: "1.1"
+    owner: "Risk Management Team"
+    refresh_frequency: "Quarterly"
+    last_updated: "2025-04-15"
+    file_type: "xlsx"
+    file_pattern: "risk_assessment_*_{YYYY}{MM}*.xlsx"
+    sheet_name: "Risk Data"
+    key_columns: ["Risk Assessment ID"]
+    validation_rules:
+      - type: "row_count_min"
+        threshold: 15
+        description: "Should have at least 15 records"
+      - type: "required_columns"
+        columns: ["Risk Assessment ID", "Entity Name", "Risk Owner", "Risk Rating", "Assessment Date"]
+        description: "Critical columns that must be present"
+    columns_mapping:
+      - source: "Assessment ID"
+        aliases: ["Risk ID", "Identifier"]
+        target: "Risk Assessment ID"
+        data_type: "string"
+      - source: "Entity"
+        aliases: ["Business Unit", "Department"]
+        target: "Entity Name"
+        data_type: "string"
+      - source: "Owner"
+        aliases: ["Responsible", "Accountable"]
+        target: "Risk Owner"
+        data_type: "string"
+      - source: "Rating"
+        aliases: ["Risk Level", "Severity"]
+        target: "Risk Rating"
+        data_type: "category"
+        valid_values: ["Critical", "High", "Medium", "Low", "N/A"]
+      - source: "Date Assessed"
+        aliases: ["Evaluation Date"]
+        target: "Assessment Date"
+        data_type: "date"
+
+# Map analytics to data sources
+analytics_mapping:
+  - data_source: "audit_workpaper_approvals"
+    analytics: ["77"]
+
+  - data_source: "audit_planning_approvals"
+    analytics: ["01", "02", "03"]
+
+  - data_source: "third_party_risk"
+    analytics: ["78"]
+
+  - data_source: "risk_assessment_validation"
+    analytics: ["10", "11", "12"]
