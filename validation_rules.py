@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-from typing import Dict, List
+from typing import Dict
 from logging_config import setup_logging
+from excel_formula_parser import ExcelFormulaParser
 
 logger = setup_logging()
 
@@ -165,7 +166,7 @@ class ValidationRules:
             risk_level = row[risk_level_field]
 
             # Case 1: No third parties and risk level is N/A - this is correct
-            if (pd.isna(third_parties) or third_parties == ""):
+            if pd.isna(third_parties) or third_parties == "":
                 if risk_level == "N/A":
                     result[idx] = True
             # Case 2: Third parties exist and risk level is NOT N/A - this is correct
@@ -174,3 +175,57 @@ class ValidationRules:
                     result[idx] = True
 
         return result
+
+    @staticmethod
+    def custom_formula(df: pd.DataFrame, params: Dict) -> pd.Series:
+        """
+        Execute a user-defined Excel formula against the dataframe.
+
+        Args:
+            df: DataFrame containing the data to validate
+            params: Dictionary with formula parameters:
+                - formula: Pandas expression (parsed from original_formula)
+                - original_formula: Original Excel-style formula
+
+        Returns:
+            Series with True for rows that conform, False for non-conforming
+        """
+        try:
+            # Get formula and original formula
+            formula = params.get('formula')
+            original = params.get('original_formula', 'Unknown formula')
+
+            if not formula:
+                # If formula not provided but original formula is available, parse it
+                if original and original != 'Unknown formula':
+                    parser = ExcelFormulaParser()
+                    formula, _ = parser.parse(original)
+                else:
+                    logger.error("Missing formula parameter")
+                    return pd.Series(False, index=df.index)
+
+            # Use safe evaluation approach
+            restricted_globals = {"__builtins__": {}}
+            safe_locals = {"df": df, "pd": pd, "np": np}
+
+            # Execute formula
+            result = eval(formula, restricted_globals, safe_locals)
+
+            # Ensure result is a boolean Series
+            if not isinstance(result, pd.Series):
+                logger.error(f"Formula did not return a Series: {original}")
+                return pd.Series(False, index=df.index)
+
+            # Try to convert to boolean if not already
+            if result.dtype != bool:
+                try:
+                    result = result.astype(bool)
+                except (ValueError, TypeError) as e:
+                    logger.error(f"Formula did not return boolean values: {original}. Error: {e}")
+                    return pd.Series(False, index=df.index)
+
+            return result
+
+        except Exception as e:
+            logger.error(f"Custom formula failed: {e}, Formula: {params.get('original_formula', 'Unknown')}")
+            return pd.Series(False, index=df.index)

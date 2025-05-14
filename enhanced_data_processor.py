@@ -6,6 +6,7 @@ from validation_rules import ValidationRules
 from reference_data_manager import ReferenceDataManager
 from data_source_manager import DataSourceManager
 from logging_config import setup_logging
+from excel_formula_parser import ExcelFormulaParser
 
 logger = setup_logging()
 
@@ -224,9 +225,31 @@ class EnhancedDataProcessor:
         # Create result columns for each validation
         validation_results = {}
 
+        # Create a parser instance for any custom formulas
+        formula_parser = ExcelFormulaParser()
+
         for validation in self.config['validations']:
             rule_name = validation['rule']
             params = validation.get('parameters', {})
+
+            # Handle custom formula parsing if needed
+            if rule_name == 'custom_formula' and 'original_formula' in params and 'formula' not in params:
+                try:
+                    # Parse the formula
+                    original_formula = params['original_formula']
+                    parsed_formula, fields_used = formula_parser.parse(original_formula)
+
+                    # Update the parameters with the parsed formula
+                    params['formula'] = parsed_formula
+
+                    # Log the formula parsing
+                    logger.info(f"Parsed custom formula: {original_formula} -> {parsed_formula}")
+                    logger.info(f"Fields used: {fields_used}")
+
+                except Exception as e:
+                    logger.error(f"Error parsing custom formula: {e}")
+                    validation_results[rule_name] = pd.Series(False, index=self.source_data.index)
+                    continue
 
             # Get the validation method by name
             if hasattr(self.validation_rules, rule_name) and callable(getattr(self.validation_rules, rule_name)):
@@ -280,7 +303,7 @@ class EnhancedDataProcessor:
             logger.warning("No validation results calculated")
             self.source_data['Compliance'] = 'N/A'
 
-    def generate_summary(self) -> pd.DataFrame:
+    def generate_summary(self) -> Optional[pd.DataFrame]:
         """Generate summary statistics by group"""
         if self.source_data is None or 'Compliance' not in self.source_data:
             logger.error("Cannot generate summary - validation not complete")
