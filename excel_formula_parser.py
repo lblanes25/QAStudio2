@@ -76,7 +76,7 @@ class ExcelFormulaParser:
         fields_used = []
 
         # First, handle backtick-quoted field names
-        formula, backtick_fields = self._extract_backtick_fields(formula)
+        formula, backtick_fields, placeholder_map = self._extract_backtick_fields(formula)
         fields_used.extend(backtick_fields)
 
         # Tokenize the formula into distinct parts
@@ -89,14 +89,29 @@ class ExcelFormulaParser:
         while i < len(tokens):
             token = tokens[i]
 
-            # Handle operators
-            if token.upper() in self.operator_map:
-                processed_tokens.append(self.operator_map[token.upper()])
+            # Handle IN operator
+            if token.upper() == 'IN':
+                # Process the IN operator and its arguments
+                in_expr = self._process_in_operator(tokens, i, fields_used)
+                processed_tokens.append(in_expr)
+
+                # Skip past the IN expression
+                paren_count = 0
+                while i < len(tokens):
+                    if tokens[i] == '(':
+                        paren_count += 1
+                    elif tokens[i] == ')':
+                        paren_count -= 1
+                        if paren_count == 0:
+                            break
+                    i += 1
 
             # Handle functions
             elif token.upper() in self.function_map and i + 1 < len(tokens) and tokens[i+1] == '(':
                 func_name = token.upper()
-                processed_tokens.append(self._process_function(func_name, tokens, i, fields_used))
+                func_expr = self._process_function(func_name, tokens, i, fields_used)
+                processed_tokens.append(func_expr)
+
                 # Skip to the end of the function
                 paren_count = 1
                 i += 2  # Skip past function name and opening paren
@@ -108,6 +123,10 @@ class ExcelFormulaParser:
                     i += 1
                 i -= 1  # Adjust for the outer loop increment
 
+            # Handle operators
+            elif token.upper() in self.operator_map:
+                processed_tokens.append(self.operator_map[token.upper()])
+
             # Handle other tokens (field names, literals, etc.)
             else:
                 processed_token = self._process_token(token, fields_used)
@@ -115,13 +134,17 @@ class ExcelFormulaParser:
 
             i += 1
 
-        # Handle logical operators to ensure proper precedence
+        # Join tokens and handle precedence
         parsed_formula = self._apply_precedence(processed_tokens)
+
+        # Replace placeholders with actual field names
+        for placeholder, field_name in placeholder_map.items():
+            parsed_formula = parsed_formula.replace(f"df['{placeholder}']", f"df['{field_name}']")
 
         logger.info(f"Parsed formula: {formula} -> {parsed_formula}")
         return parsed_formula, fields_used
 
-    def _extract_backtick_fields(self, formula: str) -> Tuple[str, List[str]]:
+    def _extract_backtick_fields(self, formula: str) -> Tuple[str, List[str], Dict[str, str]]:
         """
         Extract backtick-quoted field names from formula.
 
@@ -129,25 +152,31 @@ class ExcelFormulaParser:
             formula: Excel-style formula
 
         Returns:
-            Tuple of (formula with placeholders, list of field names)
+            Tuple of (formula with placeholders, list of field names, placeholder map)
         """
         backtick_fields = []
         backtick_pattern = r'`([^`]+)`'
+        placeholder_map = {}
 
         # Find all backtick-quoted fields
         matches = list(re.finditer(backtick_pattern, formula))
 
-        # Replace each field with a placeholder
+        # Replace each field with a placeholder that won't be broken by tokenization
         modified_formula = formula
+
         for i, match in enumerate(reversed(matches)):  # Process in reverse to avoid index issues
             field_name = match.group(1)
             backtick_fields.append(field_name)
 
-            # Replace with field name (without backticks)
-            start, end = match.span()
-            modified_formula = modified_formula[:start] + field_name + modified_formula[end:]
+            # Create a placeholder without spaces
+            placeholder = f"__FIELD_{i}__"
+            placeholder_map[placeholder] = field_name
 
-        return modified_formula, backtick_fields
+            # Replace in formula
+            start, end = match.span()
+            modified_formula = modified_formula[:start] + placeholder + modified_formula[end:]
+
+        return modified_formula, backtick_fields, placeholder_map
 
     def _tokenize(self, formula: str) -> List[str]:
         """
@@ -160,8 +189,8 @@ class ExcelFormulaParser:
             List of formula tokens
         """
         # Build a pattern to match operators, function names, parentheses,
-        # string literals, and identifiers
-        pattern = r'(AND|OR|NOT|IN|<=|>=|<>|<|>|=|\(|\)|,|"[^"]*"|\'[^\']*\'|\b[A-Za-z][A-Za-z0-9_]*\b|\d+(?:\.\d+)?)'
+        # string literals, and identifiers (including our placeholders)
+        pattern = r'(AND|OR|NOT|IN|<=|>=|<>|<|>|=|\(|\)|,|"[^"]*"|\'[^\']*\'|\b[A-Za-z][A-Za-z0-9_]*\b|\d+(?:\.\d+)?|__FIELD_\d+__)'
 
         # Tokenize the formula
         tokens = re.findall(pattern, formula, re.IGNORECASE)
@@ -182,46 +211,129 @@ class ExcelFormulaParser:
         Returns:
             Processed function string
         """
-        # Get the template for this function
-        template = self.function_map[func_name]
+        # Special handling for ISBLANK
+        if func_name == 'ISBLANK':
+            # Find the argument (field name)
+            field_name = None
+            i = start_idx + 2  # Skip past ISBLANK and opening parenthesis
 
-        # For simple function substitutions (like ISBLANK -> pd.isna)
-        if "{}" not in template:
-            return template
+            while i < len(tokens) and tokens[i] != ')':
+                if tokens[i] not in '(),+-*/' and not tokens[i].upper() in self.operator_map:
+                    field_name = tokens[i]
+                    if field_name not in fields_used:
+                        fields_used.append(field_name)
+                    break
+                i += 1
 
-        # For functions that need argument processing
-        # Extract the argument from between parentheses
-        arg_tokens = []
-        paren_count = 0
-        i = start_idx + 1  # Start after function name
+            if not field_name:
+                logger.error(f"Could not find field name for {func_name}")
+                return "pd.Series(False, index=df.index)"  # Fallback
 
+            return f"pd.isna(df['{field_name}'])"
+
+        # Handle other functions that need argument substitution
+        if func_name in self.function_map:
+            template = self.function_map[func_name]
+
+            # If the template doesn't need argument substitution
+            if "{}" not in template:
+                return template
+
+            # Extract arguments
+            arg_tokens = []
+            paren_count = 0
+            i = start_idx + 1  # Start after function name
+
+            # Skip to opening parenthesis
+            while i < len(tokens) and tokens[i] != '(':
+                i += 1
+
+            i += 1  # Skip past opening parenthesis
+
+            # Collect argument tokens
+            while i < len(tokens):
+                token = tokens[i]
+
+                if token == '(':
+                    paren_count += 1
+                    arg_tokens.append(token)
+                elif token == ')':
+                    if paren_count == 0:
+                        break  # End of function
+                    paren_count -= 1
+                    arg_tokens.append(token)
+                else:
+                    arg_tokens.append(token)
+
+                i += 1
+
+            # Process argument tokens
+            arg_str = ""
+            for token in arg_tokens:
+                if token.upper() in self.operator_map:
+                    arg_str += self.operator_map[token.upper()]
+                else:
+                    arg_str += self._process_token(token, fields_used)
+
+            return template.format(arg_str)
+
+        # Default case (shouldn't reach here)
+        logger.warning(f"Unhandled function: {func_name}")
+        return f"{func_name.lower()}"
+
+    def _process_in_operator(self, tokens: List[str], in_idx: int, fields_used: List[str]) -> str:
+        """
+        Process the IN operator and its list of values.
+
+        Args:
+            tokens: List of tokens
+            in_idx: Index of the IN token
+            fields_used: List to track field names
+
+        Returns:
+            Processed IN expression
+        """
+        # Get the field name (token before IN)
+        if in_idx == 0:
+            logger.error("IN operator has no preceding field")
+            return ".isin([])"
+
+        field_name = tokens[in_idx - 1]
+        if field_name not in fields_used:
+            fields_used.append(field_name)
+
+        # Find the list values
+        values = []
+        i = in_idx + 1  # Start after IN
+
+        # Skip to opening parenthesis
+        while i < len(tokens) and tokens[i] != '(':
+            i += 1
+
+        if i >= len(tokens):
+            logger.error("No opening parenthesis found after IN")
+            return f"df['{field_name}'].isin([])"
+
+        i += 1  # Skip past opening parenthesis
+
+        # Collect values until closing parenthesis
         while i < len(tokens):
             token = tokens[i]
 
-            if token == '(':
-                paren_count += 1
-                if paren_count > 1:  # Only add if not the opening paren
-                    arg_tokens.append(token)
-            elif token == ')':
-                paren_count -= 1
-                if paren_count == 0:  # End of function
-                    break
-                arg_tokens.append(token)
-            else:
-                arg_tokens.append(token)
+            if token == ')':
+                break
+            elif token == ',':
+                i += 1
+                continue
 
+            # Add the value
+            values.append(token)
             i += 1
 
-        # Process the argument tokens
-        arg_str = ""
-        for token in arg_tokens:
-            if token.upper() in self.operator_map:
-                arg_str += self.operator_map[token.upper()]
-            else:
-                arg_str += self._process_token(token, fields_used)
+        # Format the values list
+        values_str = ", ".join(values)
 
-        # Return the formatted function
-        return template.format(arg_str)
+        return f"df['{field_name}'].isin([{values_str}])"
 
     def _process_token(self, token: str, fields_used: List[str]) -> str:
         """
@@ -234,6 +346,10 @@ class ExcelFormulaParser:
         Returns:
             Processed token string
         """
+        # Handle placeholder fields
+        if token.startswith('__FIELD_') and token.endswith('__'):
+            return f"df['{token}']"  # Will be replaced with actual field name later
+
         # Handle string literals
         if (token.startswith('"') and token.endswith('"')) or (token.startswith("'") and token.endswith("'")):
             return token
@@ -242,19 +358,18 @@ class ExcelFormulaParser:
         if token.replace('.', '', 1).isdigit():
             return token
 
-        # Handle operators
-        if token in self.operator_map:
-            return self.operator_map[token]
-
-        # Handle other symbols
+        # Handle parentheses and punctuation
         if token in "(),.+-*/":
             return token
 
-        # Assume it's a field name
-        if token not in fields_used and re.match(r'^[A-Za-z][A-Za-z0-9_\s]*$', token):
+        # Handle operators
+        if token.upper() in self.operator_map:
+            return self.operator_map[token.upper()]
+
+        # Assume it's a field name if not recognized as anything else
+        if token not in fields_used:
             fields_used.append(token)
 
-        # Return as a DataFrame reference
         return f"df['{token}']"
 
     def _apply_precedence(self, tokens: List[str]) -> str:
@@ -270,39 +385,48 @@ class ExcelFormulaParser:
         # Join tokens into a string
         formula = ''.join(tokens)
 
-        # Handle logical operators
+        # Handle logical operators by ensuring proper parenthesization
         for op in ['&', '|']:
-            # Find all occurrences of the operator
-            pattern = r'([^&|()]+)' + re.escape(op) + r'([^&|()]+)'
-            matches = list(re.finditer(pattern, formula))
+            # Find expressions connected by this operator
+            parts = []
+            current = ""
+            paren_count = 0
 
-            # Replace each occurrence with properly parenthesized version
-            for match in reversed(matches):  # Process in reverse to avoid index issues
-                left, right = match.group(1), match.group(2)
+            for char in formula:
+                if char == '(':
+                    paren_count += 1
+                    current += char
+                elif char == ')':
+                    paren_count -= 1
+                    current += char
+                elif char == op and paren_count == 0:
+                    # Found operator at top level
+                    parts.append(current)
+                    current = ""
+                else:
+                    current += char
 
-                # Skip if already parenthesized
-                if (left.startswith('(') and left.endswith(')') and
-                    right.startswith('(') and right.endswith(')')):
-                    continue
+            if current:
+                parts.append(current)
 
-                # Parenthesize the operands if needed
-                if not (left.startswith('(') and left.endswith(')')):
-                    left = f"({left})"
+            # If we found parts separated by the operator
+            if len(parts) > 1:
+                # Ensure each part is parenthesized
+                for i in range(len(parts)):
+                    part = parts[i].strip()
+                    if not (part.startswith('(') and part.endswith(')')):
+                        parts[i] = f"({part})"
 
-                if not (right.startswith('(') and right.endswith(')')):
-                    right = f"({right})"
+                # Reconstruct the formula
+                formula = f" {op} ".join(parts)
 
-                # Replace in formula
-                start, end = match.span()
-                formula = formula[:start] + f"{left} {op} {right}" + formula[end:]
-
-        # Wrap the entire formula in parentheses if it's not already
+        # Ensure the entire formula is parenthesized
         if not (formula.startswith('(') and formula.endswith(')')):
             formula = f"({formula})"
 
         return formula
 
-    def test_formula(self, formula: str, data: pd.DataFrame) -> Tuple[bool, pd.Series, str]:
+    def test_formula(self, formula: str, data: pd.DataFrame) -> Tuple[bool, Optional[pd.Series], Optional[str]]:
         """
         Test a formula against sample data.
 
@@ -318,13 +442,16 @@ class ExcelFormulaParser:
             parsed_formula, fields_used = self.parse(formula)
 
             # Check that all fields exist in the data
-            for field in fields_used:
-                if field not in data.columns:
-                    return False, None, f"Field '{field}' not found in data"
+            missing_fields = [field for field in fields_used if field not in data.columns]
+            if missing_fields:
+                return False, None, f"Fields not found in data: {', '.join(missing_fields)}"
 
             # Create safe evaluation environment
             restricted_globals = {"__builtins__": {}}
             safe_locals = {"df": data, "pd": pd, "np": np}
+
+            # Log the formula for debugging
+            logger.debug(f"Evaluating formula: {parsed_formula}")
 
             # Evaluate the formula
             result = eval(parsed_formula, restricted_globals, safe_locals)
@@ -333,18 +460,19 @@ class ExcelFormulaParser:
             if not isinstance(result, pd.Series):
                 return False, None, f"Formula did not return a Series (got {type(result).__name__})"
 
-            # Convert to boolean if needed
+            # Ensure all results are boolean
             if result.dtype != bool:
                 try:
                     result = result.astype(bool)
-                except:
-                    return False, None, f"Could not convert result to boolean (dtype: {result.dtype})"
+                except Exception as e:
+                    return False, None, f"Could not convert result to boolean: {str(e)}"
 
             return True, result, None
 
         except Exception as e:
-            logger.error(f"Error testing formula: {e}")
-            return False, None, str(e)
+            error_msg = str(e)
+            logger.error(f"Custom formula failed: {error_msg}, Formula: {formula}")
+            return False, None, error_msg
 
 
 # Example usage (for testing)
