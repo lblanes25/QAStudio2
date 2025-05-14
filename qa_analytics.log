@@ -390,3 +390,5 @@ Failing Examples:
 Demo complete. This shows how the Excel Formula Enhancement would work
 2025-05-14 12:37:55,826 - excel_formula_test - INFO - in the QA Analytics Framework. The actual parser implementation would
 2025-05-14 12:37:55,826 - excel_formula_test - INFO - replace the hardcoded examples used in this demonstration.
+2025-05-14 12:48:30,433 - qa_analytics - INFO - Parsed formula: Submitter <> Approver AND `Submit Date` <= `TL Date` -> (df['Submitter']!=df['Approver']&df['Submit Date']<=df['TL Date'])
+2025-05-14 12:48:30,434 - qa_analytics - ERROR - Custom formula failed: unsupported operand type(s) for &: 'str' and 'int', Formula: Submitter <> Approver AND `Submit Date` <= `TL Date`
