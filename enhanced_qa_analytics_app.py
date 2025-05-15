@@ -89,7 +89,24 @@ class EnhancedQAAnalyticsApp:
             logger.error(f"Error saving preferences: {e}")
 
     def _setup_ui(self):
-        """Set up the user interface with notebook tabs"""
+        """Set up the user interface with notebook tabs and a permanent mode toggle"""
+        # Create a top bar frame for permanent controls
+        top_bar = ttk.Frame(self.root)
+        top_bar.pack(fill=tk.X, side=tk.TOP, padx=5, pady=5)
+
+        # Add application title to left side of top bar
+        title_label = ttk.Label(top_bar, text="Enhanced QA Analytics", font=("Arial", 12, "bold"))
+        title_label.pack(side=tk.LEFT, padx=5)
+
+        # Add mode toggle button to right side of top bar
+        self.mode_btn = ttk.Button(
+            top_bar,
+            text="Switch to Simple Mode" if self.is_advanced_mode else "Switch to Advanced Mode",
+            command=self._toggle_ui_mode,
+            width=20
+        )
+        self.mode_btn.pack(side=tk.RIGHT, padx=5)
+
         # Create notebook for tabs
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill=tk.BOTH, expand=True)
@@ -121,26 +138,26 @@ class EnhancedQAAnalyticsApp:
         self._setup_data_source_tab()
         self._setup_reference_data_tab()
 
-        # Status bar with mode toggle
+        # Status bar at the bottom
         self.status_var = tk.StringVar(value="Ready")
-        self.status_bar = ttk.Frame(self.root, relief=tk.SUNKEN)
-        self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+        status_bar = ttk.Frame(self.root, relief=tk.SUNKEN, border=1)
+        status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
         # Status label on left
-        status_label = ttk.Label(self.status_bar, textvariable=self.status_var, anchor=tk.W)
-        status_label.pack(side=tk.LEFT, padx=5)
-
-        # Mode toggle on right
-        self.mode_btn = ttk.Button(
-            self.status_bar,
-            text="Switch to Advanced Mode" if not self.is_advanced_mode else "Switch to Simple Mode",
-            command=self._toggle_ui_mode,
-            width=20
-        )
-        self.mode_btn.pack(side=tk.RIGHT, padx=5, pady=2)
+        status_label = ttk.Label(status_bar, textvariable=self.status_var, anchor=tk.W)
+        status_label.pack(side=tk.LEFT, padx=5, pady=2)
 
         # Set up log handler
         self._setup_log_handler()
+
+    def _reset_preferences(self):
+        """Reset user preferences to defaults"""
+        if messagebox.askyesno("Reset Preferences",
+                               "Are you sure you want to reset all preferences to defaults?"):
+            self.user_preferences = {"advanced_mode": False}
+            self._save_user_preferences()
+            messagebox.showinfo("Restart Required",
+                                "Preferences have been reset. Please restart the application.")
 
     def _toggle_ui_mode(self):
         """Toggle between simple and advanced UI modes"""
@@ -148,7 +165,7 @@ class EnhancedQAAnalyticsApp:
 
         # Update button text
         self.mode_btn.config(
-            text="Switch to Advanced Mode" if not self.is_advanced_mode else "Switch to Simple Mode"
+            text="Switch to Simple Mode" if self.is_advanced_mode else "Switch to Advanced Mode"
         )
 
         # Update user preferences
@@ -160,9 +177,17 @@ class EnhancedQAAnalyticsApp:
 
     def _update_ui_mode(self):
         """Update UI based on current mode"""
-        # Remove all tabs except main tab
+        # Remove all tabs
         for tab in self.notebook.tabs():
             self.notebook.forget(tab)
+
+        # Recreate the frames for all tabs (not just main tab)
+        self.main_tab = ttk.Frame(self.notebook)
+        self.config_wizard_tab = ttk.Frame(self.notebook)
+        self.testing_tab = ttk.Frame(self.notebook)
+        self.scheduler_tab = ttk.Frame(self.notebook)
+        self.data_source_tab = ttk.Frame(self.notebook)
+        self.reference_data_tab = ttk.Frame(self.notebook)
 
         # Always add main tab
         self.notebook.add(self.main_tab, text="Run Analytics")
@@ -174,6 +199,17 @@ class EnhancedQAAnalyticsApp:
             self.notebook.add(self.scheduler_tab, text="Scheduler")
             self.notebook.add(self.data_source_tab, text="Data Sources")
             self.notebook.add(self.reference_data_tab, text="Reference Data")
+
+        # Recreate the content for main tab
+        self._setup_main_tab()
+
+        # If in advanced mode, recreate content for other tabs
+        if self.is_advanced_mode:
+            self._setup_config_wizard_tab()
+            self._setup_testing_tab()
+            self._setup_scheduler_tab()
+            self._setup_data_source_tab()
+            self._setup_reference_data_tab()
 
         # Update status message
         self.status_var.set(f"Ready - {'Advanced' if self.is_advanced_mode else 'Simple'} Mode")
@@ -334,13 +370,36 @@ class EnhancedQAAnalyticsApp:
         # Set focus to the data file selection
         self.source_entry.focus_set()
 
+    def _refresh_analytics_list(self):
+        """Refresh the list of available analytics in the dropdown"""
+        # Reload configs from disk
+        self.available_analytics = self.config_manager.get_available_analytics()
+
+        # Update the dropdown values in the main tab
+        analytics_values = [f"{id} - {name}" for id, name in self.available_analytics]
+        self.analytic_combo["values"] = analytics_values
+
+        # If there are values available, select the first one by default
+        if analytics_values:
+            self.analytic_combo.current(0)
+
+        # Also refresh testing tab if it exists
+        if hasattr(self, 'testing_environment') and hasattr(self.testing_environment, 'analytics_combo'):
+            self.testing_environment.analytics_combo["values"] = analytics_values
+            if analytics_values:
+                self.testing_environment.analytics_combo.current(0)
+
+        # Log the refresh action
+        logger.info(f"Refreshed analytics list: found {len(self.available_analytics)} configurations")
+
     def _setup_config_wizard_tab(self):
         """Set up the configuration wizard tab"""
-        # Create the configuration wizard
+        # Create the configuration wizard with a callback to refresh the analytics list
         self.config_wizard = ConfigWizard(
             parent_frame=self.config_wizard_tab,
             config_manager=self.config_manager,
-            template_manager=self.template_manager
+            template_manager=self.template_manager,
+            on_config_saved=self._refresh_analytics_list  # Pass the refresh callback
         )
 
     def _setup_testing_tab(self):

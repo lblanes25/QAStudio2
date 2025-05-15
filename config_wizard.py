@@ -865,9 +865,15 @@ class ConfigWizard:
             if hasattr(self.config_manager, 'load_all_configs'):
                 self.config_manager.load_all_configs()
 
-            # Call the callback if provided
+            # Call the callback if provided to refresh UI in other tabs
             if callable(self.on_config_saved):
                 self.on_config_saved()
+
+            # Show a helpful message about the new configuration being available
+            messagebox.showinfo(
+                "Configuration Available",
+                f"The new configuration 'QA-{analytics_id}' is now available in the Run Analytics tab."
+            )
         else:
             messagebox.showerror("Error", result)
 

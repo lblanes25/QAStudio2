@@ -1,0 +1,67 @@
+data_sources:
+  qa_100_test_data:
+    type: report
+    description: XLSX file with 50 rows in sheet 'Sheet1'
+    version: '1.0'
+    owner: QA Analytics
+    refresh_frequency: Weekly
+    last_updated: '2025-05-15T10:01:05.055156'
+    file_type: xlsx
+    file_pattern: qa_100_test_data.xlsx
+    validation_rules:
+    - type: row_count_min
+      threshold: 25
+      description: Should have at least 25 rows
+    - type: required_columns
+      columns:
+      - Audit TW ID
+      - TW submitter
+      - TL approver
+      - Submit Date
+      - TL Approval Date
+      description: Critical columns that must be present
+    columns_mapping:
+    - source: Audit TW ID
+      target: Audit TW ID
+      data_type: id
+    - source: TW submitter
+      target: TW submitter
+      data_type: categorical
+      valid_values:
+      - Fiona Garcia
+      - Alice Johnson
+      - Charlie Davis
+      - Jane Smith
+      - John Doe
+      - Bob Brown
+      - Hannah Ingram
+    - source: TL approver
+      target: TL approver
+      data_type: categorical
+      valid_values:
+      - Charlie Davis
+      - John Doe
+      - Hannah Ingram
+    - source: AL approver
+      target: AL approver
+      data_type: categorical
+      valid_values:
+      - Bob Brown
+      - Jane Smith
+      - Ian Jackson
+    - source: Submit Date
+      target: Submit Date
+      data_type: date
+    - source: TL Approval Date
+      target: TL Approval Date
+      data_type: date
+    - source: AL Approval Date
+      target: AL Approval Date
+      data_type: date
+    key_columns:
+    - Audit TW ID
+    - Submit Date
+    sheet_name: Sheet1
+analytics_mapping:
+- data_source: qa_100_test_data
+  analytics: []

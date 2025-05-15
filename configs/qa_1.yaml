@@ -1,0 +1,26 @@
+analytic_description: '1'
+analytic_id: 1
+analytic_name: '11'
+data_source:
+  name: generate
+  required_fields: []
+reporting:
+  detail_required: true
+  group_by: Audit LEader
+  summary_fields:
+  - GC
+  - PC
+  - DNC
+  - Total
+  - DNC_Percentage
+thresholds:
+  error_percentage: 5.0
+  rationale: Maximum allowed error rate for this validation
+validations:
+- description: User-defined Excel formula validation
+  parameters:
+    fields_used:
+    - a
+    formula: ((df['a']) == df['b'])
+    original_formula: a = b
+  rule: custom_formula
