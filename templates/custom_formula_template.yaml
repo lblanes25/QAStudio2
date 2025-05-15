@@ -1,0 +1,31 @@
+template_id: custom_formula
+template_name: Custom Excel Formula Validation
+template_description: Create a validation rule using Excel-style formula syntax
+template_category: Advanced
+template_version: 1.0
+
+template_parameters:
+  - name: original_formula
+    description: Excel-style formula for validation
+    data_type: formula
+    required: true
+    example: "Submitter <> Approver AND `Submit Date` <= `TL Date`"
+
+generated_validations:
+  - rule: custom_formula
+    description: User-defined Excel formula validation
+    parameters_mapping:
+      original_formula: "{original_formula}"
+      formula: "{original_formula_parsed}"
+
+default_thresholds:
+  error_percentage: 5.0
+  rationale: Maximum allowed error rate for this validation
+
+example_mappings:
+  Segregation of Duties:
+    original_formula: "Submitter <> Approver"
+  Approval Sequence:
+    original_formula: "`Submit Date` <= `Approval Date`"
+  Required Fields:
+    original_formula: "NOT ISBLANK(RiskRating)"

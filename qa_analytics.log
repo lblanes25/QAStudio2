@@ -2043,3 +2043,249 @@ Demo complete! The Excel Formula Enhancement is working correctly.
 2025-05-14 15:42:22,501 - qa_analytics - INFO - Parsed formula: (Risk_Level IN ("High", "Critical") AND Value) OR (Risk_Level = "Medium" AND Value <= 100) -> ((  ) & (  df[)'Value'] <= 100 )) > 100
 2025-05-14 15:42:22,501 - qa_analytics - INFO - Parsed formula: (Risk_Level IN ("High", "Critical") AND Value) OR (Risk_Level = "Medium" AND Value <= 100) -> ((  ) & (  df[)'Value'] <= 100 )) > 100
 2025-05-14 15:42:22,501 - qa_analytics - ERROR - Custom formula failed: closing parenthesis ')' does not match opening parenthesis '[' (<string>, line 1), Formula: (Risk_Level IN ("High", "Critical") AND Value > 100) OR (Risk_Level = "Medium" AND Value <= 100)
+2025-05-14 21:18:22,781 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:18:23,099 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:18:23,106 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:18:23,111 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:18:23,117 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:18:23,122 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:18:23,127 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:18:23,133 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:18:23,138 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:18:23,140 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:18:23,149 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:18:23,149 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:18:23,158 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:18:23,166 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:18:23,181 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:18:23,181 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:19:16,611 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:19:16,660 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:19:16,662 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:19:16,663 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:19:16,664 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:19:16,665 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:19:16,666 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:19:16,668 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:19:16,668 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:19:16,670 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:19:16,679 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:19:16,679 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:19:16,682 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:19:16,685 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:19:16,690 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:19:16,691 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:19:27,394 - qa_analytics - INFO - User preferences saved
+2025-05-14 21:19:38,625 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:19:38,625 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:21:39,667 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:21:39,713 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:21:39,715 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:21:39,716 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:21:39,718 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:21:39,719 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:21:39,720 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:21:39,721 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:21:39,722 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:21:39,723 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:21:39,732 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:21:39,732 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:21:39,736 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:21:39,738 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:21:39,744 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:21:39,744 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:21:53,325 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:21:53,326 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:22:50,337 - qa_analytics - INFO - Successfully generated configuration for template risk_assessment
+2025-05-14 21:24:01,268 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:24:01,315 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:24:01,317 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:24:01,318 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:24:01,319 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:24:01,320 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:24:01,321 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:24:01,322 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:24:01,323 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:24:01,324 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:24:01,334 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:24:01,334 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:24:01,337 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:24:01,338 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-14 21:24:01,341 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:24:01,346 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:24:01,347 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:24:06,278 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:24:06,278 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:24:24,665 - formula_parser - INFO - Parsed formula: i -> (df['i'])
+2025-05-14 21:24:24,725 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:26,022 - formula_parser - INFO - Parsed formula: if= -> (df['if'] ==)
+2025-05-14 21:24:26,543 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:27,128 - formula_parser - INFO - Parsed formula: i -> (df['i'])
+2025-05-14 21:24:30,439 - formula_parser - INFO - Parsed formula: i -> (df['i'])
+2025-05-14 21:24:30,487 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:31,207 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:31,207 - formula_parser - INFO - Parsed formula: if( -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:34,511 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:34,511 - formula_parser - INFO - Parsed formula: if(a -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:35,079 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:35,080 - formula_parser - INFO - Parsed formula: if(a2 -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:35,783 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:35,783 - formula_parser - INFO - Parsed formula: if(a -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:36,535 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:36,535 - formula_parser - INFO - Parsed formula: if( -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:47,759 - formula_parser - INFO - Parsed formula: i -> (df['i'])
+2025-05-14 21:24:47,837 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:47,951 - formula_parser - INFO - Parsed formula: if  -> (df['if'])
+2025-05-14 21:24:48,622 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:48,919 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:48,919 - formula_parser - INFO - Parsed formula: if( -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:49,567 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:49,568 - formula_parser - INFO - Parsed formula: if(a -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:49,903 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:49,903 - formula_parser - INFO - Parsed formula: if(a2 -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:50,303 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:50,304 - formula_parser - INFO - Parsed formula: if(a2= -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:50,791 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:50,792 - formula_parser - INFO - Parsed formula: if(a2 -> ((pd.Series(np.nan, index=df.index)) == df['b'])
+2025-05-14 21:24:50,958 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:50,959 - formula_parser - INFO - Parsed formula: if(a2 -> ((pd.Series(np.nan, index=df.index)) == df['b2'])
+2025-05-14 21:24:52,223 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:52,223 - formula_parser - INFO - Parsed formula: if(a2 -> ((pd.Series(np.nan, index=df.index)) == df['b'])
+2025-05-14 21:24:52,374 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:52,375 - formula_parser - INFO - Parsed formula: if(a2= -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:52,503 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:52,503 - formula_parser - INFO - Parsed formula: if(a2 -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:52,655 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:52,655 - formula_parser - INFO - Parsed formula: if(a -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:52,815 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:52,816 - formula_parser - INFO - Parsed formula: if( -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:55,343 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:55,343 - formula_parser - INFO - Parsed formula: if($ -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:55,935 - formula_parser - ERROR - IF requires 3 arguments, got 0
+2025-05-14 21:24:55,935 - formula_parser - INFO - Parsed formula: if( -> (pd.Series(np.nan, index=df.index))
+2025-05-14 21:24:56,607 - formula_parser - INFO - Parsed formula: if -> (df['if'])
+2025-05-14 21:24:56,775 - formula_parser - INFO - Parsed formula: i -> (df['i'])
+2025-05-14 21:25:56,958 - formula_parser - INFO - Parsed formula: A -> (df['A'])
+2025-05-14 21:26:00,215 - formula_parser - INFO - Parsed formula: A  -> (df['A'])
+2025-05-14 21:26:00,310 - formula_parser - INFO - Parsed formula: A = -> (df['A'] ==)
+2025-05-14 21:26:00,447 - formula_parser - INFO - Parsed formula: A =  -> (df['A'] ==)
+2025-05-14 21:26:00,726 - formula_parser - INFO - Parsed formula: A -> ((df['A']) == df['B'])
+2025-05-14 21:26:07,287 - formula_parser - INFO - Parsed formula: A -> (df['A'])
+2025-05-14 21:26:07,590 - formula_parser - INFO - Parsed formula: A  -> (df['A'])
+2025-05-14 21:26:08,039 - formula_parser - INFO - Parsed formula: A > -> (df['A'] >)
+2025-05-14 21:26:08,175 - formula_parser - INFO - Parsed formula: A >  -> (df['A'] >)
+2025-05-14 21:26:08,406 - formula_parser - INFO - Parsed formula: A -> ((df['A']) > df['B'])
+2025-05-14 21:26:13,993 - formula_parser - INFO - Parsed formula: A -> ((df['A']) > df['B'])
+2025-05-14 21:26:13,993 - qa_analytics - ERROR - Custom formula failed: 'B', Formula: A > B
+2025-05-14 21:26:16,770 - formula_parser - INFO - Parsed formula: A -> ((df['A']) > df['B'])
+2025-05-14 21:26:16,771 - qa_analytics - ERROR - Custom formula failed: 'B', Formula: A > B
+2025-05-14 21:26:22,849 - formula_parser - INFO - Parsed formula: A -> ((df['A']) > df['B'])
+2025-05-14 21:26:22,849 - qa_analytics - ERROR - Custom formula failed: 'B', Formula: A > B
+2025-05-14 21:26:22,968 - formula_parser - INFO - Parsed formula: A -> ((df['A']) > df['B'])
+2025-05-14 21:26:22,968 - qa_analytics - ERROR - Custom formula failed: 'B', Formula: A > B
+2025-05-14 21:27:12,899 - formula_parser - INFO - Parsed formula: __FIELD_1__ <= __FIELD_0__ -> (df['Submit Date'] <= df['Approval Date'])
+2025-05-14 21:27:16,530 - formula_parser - INFO - Parsed formula: Submitter -> ((df['Submitter']) != df['Approver'])
+2025-05-14 21:27:18,522 - formula_parser - INFO - Parsed formula: ISBLANK ( RiskRating -> (pd.isna(df['RiskRating']))
+2025-05-14 21:27:18,522 - formula_parser - INFO - Parsed formula: NOT ISBLANK(RiskRating) -> (~pd.Series((pd.isna(df['RiskRating'])), index=df.index).astype(bool) ))
+2025-05-14 21:27:25,271 - formula_parser - INFO - Parsed formula: __FIELD_1__ <= __FIELD_0__ -> (df['Submit Date'] <= df['Approval Date'])
+2025-05-14 21:27:26,342 - qa_analytics - INFO - Successfully generated configuration for template custom_formula
+2025-05-14 21:27:35,920 - qa_analytics - INFO - Successfully generated configuration for template custom_formula
+2025-05-14 21:39:37,184 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:39:37,449 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:39:37,455 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:39:37,461 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:39:37,465 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:39:37,469 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:39:37,473 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:39:37,478 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:39:37,482 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:39:37,483 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:39:37,492 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:39:37,492 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:39:37,500 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:39:37,505 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-14 21:39:37,513 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:39:37,526 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:39:37,527 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:40:06,408 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:40:06,408 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:40:33,649 - formula_parser - INFO - Parsed formula: a -> (df['a'])
+2025-05-14 21:40:33,807 - formula_parser - INFO - Parsed formula: a  -> (df['a'])
+2025-05-14 21:40:33,950 - formula_parser - INFO - Parsed formula: a = -> (df['a'] ==)
+2025-05-14 21:40:34,151 - formula_parser - INFO - Parsed formula: a =  -> (df['a'] ==)
+2025-05-14 21:40:34,559 - formula_parser - INFO - Parsed formula: a -> ((df['a']) == df['b'])
+2025-05-14 21:40:39,735 - formula_parser - INFO - Parsed formula: a -> ((df['a']) == df['b'])
+2025-05-14 21:40:46,823 - formula_parser - INFO - Parsed formula: a -> ((df['a']) == df['b'])
+2025-05-14 21:45:48,224 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:45:48,269 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:45:48,271 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:45:48,272 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:45:48,273 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:45:48,274 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:45:48,276 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:45:48,277 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:45:48,277 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:45:48,279 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:45:48,288 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:45:48,288 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:45:48,291 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:45:48,292 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-14 21:45:48,295 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:45:48,300 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:45:48,301 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:45:56,268 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:45:56,268 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:51:23,379 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:51:23,438 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:51:23,440 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:51:23,442 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:51:23,443 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:51:23,444 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:51:23,446 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:51:23,447 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:51:23,448 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:51:23,449 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:51:23,458 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:51:23,458 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:51:23,462 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:51:23,463 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-14 21:51:23,466 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:51:23,471 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:51:23,472 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:51:27,641 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:51:27,641 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:51:37,933 - formula_parser - INFO - Parsed formula: Submitter AND __FIELD_1__ <= __FIELD_0__ -> ((pd.Series(df['Submitter'], index=df.index).astype(bool)&pd.Series(df['Submit Date'] <= df['TL Date'], index=df.index).astype(bool)) != df['Approver'])
+2025-05-14 21:55:48,330 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-14 21:55:48,376 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:55:48,378 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-14 21:55:48,380 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-14 21:55:48,381 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:55:48,382 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-14 21:55:48,383 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-14 21:55:48,384 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:55:48,385 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-14 21:55:48,386 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-14 21:55:48,396 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:55:48,396 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:55:48,399 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-14 21:55:48,400 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-14 21:55:48,404 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-14 21:55:48,409 - qa_analytics - INFO - Loaded template metadata
+2025-05-14 21:55:48,410 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-14 21:55:55,510 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-14 21:55:55,510 - qa_analytics - INFO - Found 5 data sources and 9 analytic mappings
+2025-05-14 21:56:10,290 - formula_parser - INFO - Parsed formula: a -> (df['a'])
+2025-05-14 21:56:10,424 - formula_parser - INFO - Parsed formula: a  -> (df['a'])
+2025-05-14 21:56:10,544 - formula_parser - INFO - Parsed formula: a = -> (df['a'] ==)
+2025-05-14 21:56:10,631 - formula_parser - INFO - Parsed formula: a =  -> (df['a'] ==)
+2025-05-14 21:56:10,696 - formula_parser - INFO - Parsed formula: a -> ((df['a']) == df['b'])
+2025-05-14 21:56:12,503 - formula_parser - INFO - Parsed formula: A -> (df['A'])
+2025-05-14 21:56:12,752 - formula_parser - INFO - Parsed formula: A  -> (df['A'])
+2025-05-14 21:56:12,912 - formula_parser - INFO - Parsed formula: A = -> (df['A'] ==)
+2025-05-14 21:56:13,055 - formula_parser - INFO - Parsed formula: A -> ((df['A']) == df['b'])
+2025-05-14 21:56:13,311 - formula_parser - INFO - Parsed formula: A  -> ((df['A']) == df['b'])
+2025-05-14 21:56:13,584 - formula_parser - INFO - Parsed formula: A -> ((df['A']) == df['b'])
+2025-05-14 21:56:13,719 - formula_parser - INFO - Parsed formula: A = -> (df['A'] ==)
+2025-05-14 21:56:13,864 - formula_parser - INFO - Parsed formula: A =  -> (df['A'] ==)
+2025-05-14 21:56:14,039 - formula_parser - INFO - Parsed formula: A -> ((df['A']) == df['B'])
+2025-05-14 21:57:38,059 - qa_analytics - INFO - Successfully generated configuration for template custom_formula

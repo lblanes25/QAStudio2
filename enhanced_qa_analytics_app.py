@@ -1,10 +1,13 @@
 import os
 import sys
+import json
 import logging
 import threading
 import tkinter as tk
+import pandas as pd
 from tkinter import filedialog, messagebox, ttk
 import datetime
+
 from typing import Dict, List
 
 from config_manager import ConfigManager
@@ -22,15 +25,18 @@ from automation_scheduler import AutomationScheduler, SchedulerUI
 
 logger = setup_logging()
 
-
 class EnhancedQAAnalyticsApp:
-    """Enhanced application with GUI interface and data management tabs"""
+    """Enhanced application with GUI interface and simplified, progressive UI"""
 
     def __init__(self, root):
         """Initialize the application"""
         self.root = root
         self.root.title("Enhanced QA Analytics Automation")
         self.root.geometry("900x700")
+
+        # Load user preferences
+        self.user_preferences = self._load_user_preferences()
+        self.is_advanced_mode = self.user_preferences.get("advanced_mode", False)
 
         # Load configuration
         self.config_manager = ConfigManager()
@@ -40,7 +46,7 @@ class EnhancedQAAnalyticsApp:
         self.reference_data_manager = ReferenceDataManager()
         self.data_source_manager = DataSourceManager()
         self.template_manager = TemplateManager()
-        
+
         # Initialize scheduler
         self.scheduler = AutomationScheduler(
             config_manager=self.config_manager,
@@ -51,13 +57,44 @@ class EnhancedQAAnalyticsApp:
         # Set up UI components
         self._setup_ui()
 
+    def _load_user_preferences(self):
+        """Load saved user preferences or use defaults"""
+        try:
+            # Create user_data directory if it doesn't exist
+            os.makedirs("user_data", exist_ok=True)
+
+            preferences_path = os.path.join("user_data", "preferences.json")
+            if os.path.exists(preferences_path):
+                with open(preferences_path, "r") as f:
+                    return json.load(f)
+            else:
+                # Default preferences
+                default_prefs = {"advanced_mode": False}
+                # Save defaults
+                with open(preferences_path, "w") as f:
+                    json.dump(default_prefs, f, indent=2)
+                return default_prefs
+        except Exception as e:
+            logger.error(f"Error loading preferences: {e}")
+            return {"advanced_mode": False}
+
+    def _save_user_preferences(self):
+        """Save current user preferences"""
+        try:
+            preferences_path = os.path.join("user_data", "preferences.json")
+            with open(preferences_path, "w") as f:
+                json.dump(self.user_preferences, f, indent=2)
+            logger.info("User preferences saved")
+        except Exception as e:
+            logger.error(f"Error saving preferences: {e}")
+
     def _setup_ui(self):
         """Set up the user interface with notebook tabs"""
         # Create notebook for tabs
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill=tk.BOTH, expand=True)
 
-        # Create tabs
+        # Create tabs - all tabs are created but not all are added initially
         self.main_tab = ttk.Frame(self.notebook)
         self.config_wizard_tab = ttk.Frame(self.notebook)
         self.testing_tab = ttk.Frame(self.notebook)
@@ -65,13 +102,16 @@ class EnhancedQAAnalyticsApp:
         self.data_source_tab = ttk.Frame(self.notebook)
         self.reference_data_tab = ttk.Frame(self.notebook)
 
-        # Add tabs to notebook
+        # Always add main tab
         self.notebook.add(self.main_tab, text="Run Analytics")
-        self.notebook.add(self.config_wizard_tab, text="Configuration Wizard")
-        self.notebook.add(self.testing_tab, text="Testing")
-        self.notebook.add(self.scheduler_tab, text="Scheduler")
-        self.notebook.add(self.data_source_tab, text="Data Sources")
-        self.notebook.add(self.reference_data_tab, text="Reference Data")
+
+        # Conditionally add other tabs based on mode
+        if self.is_advanced_mode:
+            self.notebook.add(self.config_wizard_tab, text="Configuration Wizard")
+            self.notebook.add(self.testing_tab, text="Testing")
+            self.notebook.add(self.scheduler_tab, text="Scheduler")
+            self.notebook.add(self.data_source_tab, text="Data Sources")
+            self.notebook.add(self.reference_data_tab, text="Reference Data")
 
         # Set up each tab
         self._setup_main_tab()
@@ -81,102 +121,227 @@ class EnhancedQAAnalyticsApp:
         self._setup_data_source_tab()
         self._setup_reference_data_tab()
 
-        # Status bar
+        # Status bar with mode toggle
         self.status_var = tk.StringVar(value="Ready")
-        self.status_bar = ttk.Label(self.root, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W)
+        self.status_bar = ttk.Frame(self.root, relief=tk.SUNKEN)
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+
+        # Status label on left
+        status_label = ttk.Label(self.status_bar, textvariable=self.status_var, anchor=tk.W)
+        status_label.pack(side=tk.LEFT, padx=5)
+
+        # Mode toggle on right
+        self.mode_btn = ttk.Button(
+            self.status_bar,
+            text="Switch to Advanced Mode" if not self.is_advanced_mode else "Switch to Simple Mode",
+            command=self._toggle_ui_mode,
+            width=20
+        )
+        self.mode_btn.pack(side=tk.RIGHT, padx=5, pady=2)
 
         # Set up log handler
         self._setup_log_handler()
 
+    def _toggle_ui_mode(self):
+        """Toggle between simple and advanced UI modes"""
+        self.is_advanced_mode = not self.is_advanced_mode
+
+        # Update button text
+        self.mode_btn.config(
+            text="Switch to Advanced Mode" if not self.is_advanced_mode else "Switch to Simple Mode"
+        )
+
+        # Update user preferences
+        self.user_preferences["advanced_mode"] = self.is_advanced_mode
+        self._save_user_preferences()
+
+        # Update UI
+        self._update_ui_mode()
+
+    def _update_ui_mode(self):
+        """Update UI based on current mode"""
+        # Remove all tabs except main tab
+        for tab in self.notebook.tabs():
+            self.notebook.forget(tab)
+
+        # Always add main tab
+        self.notebook.add(self.main_tab, text="Run Analytics")
+
+        # Add other tabs in advanced mode
+        if self.is_advanced_mode:
+            self.notebook.add(self.config_wizard_tab, text="Configuration Wizard")
+            self.notebook.add(self.testing_tab, text="Testing")
+            self.notebook.add(self.scheduler_tab, text="Scheduler")
+            self.notebook.add(self.data_source_tab, text="Data Sources")
+            self.notebook.add(self.reference_data_tab, text="Reference Data")
+
+        # Update status message
+        self.status_var.set(f"Ready - {'Advanced' if self.is_advanced_mode else 'Simple'} Mode")
+
     def _setup_main_tab(self):
-        """Set up the main analytics tab"""
-        # Create main frame
-        main_frame = ttk.Frame(self.main_tab, padding="10")
+        """Set up the main analytics tab with a simplified, step-based interface"""
+        # Clean up any existing widgets
+        for widget in self.main_tab.winfo_children():
+            widget.destroy()
+
+        # Create main frame with padding
+        main_frame = ttk.Frame(self.main_tab, padding="20")
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Analytics selection
-        ttk.Label(main_frame, text="Select QA-ID:").grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
+        # Add a clear title
+        title_label = ttk.Label(
+            main_frame,
+            text="Run Quality Assurance Analytics",
+            font=("Arial", 16, "bold")
+        )
+        title_label.grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 20))
+
+        # Step 1: Select Analytics
+        step1_frame = ttk.LabelFrame(main_frame, text="Step 1: Select Analytics")
+        step1_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15), padx=5)
+
+        # Add "Quick Select" and "Recently Used" sections
+        quick_select_frame = ttk.Frame(step1_frame)
+        quick_select_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        ttk.Label(quick_select_frame, text="Quick Select:").grid(row=0, column=0, sticky=tk.W)
+
+        # Define quick select buttons
+        quick_select_buttons = [
+            ("Audit Approvals", "77"),
+            ("Risk Assessment", "78"),
+            ("Issue Management", "02")
+        ]
+
+        # Add quick select buttons
+        for i, (name, qa_id) in enumerate(quick_select_buttons):
+            ttk.Button(
+                quick_select_frame,
+                text=name,
+                command=lambda id=qa_id: self._quick_select_analytics(id)
+            ).grid(row=0, column=i + 1, padx=5)
+
+        # Standard dropdown for analytics selection
+        ttk.Label(step1_frame, text="Or select from list:").pack(anchor=tk.W, padx=10, pady=(0, 5))
 
         self.analytic_var = tk.StringVar()
-        self.analytic_combo = ttk.Combobox(main_frame, textvariable=self.analytic_var, state="readonly", width=50)
+        self.analytic_combo = ttk.Combobox(
+            step1_frame,
+            textvariable=self.analytic_var,
+            state="readonly",
+            width=50
+        )
         self.analytic_combo["values"] = [f"{id} - {name}" for id, name in self.available_analytics]
         if self.available_analytics:
             self.analytic_combo.current(0)
-        self.analytic_combo.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 5))
+        self.analytic_combo.pack(fill=tk.X, padx=10, pady=(0, 10))
 
-        # Source file selection
-        ttk.Label(main_frame, text="Source Data File:").grid(row=1, column=0, sticky=tk.W, pady=(0, 5))
+        # Step 2: Select Data
+        step2_frame = ttk.LabelFrame(main_frame, text="Step 2: Select Data Source")
+        step2_frame.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15), padx=5)
 
-        source_frame = ttk.Frame(main_frame)
-        source_frame.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(0, 5))
+        # Simplified file selection
+        file_frame = ttk.Frame(step2_frame)
+        file_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        ttk.Label(file_frame, text="Data File:").grid(row=0, column=0, sticky=tk.W)
 
         self.source_var = tk.StringVar()
-        self.source_entry = ttk.Entry(source_frame, textvariable=self.source_var, width=50)
-        self.source_entry.pack(side=tk.LEFT, expand=True, fill=tk.X)
+        self.source_entry = ttk.Entry(file_frame, textvariable=self.source_var, width=50)
+        self.source_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), padx=5)
 
-        source_btn = ttk.Button(source_frame, text="Browse...", command=self._browse_source)
-        source_btn.pack(side=tk.RIGHT, padx=(5, 0))
+        ttk.Button(file_frame, text="Browse...", command=self._browse_source).grid(row=0, column=2)
 
-        # Output directory
-        ttk.Label(main_frame, text="Output Directory:").grid(row=2, column=0, sticky=tk.W, pady=(0, 5))
+        # Make source entry expandable
+        file_frame.columnconfigure(1, weight=1)
 
-        output_frame = ttk.Frame(main_frame)
-        output_frame.grid(row=2, column=1, sticky=(tk.W, tk.E), pady=(0, 5))
+        # Step 3: Run and View Results
+        step3_frame = ttk.LabelFrame(main_frame, text="Step 3: Run Analysis")
+        step3_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15), padx=5)
 
-        self.output_var = tk.StringVar(value="output")
-        self.output_entry = ttk.Entry(output_frame, textvariable=self.output_var, width=50)
-        self.output_entry.pack(side=tk.LEFT, expand=True, fill=tk.X)
+        action_frame = ttk.Frame(step3_frame)
+        action_frame.pack(fill=tk.X, padx=10, pady=10)
 
-        output_btn = ttk.Button(output_frame, text="Browse...", command=self._browse_output)
-        output_btn.pack(side=tk.RIGHT, padx=(5, 0))
+        self.progress = ttk.Progressbar(action_frame, orient="horizontal", length=200, mode="indeterminate")
+        self.progress.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
 
-        # Execution frame
-        exec_frame = ttk.Frame(main_frame)
-        exec_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        self.run_btn = ttk.Button(action_frame, text="Run Analysis", command=self._run_analysis)
+        self.run_btn.pack(side=tk.RIGHT)
 
-        self.progress = ttk.Progressbar(exec_frame, orient="horizontal", length=200, mode="indeterminate")
-        self.progress.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
+        # Results section (initially collapsed)
+        self.results_section = ttk.LabelFrame(main_frame, text="Results")
+        self.results_section.grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10), padx=5)
 
-        exec_btn = ttk.Button(exec_frame, text="Run Analysis", command=self._run_analysis)
-        exec_btn.pack(side=tk.RIGHT)
+        # Results will be populated after running analysis
+        self.results_placeholder = ttk.Label(
+            self.results_section,
+            text="Run an analysis to see results",
+            font=("Arial", 10, "italic")
+        )
+        self.results_placeholder.pack(padx=20, pady=20)
 
-        # Status log
-        ttk.Label(main_frame, text="Status Log:").grid(row=4, column=0, sticky=tk.W, pady=(10, 5))
+        # Log section at bottom with toggle
+        log_header = ttk.Frame(main_frame)
+        log_header.grid(row=5, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
 
-        self.log_text = tk.Text(main_frame, height=15, width=80, wrap=tk.WORD)
-        self.log_text.grid(row=5, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
+        ttk.Label(log_header, text="Status Log:").pack(side=tk.LEFT)
+
+        self.log_toggle_var = tk.BooleanVar(value=False)
+        ttk.Checkbutton(
+            log_header,
+            text="Show Log",
+            variable=self.log_toggle_var,
+            command=self._toggle_log_visibility
+        ).pack(side=tk.RIGHT)
+
+        # Log container (initially hidden)
+        self.log_container = ttk.Frame(main_frame)
+        self.log_container.grid(row=6, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        self.log_text = tk.Text(self.log_container, height=15, width=80, wrap=tk.WORD)
+        self.log_text.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
         self.log_text.config(state=tk.DISABLED)
 
-        # Add scrollbar to log
-        log_scroll = ttk.Scrollbar(main_frame, orient="vertical", command=self.log_text.yview)
-        log_scroll.grid(row=5, column=2, sticky=(tk.N, tk.S))
+        log_scroll = ttk.Scrollbar(self.log_container, orient="vertical", command=self.log_text.yview)
+        log_scroll.pack(side=tk.RIGHT, fill=tk.Y)
         self.log_text.config(yscrollcommand=log_scroll.set)
 
+        # Hide log initially
+        self.log_container.grid_remove()
+
         # Configure resizing
+        main_frame.columnconfigure(0, weight=1)
         main_frame.columnconfigure(1, weight=1)
-        main_frame.rowconfigure(5, weight=1)
+
+        # Make results section expandable
+        main_frame.rowconfigure(4, weight=1)
+
+    def _toggle_log_visibility(self):
+        """Toggle the visibility of the log section"""
+        if self.log_toggle_var.get():
+            self.log_container.grid()
+        else:
+            self.log_container.grid_remove()
+
+    def _quick_select_analytics(self, analytics_id):
+        """Quickly select an analytics configuration by ID"""
+        # Find the matching item in the dropdown and select it
+        for i, (id, _) in enumerate(self.available_analytics):
+            if id == analytics_id:
+                self.analytic_combo.current(i)
+                break
+
+        # Set focus to the data file selection
+        self.source_entry.focus_set()
 
     def _setup_config_wizard_tab(self):
         """Set up the configuration wizard tab"""
-        # Create the configuration wizard with a callback
+        # Create the configuration wizard
         self.config_wizard = ConfigWizard(
             parent_frame=self.config_wizard_tab,
             config_manager=self.config_manager,
-            template_manager=self.template_manager,
-            on_config_saved=self._refresh_available_analytics  # Add this callback
+            template_manager=self.template_manager
         )
-
-    def _refresh_available_analytics(self):
-        """Refresh the list of available analytics"""
-        # Reload available analytics
-        self.available_analytics = self.config_manager.get_available_analytics()
-
-        # Update the dropdown in the main tab
-        self.analytic_combo["values"] = [f"{id} - {name}" for id, name in self.available_analytics]
-
-        # Show a confirmation message
-        self.status_var.set("Analytics list refreshed with new configuration")
 
     def _setup_testing_tab(self):
         """Set up the testing tab"""
@@ -341,6 +506,238 @@ class EnhancedQAAnalyticsApp:
         if directory:
             self.output_var.set(directory)
 
+    def _update_results_display(self, processor_results):
+        """Update the results display area with analysis results"""
+        # Clear placeholder
+        for widget in self.results_section.winfo_children():
+            widget.destroy()
+
+        # Create notebook for result tabs
+        results_notebook = ttk.Notebook(self.results_section)
+        results_notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+        # Create result tabs
+        summary_tab = ttk.Frame(results_notebook)
+        detail_tab = ttk.Frame(results_notebook)
+
+        results_notebook.add(summary_tab, text="Summary")
+        results_notebook.add(detail_tab, text="Detail")
+
+        # Summary tab
+        summary_frame = ttk.Frame(summary_tab)
+        summary_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Statistics at the top
+        stats_frame = ttk.LabelFrame(summary_frame, text="Results Summary")
+        stats_frame.pack(fill=tk.X, pady=(0, 10))
+
+        # Get statistics from results
+        detail_data = processor_results.get('detail')
+        if detail_data is not None and 'Compliance' in detail_data:
+            total = len(detail_data)
+            gc_count = sum(detail_data['Compliance'] == 'GC')
+            dnc_count = sum(detail_data['Compliance'] == 'DNC')
+            pc_count = sum(detail_data['Compliance'] == 'PC')
+
+            error_pct = (dnc_count / total * 100) if total > 0 else 0
+
+            # Display stats in a grid
+            stats_grid = ttk.Frame(stats_frame)
+            stats_grid.pack(padx=10, pady=10, fill=tk.X)
+
+            # Create a 2-column grid for stats
+            ttk.Label(stats_grid, text="Total Records:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=2)
+            ttk.Label(stats_grid, text=str(total)).grid(row=0, column=1, sticky=tk.W, padx=5, pady=2)
+
+            ttk.Label(stats_grid, text="Generally Conforms (GC):").grid(row=1, column=0, sticky=tk.W, padx=5, pady=2)
+            ttk.Label(stats_grid, text=f"{gc_count} ({gc_count / total * 100:.1f}%)").grid(row=1, column=1, sticky=tk.W,
+                                                                                           padx=5, pady=2)
+
+            ttk.Label(stats_grid, text="Does Not Conform (DNC):").grid(row=2, column=0, sticky=tk.W, padx=5, pady=2)
+            ttk.Label(stats_grid, text=f"{dnc_count} ({dnc_count / total * 100:.1f}%)").grid(row=2, column=1,
+                                                                                             sticky=tk.W, padx=5,
+                                                                                             pady=2)
+
+            ttk.Label(stats_grid, text="Partially Conforms (PC):").grid(row=3, column=0, sticky=tk.W, padx=5, pady=2)
+            ttk.Label(stats_grid, text=f"{pc_count} ({pc_count / total * 100:.1f}%)").grid(row=3, column=1, sticky=tk.W,
+                                                                                           padx=5, pady=2)
+
+            ttk.Label(stats_grid, text="Error Percentage:").grid(row=4, column=0, sticky=tk.W, padx=5, pady=2)
+            ttk.Label(stats_grid, text=f"{error_pct:.2f}%").grid(row=4, column=1, sticky=tk.W, padx=5, pady=2)
+
+        # Group results if available
+        summary_data = processor_results.get('summary')
+        if summary_data is not None:
+            # Group results table
+            group_frame = ttk.LabelFrame(summary_frame, text="Group Summary")
+            group_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+
+            # Create treeview for group results
+            columns = ["Group", "GC", "PC", "DNC", "Total", "Error %", "Status"]
+            group_tree = ttk.Treeview(group_frame, columns=columns, show="headings", height=8)
+
+            # Configure columns
+            group_tree.column("Group", width=150)
+            group_tree.column("GC", width=70, anchor=tk.CENTER)
+            group_tree.column("PC", width=70, anchor=tk.CENTER)
+            group_tree.column("DNC", width=70, anchor=tk.CENTER)
+            group_tree.column("Total", width=70, anchor=tk.CENTER)
+            group_tree.column("Error %", width=70, anchor=tk.CENTER)
+            group_tree.column("Status", width=100, anchor=tk.CENTER)
+
+            # Configure headings
+            for col in columns:
+                group_tree.heading(col, text=col)
+
+            # Add scrollbar
+            tree_scroll = ttk.Scrollbar(group_frame, orient="vertical", command=group_tree.yview)
+            group_tree.configure(yscrollcommand=tree_scroll.set)
+
+            # Pack tree and scrollbar
+            group_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            tree_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+            # Add data to tree
+            for _, row in summary_data.iterrows():
+                # Get group by field name
+                group_field = self.current_config.get('reporting', {}).get('group_by', '')
+                group_value = row[group_field] if group_field in row else "Unknown"
+
+                # Get counts
+                gc = row.get('GC', 0)
+                pc = row.get('PC', 0)
+                dnc = row.get('DNC', 0)
+                total = row.get('Total', 0)
+                dnc_pct = row.get('DNC_Percentage', 0)
+                exceeds = row.get('Exceeds_Threshold', False)
+
+                # Add to tree
+                item_id = group_tree.insert("", tk.END, values=(
+                    group_value,
+                    gc,
+                    pc,
+                    dnc,
+                    total,
+                    f"{dnc_pct:.2f}%",
+                    "EXCEEDS" if exceeds else "Within Threshold"
+                ))
+
+                # Color code based on threshold
+                if exceeds:
+                    group_tree.item(item_id, tags=("exceeds",))
+
+            # Configure tag colors
+            group_tree.tag_configure("exceeds", background="#FFE6E6")  # Light red
+
+        # Detail tab
+        detail_frame = ttk.Frame(detail_tab)
+        detail_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Add filter options
+        filter_frame = ttk.Frame(detail_frame)
+        filter_frame.pack(fill=tk.X, pady=(0, 10))
+
+        ttk.Label(filter_frame, text="Show:").pack(side=tk.LEFT)
+
+        filter_var = tk.StringVar(value="all")
+
+        ttk.Radiobutton(filter_frame, text="All", variable=filter_var,
+                        value="all").pack(side=tk.LEFT, padx=(5, 10))
+        ttk.Radiobutton(filter_frame, text="GC Only", variable=filter_var,
+                        value="gc").pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Radiobutton(filter_frame, text="DNC Only", variable=filter_var,
+                        value="dnc").pack(side=tk.LEFT, padx=(0, 10))
+
+        # Detail data table
+        if detail_data is not None:
+            # Create a container frame for the treeview and scrollbars
+            tree_container = ttk.Frame(detail_frame)
+            tree_container.pack(fill=tk.BOTH, expand=True)
+
+            # Create treeview for detail results
+            detail_tree = ttk.Treeview(tree_container, show="headings")
+
+            # Set up columns
+            columns = list(detail_data.columns)
+            detail_tree['columns'] = columns
+
+            # Configure columns and headings
+            for col in columns:
+                detail_tree.column(col, width=100, stretch=True)
+                detail_tree.heading(col, text=col)
+
+            # Add scrollbars
+            detail_y_scroll = ttk.Scrollbar(tree_container, orient="vertical", command=detail_tree.yview)
+            detail_x_scroll = ttk.Scrollbar(tree_container, orient="horizontal", command=detail_tree.xview)
+            detail_tree.configure(yscrollcommand=detail_y_scroll.set, xscrollcommand=detail_x_scroll.set)
+
+            # Pack tree and scrollbars
+            detail_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            detail_y_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+            detail_x_scroll.pack(side=tk.BOTTOM, fill=tk.X)
+
+            # Add data rows
+            for idx, row in detail_data.iterrows():
+                values = []
+                for col in columns:
+                    val = row[col]
+                    # Format date values
+                    if isinstance(val, pd.Timestamp) or isinstance(val, datetime.datetime):
+                        val = val.strftime('%Y-%m-%d %H:%M')
+                    values.append(val)
+
+                item_id = detail_tree.insert("", tk.END, values=values)
+
+                # Color code based on compliance
+                compliance = row.get('Compliance')
+                if compliance == 'GC':
+                    detail_tree.item(item_id, tags=("gc",))
+                elif compliance == 'DNC':
+                    detail_tree.item(item_id, tags=("dnc",))
+                elif compliance == 'PC':
+                    detail_tree.item(item_id, tags=("pc",))
+
+            # Configure tag colors
+            detail_tree.tag_configure("gc", background="#E6FFE6")  # Light green
+            detail_tree.tag_configure("dnc", background="#FFE6E6")  # Light red
+            detail_tree.tag_configure("pc", background="#FFF8E6")  # Light yellow
+
+            # Connect filter buttons to the tree
+            def apply_filter():
+                filter_value = filter_var.get()
+
+                # Show all rows first
+                for item in detail_tree.get_children():
+                    detail_tree.item(item, open=True)
+
+                # Hide rows that don't match the filter
+                if filter_value != "all":
+                    for item in detail_tree.get_children():
+                        tags = detail_tree.item(item, "tags")
+                        if filter_value not in tags:
+                            detail_tree.detach(item)
+
+            # Connect radiobuttons to filter function
+            for rb in filter_frame.winfo_children():
+                if isinstance(rb, ttk.Radiobutton):
+                    rb.config(command=apply_filter)
+
+        # Add buttons for report generation
+        button_frame = ttk.Frame(self.results_section)
+        button_frame.pack(fill=tk.X, pady=(0, 10), padx=5)
+
+        ttk.Button(
+            button_frame,
+            text="Generate Excel Report",
+            command=self._generate_excel_report
+        ).pack(side=tk.RIGHT)
+
+        ttk.Button(
+            button_frame,
+            text="Export Results",
+            command=self._export_results
+        ).pack(side=tk.RIGHT, padx=(0, 10))
+
     def _run_analysis(self):
         """Run the analysis process"""
         # Validate inputs
@@ -362,6 +759,7 @@ class EnhancedQAAnalyticsApp:
         # Start progress bar
         self.progress.start()
         self.status_var.set("Processing...")
+        self.run_btn.config(state=tk.DISABLED)
 
         # Run in a separate thread to avoid freezing the UI
         threading.Thread(target=self._process_data, args=(analytic_id,), daemon=True).start()
@@ -370,15 +768,15 @@ class EnhancedQAAnalyticsApp:
         """Process data in a separate thread"""
         try:
             # Get configuration
-            config = self.config_manager.get_config(analytic_id)
+            self.current_config = self.config_manager.get_config(analytic_id)
 
             # Create output directory if needed
-            output_dir = self.output_var.get()
+            output_dir = "output"
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
 
             # Initialize enhanced processor
-            processor = EnhancedDataProcessor(config)
+            processor = EnhancedDataProcessor(self.current_config)
 
             # Process data
             logger.info(f"Starting processing for QA-ID {analytic_id}")
@@ -386,38 +784,98 @@ class EnhancedQAAnalyticsApp:
 
             if not success:
                 self.root.after(0, lambda: messagebox.showerror("Error", message))
+                self.root.after(0, self._reset_ui_after_processing)
                 return
 
-            # Generate reports
-            logger.info("Generating reports...")
-            report_generator = EnhancedReportGenerator(config, processor.results)
+            # Store results for reporting
+            self.processor_results = processor.results
 
-            # Generate main report
-            main_report_path = os.path.join(
-                output_dir,
-                f"QA_{analytic_id}_Main_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
-            )
-            main_report = report_generator.generate_main_report(main_report_path)
+            # Update UI with results
+            self.root.after(0, lambda: self._update_results_display(processor.results))
 
-            # Generate individual reports
-            individual_reports = report_generator.generate_individual_reports()
-
-            # Show completion message
-            report_count = 1 + len(individual_reports)
-            completion_msg = f"Processing complete. Generated {report_count} reports."
-            logger.info(completion_msg)
-
-            self.root.after(0, lambda: messagebox.showinfo("Success", completion_msg))
-            self.root.after(0, lambda: self.status_var.set("Ready"))
+            # Show success message
+            self.root.after(0, lambda: messagebox.showinfo("Success", "Analysis completed successfully"))
+            self.root.after(0, lambda: self.status_var.set("Ready - Analysis complete"))
 
         except Exception as e:
             logger.error(f"Error in processing: {e}")
             self.root.after(0, lambda: messagebox.showerror("Error", f"An error occurred: {e}"))
+            self.root.after(0, lambda: self.status_var.set("Ready - Error occurred"))
 
         finally:
-            # Stop progress bar
-            self.root.after(0, self.progress.stop)
-            self.root.after(0, lambda: self.status_var.set("Ready"))
+            # Reset UI
+            self.root.after(0, self._reset_ui_after_processing)
+
+    def _reset_ui_after_processing(self):
+        """Reset UI after processing completes"""
+        self.progress.stop()
+        self.run_btn.config(state=tk.NORMAL)
+
+    def _generate_excel_report(self):
+        """Generate a formatted Excel report"""
+        if not hasattr(self, 'processor_results') or not self.processor_results:
+            messagebox.showinfo("Info", "No results available to generate report")
+            return
+
+        if not hasattr(self, 'current_config') or not self.current_config:
+            messagebox.showinfo("Info", "No configuration loaded")
+            return
+
+        # Ask for save location
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            filetypes=[("Excel Files", "*.xlsx")],
+            title="Save Excel Report"
+        )
+
+        if not file_path:
+            return
+
+        try:
+            # Create report generator
+            report_generator = EnhancedReportGenerator(self.current_config, self.processor_results)
+
+            # Generate report
+            report_path = report_generator.generate_main_report(file_path)
+
+            if report_path:
+                messagebox.showinfo("Success", f"Report generated: {report_path}")
+            else:
+                messagebox.showerror("Error", "Failed to generate report")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generating report: {e}")
+            logger.error(f"Error generating report: {e}", exc_info=True)
+
+    def _export_results(self):
+        """Export the raw results to Excel files"""
+        if not hasattr(self, 'processor_results') or not self.processor_results:
+            messagebox.showinfo("Info", "No results available to export")
+            return
+
+        # Ask for save location
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            filetypes=[("Excel Files", "*.xlsx")],
+            title="Export Results"
+        )
+
+        if not file_path:
+            return
+
+        try:
+            # Create a workbook
+            with pd.ExcelWriter(file_path) as writer:
+                # Save summary
+                if 'summary' in self.processor_results and self.processor_results['summary'] is not None:
+                    self.processor_results['summary'].to_excel(writer, sheet_name='Summary', index=False)
+
+                # Save detail
+                if 'detail' in self.processor_results and self.processor_results['detail'] is not None:
+                    self.processor_results['detail'].to_excel(writer, sheet_name='Detail', index=False)
+
+            messagebox.showinfo("Success", f"Results exported to {file_path}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to export results: {e}")
 
     def _populate_data_source_tree(self):
         """Populate data source tree with registry information"""

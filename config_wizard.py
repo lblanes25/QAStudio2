@@ -8,6 +8,7 @@ from typing import Dict, List, Any, Optional, Callable
 from template_manager import TemplateManager
 from excel_formula_ui import ExcelFormulaFrame
 from excel_formula_parser import ExcelFormulaParser
+from step_tracker import StepTracker  # Import the new StepTracker component
 
 # Set up logging
 logger = logging.getLogger("qa_analytics")
@@ -16,7 +17,7 @@ logger = logging.getLogger("qa_analytics")
 class ConfigWizard:
     """GUI wizard for creating and editing analytics configurations"""
 
-    def __init__(self, parent_frame, config_manager, template_manager=None):
+    def __init__(self, parent_frame, config_manager, template_manager=None, on_config_saved=None):
         """
         Initialize the configuration wizard
 
@@ -24,12 +25,15 @@ class ConfigWizard:
             parent_frame: Parent tkinter frame
             config_manager: ConfigManager instance for loading/saving configs
             template_manager: Optional TemplateManager instance
+            on_config_saved: Optional callback for when config is saved
         """
         self.parent = parent_frame
         self.config_manager = config_manager
         self.template_manager = template_manager or TemplateManager()
+        self.on_config_saved = on_config_saved  # Callback when config is saved
 
         # Initialize state variables
+        self.current_step = 0  # Start at first step
         self.current_template_id = None
         self.template_parameters = []
         self.parameter_entries = {}
@@ -49,30 +53,20 @@ class ConfigWizard:
         self._setup_ui()
 
     def _setup_ui(self):
-        """Set up the wizard user interface"""
+        """Set up the wizard user interface with StepTracker"""
         main_frame = ttk.Frame(self.parent)
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # Create notebook for wizard steps
-        self.wizard_notebook = ttk.Notebook(main_frame)
-        self.wizard_notebook.pack(fill=tk.BOTH, expand=True)
+        # Define the steps for our wizard
+        steps = ["Select Template", "Basic Configuration", "Template Parameters", "Review & Save"]
 
-        # Create wizard steps
-        self.step1_frame = ttk.Frame(self.wizard_notebook)  # Template Selection
-        self.step2_frame = ttk.Frame(self.wizard_notebook)  # Basic Configuration
-        self.step3_frame = ttk.Frame(self.wizard_notebook)  # Template Parameters
-        self.step4_frame = ttk.Frame(self.wizard_notebook)  # Review & Save
+        # Add StepTracker at the top
+        self.step_tracker = StepTracker(main_frame, steps, initial_step=self.current_step)
+        self.step_tracker.pack(fill=tk.X, pady=(0, 20))
 
-        self.wizard_notebook.add(self.step1_frame, text="1. Select Template")
-        self.wizard_notebook.add(self.step2_frame, text="2. Basic Configuration")
-        self.wizard_notebook.add(self.step3_frame, text="3. Template Parameters")
-        self.wizard_notebook.add(self.step4_frame, text="4. Review & Save")
-
-        # Set up each step
-        self._setup_step1()
-        self._setup_step2()
-        self._setup_step3()
-        self._setup_step4()
+        # Create a frame for step content that will change based on current step
+        self.content_frame = ttk.Frame(main_frame)
+        self.content_frame.pack(fill=tk.BOTH, expand=True)
 
         # Add navigation buttons at the bottom
         button_frame = ttk.Frame(main_frame)
@@ -84,12 +78,32 @@ class ConfigWizard:
         self.next_btn = ttk.Button(button_frame, text="Next", command=self._go_next_step)
         self.next_btn.pack(side=tk.RIGHT)
 
+        # Display the initial step
+        self._display_current_step()
+
         # Initialize button states
         self._update_button_states()
 
-    def _setup_step1(self):
-        """Set up Step 1: Template Selection"""
-        frame = ttk.LabelFrame(self.step1_frame, text="Available Templates")
+    def _display_current_step(self):
+        """Display the content for the current step"""
+        # Clear current content
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+
+        # Display content based on current step
+        if self.current_step == 0:
+            self._display_step1()  # Template Selection
+        elif self.current_step == 1:
+            self._display_step2()  # Basic Configuration
+        elif self.current_step == 2:
+            self._display_step3()  # Template Parameters
+        elif self.current_step == 3:
+            self._display_step4()  # Review & Save
+
+    def _display_step1(self):
+        """Display Step 1: Template Selection"""
+        # Create frames
+        frame = ttk.LabelFrame(self.content_frame, text="Available Templates")
         frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Create template filter options
@@ -138,7 +152,7 @@ class ConfigWizard:
         self.template_tree.bind("<<TreeviewSelect>>", self._on_template_selected)
 
         # Create template details frame
-        details_frame = ttk.LabelFrame(self.step1_frame, text="Template Details")
+        details_frame = ttk.LabelFrame(self.content_frame, text="Template Details")
         details_frame.pack(fill=tk.BOTH, padx=10, pady=(10, 0))
 
         # Template details text
@@ -154,9 +168,9 @@ class ConfigWizard:
         # Populate the template tree
         self._populate_template_tree()
 
-    def _setup_step2(self):
-        """Set up Step 2: Basic Configuration"""
-        frame = ttk.Frame(self.step2_frame)
+    def _display_step2(self):
+        """Display Step 2: Basic Configuration"""
+        frame = ttk.Frame(self.content_frame)
         frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Analytics ID
@@ -203,7 +217,7 @@ class ConfigWizard:
         group_by_entry.grid(row=5, column=1, columnspan=2, sticky=tk.W, pady=(0, 5))
 
         # Explanation text
-        explanation_frame = ttk.LabelFrame(self.step2_frame, text="Information")
+        explanation_frame = ttk.LabelFrame(self.content_frame, text="Information")
         explanation_frame.pack(fill=tk.X, padx=10, pady=(10, 10))
 
         explanation_text = """
@@ -220,10 +234,10 @@ class ConfigWizard:
         explanation_label = ttk.Label(explanation_frame, text=explanation_text, wraplength=500, justify=tk.LEFT)
         explanation_label.pack(padx=10, pady=10)
 
-    def _setup_step3(self):
-        """Set up Step 3: Template Parameters"""
+    def _display_step3(self):
+        """Display Step 3: Template Parameters"""
         # Create container frame with scrollbar
-        container = ttk.Frame(self.step3_frame)
+        container = ttk.Frame(self.content_frame)
         container.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Add canvas for scrolling
@@ -253,6 +267,39 @@ class ConfigWizard:
 
         # Initialize next_row counter for dynamic parameter fields
         self.next_row = 1
+
+        # Update parameter fields based on selected template
+        self._update_parameter_fields()
+
+    def _display_step4(self):
+        """Display Step 4: Review & Save"""
+        frame = ttk.Frame(self.content_frame)
+        frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Create preview pane
+        preview_frame = ttk.LabelFrame(frame, text="Configuration Preview")
+        preview_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.preview_text = tk.Text(preview_frame, wrap=tk.WORD)
+        self.preview_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Add scrollbar for preview
+        preview_scroll = ttk.Scrollbar(preview_frame, orient="vertical", command=self.preview_text.yview)
+        preview_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        self.preview_text.config(yscrollcommand=preview_scroll.set)
+
+        # Add save button
+        save_frame = ttk.Frame(frame)
+        save_frame.pack(fill=tk.X, pady=10)
+
+        save_btn = ttk.Button(save_frame, text="Save Configuration", command=self._save_configuration)
+        save_btn.pack(side=tk.RIGHT)
+
+        preview_btn = ttk.Button(save_frame, text="Refresh Preview", command=self._refresh_preview)
+        preview_btn.pack(side=tk.RIGHT, padx=(0, 10))
+
+        # Refresh the preview when entering this step
+        self._refresh_preview()
 
     def _update_parameter_fields(self):
         """Update parameter fields based on selected template"""
@@ -315,15 +362,126 @@ class ConfigWizard:
             ).grid(row=self.next_row, column=0, columnspan=3, sticky=tk.W, pady=(10, 0), padx=10)
             self.next_row += 1
 
-            # Create and add the Excel Formula UI
-            self.formula_frame = ExcelFormulaFrame(
-                parent=self.params_container,
-                config_manager=self.config_manager,
-                template_manager=self.template_manager,
-                on_formula_change=self._handle_formula_change
-            )
-            self.formula_frame.grid(row=self.next_row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 10))
+            # Create a custom Excel formula panel
+            custom_formula_frame = ttk.LabelFrame(self.params_container, text="Custom Excel Formula")
+            custom_formula_frame.grid(row=self.next_row, column=0, columnspan=3, sticky=(tk.W, tk.E), padx=10, pady=5)
             self.next_row += 1
+
+            # Add description
+            description_label = ttk.Label(
+                custom_formula_frame,
+                text="Enter your validation logic using familiar Excel syntax. Reference field names exactly as they appear in your data.",
+                wraplength=600,
+                justify=tk.LEFT
+            )
+            description_label.pack(fill=tk.X, padx=10, pady=10)
+
+            # Formula input
+            formula_input_frame = ttk.Frame(custom_formula_frame)
+            formula_input_frame.pack(fill=tk.X, padx=10)
+
+            ttk.Label(formula_input_frame, text="Formula:").grid(row=0, column=0, sticky=tk.W, pady=5)
+            self.formula_var = tk.StringVar()
+            formula_entry = ttk.Entry(formula_input_frame, textvariable=self.formula_var, width=60)
+            formula_entry.grid(row=0, column=1, sticky=tk.EW, padx=(5, 0), pady=5)
+
+            # Parsed formula display
+            ttk.Label(formula_input_frame, text="Parsed Formula:").grid(row=1, column=0, sticky=tk.W, pady=5)
+            self.parsed_formula_text = tk.Text(formula_input_frame, height=3, wrap=tk.WORD)
+            self.parsed_formula_text.grid(row=1, column=1, sticky=tk.EW, padx=(5, 0), pady=5)
+            self.parsed_formula_text.config(state=tk.DISABLED)
+
+            # Configure column weights
+            formula_input_frame.columnconfigure(1, weight=1)
+
+            # Status indicator
+            self.formula_status_var = tk.StringVar(value="Enter a formula")
+            status_label = ttk.Label(
+                custom_formula_frame,
+                textvariable=self.formula_status_var,
+                foreground="gray"
+            )
+            status_label.pack(fill=tk.X, padx=10, pady=(0, 10))
+
+            # Set up test section
+            test_frame = ttk.LabelFrame(custom_formula_frame, text="Test Formula")
+            test_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
+
+            test_description = ttk.Label(
+                test_frame,
+                text="Generate sample data or upload a file to test your formula.",
+                wraplength=600
+            )
+            test_description.pack(fill=tk.X, padx=10, pady=(5, 10))
+
+            # Test options
+            test_options_frame = ttk.Frame(test_frame)
+            test_options_frame.pack(fill=tk.X, padx=10)
+
+            self.data_source_var = tk.StringVar(value="generate")
+            generate_radio = ttk.Radiobutton(
+                test_options_frame,
+                text="Generate Sample Data",
+                variable=self.data_source_var,
+                value="generate",
+                command=self._update_test_options
+            )
+            generate_radio.pack(side=tk.LEFT)
+
+            existing_radio = ttk.Radiobutton(
+                test_options_frame,
+                text="Use Existing Data",
+                variable=self.data_source_var,
+                value="existing",
+                command=self._update_test_options
+            )
+            existing_radio.pack(side=tk.LEFT, padx=(20, 0))
+
+            # Sample data options
+            self.sample_frame = ttk.Frame(test_frame)
+            self.sample_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+
+            ttk.Label(self.sample_frame, text="Records:").pack(side=tk.LEFT)
+            self.record_count_var = tk.StringVar(value="100")
+            ttk.Entry(self.sample_frame, textvariable=self.record_count_var, width=8).pack(side=tk.LEFT, padx=(5, 20))
+
+            ttk.Label(self.sample_frame, text="Error %:").pack(side=tk.LEFT)
+            self.error_pct_var = tk.StringVar(value="20")
+            ttk.Entry(self.sample_frame, textvariable=self.error_pct_var, width=8).pack(side=tk.LEFT, padx=(5, 0))
+
+            # File selection frame
+            self.file_frame = ttk.Frame(test_frame)
+            ttk.Label(self.file_frame, text="Data File:").pack(side=tk.LEFT)
+            self.file_var = tk.StringVar()
+            ttk.Entry(self.file_frame, textvariable=self.file_var, width=40).pack(side=tk.LEFT, padx=5)
+            ttk.Button(self.file_frame, text="Browse...", command=self._browse_test_file).pack(side=tk.LEFT)
+
+            # Progress bar and test button
+            progress_frame = ttk.Frame(test_frame)
+            progress_frame.pack(fill=tk.X, padx=10, pady=10)
+
+            self.progress_bar = ttk.Progressbar(progress_frame, orient="horizontal", mode="indeterminate", length=200)
+            self.progress_bar.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
+
+            self.test_btn = ttk.Button(progress_frame, text="Test Formula", command=self._test_formula)
+            self.test_btn.pack(side=tk.RIGHT)
+
+            # Results frame (initially hidden)
+            self.results_frame = ttk.LabelFrame(custom_formula_frame, text="Test Results")
+
+            # Set up formula change callback
+            self.formula_var.trace_add("write", self._on_formula_changed)
+
+            # Show the correct frame based on the data source option
+            self._update_test_options()
+
+            # Import parser if not already present
+            if not hasattr(self, 'formula_parser'):
+                try:
+                    from excel_formula_parser import ExcelFormulaParser
+                    self.formula_parser = ExcelFormulaParser()
+                except ImportError:
+                    logger.error("Could not import ExcelFormulaParser")
 
         # Create fields for each parameter
         for param in self.template_parameters:
@@ -332,9 +490,9 @@ class ConfigWizard:
             data_type = param.get('data_type', 'string')
 
             # Skip formula parameters if we already have the formula UI
-            if data_type == 'formula' and is_custom_formula_template and hasattr(self, 'formula_frame'):
+            if data_type == 'formula' and is_custom_formula_template and hasattr(self, 'formula_var'):
                 # Store a variable for this parameter, but don't show an entry field
-                self.parameter_entries[param_name] = tk.StringVar()
+                self.parameter_entries[param_name] = self.formula_var
                 continue
 
             # Parameter name (with required indicator)
@@ -345,26 +503,13 @@ class ConfigWizard:
 
             # Parameter value field
             if data_type == 'formula':
-                # Capture the current parameter name for the lambda
-                current_param_name = param_name
-
-                # Create a formula entry UI for this parameter
-                formula_frame = ExcelFormulaFrame(
-                    parent=self.params_container,
-                    config_manager=self.config_manager,
-                    template_manager=self.template_manager,
-                    on_formula_change=lambda orig, parsed, fields, name=current_param_name:
-                    self._handle_formula_parameter(name, orig, parsed, fields)
-                )
-                formula_frame.grid(row=self.next_row, column=1, columnspan=1, sticky=(tk.W, tk.E), pady=(5, 0))
-
                 # Store a variable for this parameter
                 var = tk.StringVar(value=param.get('example', ''))
                 self.parameter_entries[param_name] = var
 
-                # Set the formula if there's an example
-                if 'example' in param:
-                    formula_frame.set_formula(param['example'])
+                # Create formula entry
+                formula_entry = ttk.Entry(self.params_container, textvariable=var, width=60)
+                formula_entry.grid(row=self.next_row, column=1, sticky=tk.W, pady=(10 if self.next_row == 1 else 5, 5))
             else:
                 # Standard entry field for other types
                 var = tk.StringVar(value=param.get('example', ''))
@@ -390,32 +535,100 @@ class ConfigWizard:
         self.params_container.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
-    def _setup_step4(self):
-        """Set up Step 4: Review & Save"""
-        frame = ttk.Frame(self.step4_frame)
-        frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    def _update_test_options(self):
+        """Update test options based on selection"""
+        if not hasattr(self, 'data_source_var'):
+            return
 
-        # Create preview pane
-        preview_frame = ttk.LabelFrame(frame, text="Configuration Preview")
-        preview_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        source = self.data_source_var.get()
 
-        self.preview_text = tk.Text(preview_frame, wrap=tk.WORD)
-        self.preview_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        if source == "generate":
+            if hasattr(self, 'sample_frame'):
+                self.sample_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
+            if hasattr(self, 'file_frame'):
+                self.file_frame.pack_forget()
+        else:
+            if hasattr(self, 'sample_frame'):
+                self.sample_frame.pack_forget()
+            if hasattr(self, 'file_frame'):
+                self.file_frame.pack(fill=tk.X, padx=10, pady=(10, 0))
 
-        # Add scrollbar for preview
-        preview_scroll = ttk.Scrollbar(preview_frame, orient="vertical", command=self.preview_text.yview)
-        preview_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.preview_text.config(yscrollcommand=preview_scroll.set)
+    def _browse_test_file(self):
+        """Browse for a data file"""
+        from tkinter import filedialog
 
-        # Add save button
-        save_frame = ttk.Frame(frame)
-        save_frame.pack(fill=tk.X, pady=10)
+        filename = filedialog.askopenfilename(
+            filetypes=[("Excel Files", "*.xlsx *.xls"), ("CSV Files", "*.csv")],
+            title="Select Data File"
+        )
 
-        save_btn = ttk.Button(save_frame, text="Save Configuration", command=self._save_configuration)
-        save_btn.pack(side=tk.RIGHT)
+        if filename and hasattr(self, 'file_var'):
+            self.file_var.set(filename)
 
-        preview_btn = ttk.Button(save_frame, text="Refresh Preview", command=self._refresh_preview)
-        preview_btn.pack(side=tk.RIGHT, padx=(0, 10))
+    def _on_formula_changed(self, *args):
+        """Handle formula changes and validate in real-time"""
+        if not hasattr(self, 'formula_var') or not hasattr(self, 'formula_parser'):
+            return
+
+        formula = self.formula_var.get()
+
+        if not formula:
+            self._update_formula_status("Enter a formula", "gray")
+            self._update_parsed_display("")
+            return
+
+        try:
+            # Parse the formula
+            parsed_formula, fields_used = self.formula_parser.parse(formula)
+
+            # Update UI
+            self._update_formula_status("Formula is valid", "green")
+            self._update_parsed_display(parsed_formula)
+
+            # Store for validation
+            self.validation_params = {
+                'original_formula': formula,
+                'formula': parsed_formula,
+                'fields_used': fields_used
+            }
+
+        except Exception as e:
+            # Update UI
+            self._update_formula_status(f"Error: {str(e)}", "red")
+            self._update_parsed_display("")
+
+    def _update_formula_status(self, message, color="black"):
+        """Update formula status message"""
+        if hasattr(self, 'formula_status_var'):
+            self.formula_status_var.set(message)
+
+            # Find the status label and update its color
+            for widget in self.params_container.winfo_children():
+                if isinstance(widget, ttk.LabelFrame) and widget.winfo_children():
+                    for child in widget.winfo_children():
+                        if isinstance(child, ttk.Label) and child.cget('textvariable') == str(self.formula_status_var):
+                            child.configure(foreground=color)
+                            break
+
+    def _update_parsed_display(self, text):
+        """Update the parsed formula display"""
+        if not hasattr(self, 'parsed_formula_text'):
+            return
+
+        self.parsed_formula_text.config(state=tk.NORMAL)
+        self.parsed_formula_text.delete(1.0, tk.END)
+        if text:
+            self.parsed_formula_text.insert(tk.END, text)
+        self.parsed_formula_text.config(state=tk.DISABLED)
+
+    def _test_formula(self):
+        """Test the formula with sample data"""
+        if not hasattr(self, 'formula_var') or not self.formula_var.get():
+            messagebox.showinfo("Formula Required", "Please enter a formula to test")
+            return
+
+        # Implementation of formula testing would go here
+        messagebox.showinfo("Test Formula", "Formula testing not implemented yet")
 
     def _populate_template_tree(self):
         """Populate the template treeview with available templates"""
@@ -601,19 +814,31 @@ class ConfigWizard:
 
     def _refresh_preview(self):
         """Refresh the configuration preview"""
+        # Generate the configuration
         config = self._generate_preview_config()
         if not config:
             return
 
         self.current_config = config
 
+        # Make sure preview_text exists before updating it
+        if not hasattr(self, 'preview_text') or not self.preview_text.winfo_exists():
+            # If we're called before _display_step4, don't try to update the preview
+            return
+
         # Update preview text
         self.preview_text.config(state=tk.NORMAL)
         self.preview_text.delete(1.0, tk.END)
 
         # Convert to YAML for display
-        config_yaml = yaml.dump(config, default_flow_style=False)
-        self.preview_text.insert(tk.END, config_yaml)
+        try:
+            import yaml
+            config_yaml = yaml.dump(config, default_flow_style=False)
+            self.preview_text.insert(tk.END, config_yaml)
+        except Exception as e:
+            self.preview_text.insert(tk.END, f"Error generating preview: {str(e)}\n\n")
+            self.preview_text.insert(tk.END, str(config))
+
         self.preview_text.config(state=tk.DISABLED)
 
     def _save_configuration(self):
@@ -639,64 +864,86 @@ class ConfigWizard:
             # Reload configurations in the config manager
             if hasattr(self.config_manager, 'load_all_configs'):
                 self.config_manager.load_all_configs()
+
+            # Call the callback if provided
+            if callable(self.on_config_saved):
+                self.on_config_saved()
         else:
             messagebox.showerror("Error", result)
 
     def _go_next_step(self):
         """Navigate to the next wizard step"""
-        current_tab = self.wizard_notebook.index(self.wizard_notebook.select())
-
         # Validate before moving to next step
-        if current_tab == 0:  # From Step 1 to Step 2
-            if not self.current_template_id:
-                messagebox.showinfo("Select Template", "Please select a template to continue")
-                return
+        if not self._validate_current_step():
+            return
 
-        elif current_tab == 1:  # From Step 2 to Step 3
-            # Validate basic configuration
-            if not self.analytics_id_var.get().strip():
-                messagebox.showinfo("Required Field", "Analytics ID is required")
-                return
-
-            if not self.analytics_name_var.get().strip():
-                messagebox.showinfo("Required Field", "Analytics Name is required")
-                return
-
-            # Update parameter fields for Step 3
-            self._update_parameter_fields()
-
-        elif current_tab == 2:  # From Step 3 to Step 4
-            # Update preview for Step 4
-            self._refresh_preview()
-
-        # Go to next tab
-        if current_tab < 3:  # 3 is the last tab
-            self.wizard_notebook.select(current_tab + 1)
+        # Move to next step if not at the end
+        if self.current_step < 3:  # 3 is the last step (0-indexed)
+            self.current_step += 1
+            self.step_tracker.set_current_step(self.current_step)
+            self._display_current_step()
             self._update_button_states()
 
     def _go_prev_step(self):
         """Navigate to the previous wizard step"""
-        current_tab = self.wizard_notebook.index(self.wizard_notebook.select())
-
-        if current_tab > 0:
-            self.wizard_notebook.select(current_tab - 1)
+        if self.current_step > 0:
+            self.current_step -= 1
+            self.step_tracker.set_current_step(self.current_step)
+            self._display_current_step()
             self._update_button_states()
 
     def _update_button_states(self):
         """Update the state of navigation buttons based on current step"""
-        current_tab = self.wizard_notebook.index(self.wizard_notebook.select())
-
         # Update Previous button
-        if current_tab == 0:
+        if self.current_step == 0:
             self.prev_btn.config(state=tk.DISABLED)
         else:
             self.prev_btn.config(state=tk.NORMAL)
 
         # Update Next button
-        if current_tab == 3:  # Last step
+        if self.current_step == 3:  # Last step
             self.next_btn.config(state=tk.DISABLED)
         else:
             self.next_btn.config(state=tk.NORMAL)
+
+    def _validate_current_step(self):
+        """Validate the current step before allowing navigation to the next step"""
+        if self.current_step == 0:  # Template Selection
+            if not self.current_template_id:
+                messagebox.showinfo("Select Template", "Please select a template to continue")
+                return False
+            return True
+
+        elif self.current_step == 1:  # Basic Configuration
+            # Validate required fields
+            if not self.analytics_id_var.get().strip():
+                messagebox.showinfo("Required Field", "Analytics ID is required")
+                return False
+
+            if not self.analytics_name_var.get().strip():
+                messagebox.showinfo("Required Field", "Analytics Name is required")
+                return False
+
+            return True
+
+        elif self.current_step == 2:  # Parameters
+            # Only try to validate parameters if params_container exists
+            if hasattr(self, 'params_container'):
+                # Make sure all required parameters are filled
+                for param in self.template_parameters:
+                    if param.get('required', False):
+                        param_name = param.get('name', '')
+                        if param_name in self.parameter_entries:
+                            value = self.parameter_entries[param_name].get()
+                            if not value:
+                                messagebox.showinfo("Required Parameter", f"Parameter '{param_name}' is required")
+                                return False
+
+            # We'll generate the preview when step 4 is displayed, not here
+            # This prevents the error when preview_text doesn't exist yet
+            return True
+
+        return True  # Default to allow navigation
 
     def load_existing_config(self, analytics_id):
         """
