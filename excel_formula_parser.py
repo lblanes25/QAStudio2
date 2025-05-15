@@ -1,3 +1,5 @@
+import spacy
+
 """
 Excel Formula Parser - Converts Excel-style formulas to pandas expressions.
 
@@ -397,6 +399,10 @@ class ExcelFormulaParser:
         """
         new_fields = []
 
+        # If token is an equals sign, convert to double equals
+        if token == '=':
+            return '==', new_fields
+
         # Handle placeholder fields
         if token.startswith('__FIELD_') and token.endswith('__'):
             new_fields.append(token)
@@ -442,6 +448,8 @@ class ExcelFormulaParser:
         # Remove extra spaces that might cause parsing issues
         formula = formula_str.strip()
 
+        logger.debug(f"_apply_precedence input: {formula}")  # Log the initial formula
+
         # Apply special handling for complex expressions with AND, OR
         if " & " in formula or " | " in formula:
             # Ensure arguments to & and | are Series with boolean type
@@ -477,29 +485,35 @@ class ExcelFormulaParser:
 
             # Rejoin the parts
             formula = "".join(parts)
+            logger.debug(f"_apply_precedence after AND/OR: {formula}")
 
         # Force type conversion for logical operators if not already handled above
         if " & " in formula and not "pd.Series" in formula:
-            formula = re.sub(r'(\S+)\s+&\s+(\S+)', r'pd.Series(\1, index=df.index).astype(bool) & pd.Series(\2, index=df.index).astype(bool)', formula)
+            formula = re.sub(r'(\S+)\s+&\s+(\S+)',
+                             r'pd.Series(\1, index=df.index).astype(bool) & pd.Series(\2, index=df.index).astype(bool)',
+                             formula)
+            logger.debug(f"_apply_precedence after & re.sub: {formula}")
 
         if " | " in formula and not "pd.Series" in formula:
-            formula = re.sub(r'(\S+)\s+\|\s+(\S+)', r'pd.Series(\1, index=df.index).astype(bool) | pd.Series(\2, index=df.index).astype(bool)', formula)
+            formula = re.sub(r'(\S+)\s+\|\s+(\S+)',
+                             r'pd.Series(\1, index=df.index).astype(bool) | pd.Series(\2, index=df.index).astype(bool)',
+                             formula)
+            logger.debug(f"_apply_precedence after | re.sub: {formula}")
 
         # Replace negation with explicit boolean conversion if not already handled
+        #  Crucially, only apply this if "~pd.Series" isn't already there
         if "~" in formula and not "~pd.Series" in formula:
-            formula = re.sub(r'~\s*(\S+)', r'~pd.Series(\1, index=df.index).astype(bool)', formula)
+            formula = re.sub(r'~\s*(\([^)]*\)|\S+)', r'~pd.Series(\1, index=df.index).astype(bool)', formula)
+            logger.debug(f"_apply_precedence after ~ re.sub: {formula}")
+
+
 
         # Ensure the entire expression has proper parentheses
         if not (formula.startswith('(') and formula.endswith(')')):
             formula = f"({formula})"
+            logger.debug(f"_apply_precedence after final parentheses: {formula}")
 
         return formula
-
-    import pandas as pd
-    import logging
-    from typing import List, Tuple
-
-    logger = logging.getLogger(__name__)
 
     def _process_not_operator(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[
         str, int, List[str]]:
@@ -508,6 +522,8 @@ class ExcelFormulaParser:
         """
         new_fields = []
         i = start_idx + 1
+
+        logger.debug(f"_process_not_operator called with tokens: {tokens[start_idx:]}")
 
         if i >= len(tokens):
             logger.warning("Malformed NOT expression: no tokens after NOT")
@@ -532,7 +548,6 @@ class ExcelFormulaParser:
                 logger.warning("Malformed NOT expression: empty parentheses")
                 return "pd.Series(False, index=df.index)", i + 1, new_fields
 
-            # Log the collected tokens
             logger.debug(f"Collected tokens for NOT: {expr_tokens}")
 
             # Parse the inner expression
@@ -547,17 +562,21 @@ class ExcelFormulaParser:
                     logger.warning(f"Failed to parse inner expression: {inner_formula}")
                     return "pd.Series(False, index=df.index)", i + 1, new_fields
 
-                # Ensure the inner expression results in a boolean Series
-                # The parse method should ideally handle this or return a boolean expression
-                result = f"~({inner_parsed})"
-                logger.debug(f"Final NOT result: {result}")
+                # Clean up the inner parsed expression to ensure it's a series
+                if not inner_parsed.strip().startswith('pd.Series'):
+                    # Wrap it in a Series if it's not already
+                    result = f"~pd.Series({inner_parsed}, index=df.index).astype(bool)"
+                else:
+                    # If it's already a Series, just negate it
+                    result = f"~({inner_parsed})"
 
+                logger.debug(f"Final NOT result: {result}")
                 return result, i + 1, new_fields
             except Exception as e:
                 logger.error(f"Error parsing NOT expression '{inner_formula}': {str(e)}")
                 return "pd.Series(False, index=df.index)", i + 1, new_fields
         else:
-            # Handle non-parenthesized expression (you might need to adjust this based on your grammar)
+            # Handle non-parenthesized expression
             expr_tokens = []
             while i < len(tokens) and tokens[i] not in ['AND', 'OR', ')', 'NOT']:
                 expr_tokens.append(tokens[i])
@@ -573,7 +592,13 @@ class ExcelFormulaParser:
                 inner_parsed, inner_fields = self.parse(inner_formula)
                 logger.debug(f"Inner parsed result: {inner_parsed}, fields: {inner_fields}")
                 new_fields.extend(inner_fields)
-                result = f"~({inner_parsed})"
+
+                # Same cleanup as above
+                if not inner_parsed.strip().startswith('pd.Series'):
+                    result = f"~pd.Series({inner_parsed}, index=df.index).astype(bool)"
+                else:
+                    result = f"~({inner_parsed})"
+
                 logger.debug(f"Final NOT result: {result}")
                 return result, i, new_fields
             except Exception as e:

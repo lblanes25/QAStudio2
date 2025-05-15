@@ -3,6 +3,11 @@ import pandas as pd
 import numpy as np
 from excel_formula_parser import ExcelFormulaParser
 
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 class TestExcelFormulaParser(unittest.TestCase):
     def setUp(self):
         """Set up test environment."""
