@@ -32,6 +32,7 @@ class ExcelFormulaParser:
         self.operator_map = {
             '=': '==',
             '<>': '!=',
+
             'AND': '&',
             'OR': '|',
             'NOT': '~',
@@ -55,6 +56,7 @@ class ExcelFormulaParser:
         self.complex_functions = {
             'IF': self._process_if_function,
             'IFS': self._process_ifs_function,
+            'AND': self._process_and_function,
             'SWITCH': self._process_switch_function,
             'LEFT': self._process_left_function,
             'RIGHT': self._process_right_function,
@@ -711,23 +713,19 @@ class ExcelFormulaParser:
 
         # Special handling for ISBLANK
         if func_name == 'ISBLANK':
-            # Find the argument (field name)
-            field_name = None
-            i = start_idx + 2  # Skip past ISBLANK and opening parenthesis
+            # Extract arguments
+            args, end_idx, arg_fields = self._extract_function_args(tokens, start_idx + 1, fields_used)
+            new_fields.extend(arg_fields)
 
-            while i < len(tokens) and tokens[i] != ')':
-                if tokens[i] not in '(),+-*/' and not tokens[i].upper() in self.operator_map:
-                    field_name = tokens[i]
-                    if field_name not in fields_used:
-                        new_fields.append(field_name)
-                    break
-                i += 1
+            if not args:
+                logger.error("ISBLANK requires 1 argument, got 0")
+                return "pd.Series(False, index=df.index)", end_idx, new_fields
 
-            if not field_name:
-                logger.error(f"Could not find field name for {func_name}")
-                return "pd.Series(False, index=df.index)", start_idx + 2, new_fields
+            # Apply pd.isna to the field expression
+            field_expr = args[0]
+            result = f"pd.isna({field_expr})"
 
-            return f"pd.isna(df['{field_name}'])", i + 1, new_fields  # +1 to skip past closing parenthesis
+            return result, end_idx, new_fields
 
         # Handle other functions that need argument substitution
         if func_name in self.simple_function_map:
@@ -874,6 +872,41 @@ class ExcelFormulaParser:
         return arg_expr
 
     # === Logical Function Handlers ===
+    def _process_and_function(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[
+        str, int, List[str]]:
+        """
+        Process an AND function with multiple conditions.
+
+        Args:
+            tokens: List of tokens
+            start_idx: Starting index of the function name
+            fields_used: List to track field names
+
+        Returns:
+            Tuple of (processed function string, new position index, new fields found)
+        """
+        new_fields = []
+
+        # Extract function arguments
+        args, end_idx, arg_fields = self._extract_function_args(tokens, start_idx + 1, fields_used)
+        new_fields.extend(arg_fields)
+
+        if not args:
+            logger.error("AND requires at least 1 argument, got 0")
+            return "pd.Series(True, index=df.index)", end_idx, new_fields
+
+        if len(args) == 1:
+            # Single condition, just return it
+            return args[0], end_idx, new_fields
+
+        # Join conditions with the & operator, adding parentheses for proper grouping
+        conditions = [f"({arg})" for arg in args]
+        joined_conditions = " & ".join(conditions)
+
+        # Wrap in a Series for consistent return type
+        result = f"pd.Series({joined_conditions}, index=df.index)"
+
+        return result, end_idx, new_fields
 
     def _process_if_function(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[str, int, List[str]]:
         """
