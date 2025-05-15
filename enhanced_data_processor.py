@@ -338,6 +338,17 @@ class EnhancedDataProcessor:
         # Reset index to make the group field a column
         summary = summary.reset_index()
 
+        # Filter out any rows where the group value is the same as a column name
+        # This removes any header rows that might have been mistakenly included
+        summary = summary[summary[group_by_field] != group_by_field]
+
+        # Also filter out any rows where the group value is the same as ANY column name
+        for col in summary.columns:
+            summary = summary[summary[group_by_field] != col]
+
+        # Log the summary creation
+        logger.info(f"Generated summary with {len(summary)} groups")
+
         return summary
 
     def process_data(self, source_file: str) -> Tuple[bool, str]:

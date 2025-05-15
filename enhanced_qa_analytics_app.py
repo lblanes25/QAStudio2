@@ -232,34 +232,11 @@ class EnhancedQAAnalyticsApp:
         )
         title_label.grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 20))
 
-        # Step 1: Select Analytics
+        # Step 1: Select Analytics - with no redundant label
         step1_frame = ttk.LabelFrame(main_frame, text="Step 1: Select Analytics")
         step1_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15), padx=5)
 
-        # Add "Quick Select" and "Recently Used" sections
-        quick_select_frame = ttk.Frame(step1_frame)
-        quick_select_frame.pack(fill=tk.X, padx=10, pady=10)
-
-        ttk.Label(quick_select_frame, text="Quick Select:").grid(row=0, column=0, sticky=tk.W)
-
-        # Define quick select buttons
-        quick_select_buttons = [
-            ("Audit Approvals", "77"),
-            ("Risk Assessment", "78"),
-            ("Issue Management", "02")
-        ]
-
-        # Add quick select buttons
-        for i, (name, qa_id) in enumerate(quick_select_buttons):
-            ttk.Button(
-                quick_select_frame,
-                text=name,
-                command=lambda id=qa_id: self._quick_select_analytics(id)
-            ).grid(row=0, column=i + 1, padx=5)
-
-        # Standard dropdown for analytics selection
-        ttk.Label(step1_frame, text="Or select from list:").pack(anchor=tk.W, padx=10, pady=(0, 5))
-
+        # Dropdown only, no additional label
         self.analytic_var = tk.StringVar()
         self.analytic_combo = ttk.Combobox(
             step1_frame,
@@ -270,26 +247,21 @@ class EnhancedQAAnalyticsApp:
         self.analytic_combo["values"] = [f"{id} - {name}" for id, name in self.available_analytics]
         if self.available_analytics:
             self.analytic_combo.current(0)
-        self.analytic_combo.pack(fill=tk.X, padx=10, pady=(0, 10))
+        self.analytic_combo.pack(fill=tk.X, padx=10, pady=10)
 
-        # Step 2: Select Data
+        # Step 2: Select Data Source - with no redundant label
         step2_frame = ttk.LabelFrame(main_frame, text="Step 2: Select Data Source")
         step2_frame.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15), padx=5)
 
-        # Simplified file selection
+        # File selection without redundant label
         file_frame = ttk.Frame(step2_frame)
         file_frame.pack(fill=tk.X, padx=10, pady=10)
 
-        ttk.Label(file_frame, text="Data File:").grid(row=0, column=0, sticky=tk.W)
-
         self.source_var = tk.StringVar()
         self.source_entry = ttk.Entry(file_frame, textvariable=self.source_var, width=50)
-        self.source_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), padx=5)
+        self.source_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
 
-        ttk.Button(file_frame, text="Browse...", command=self._browse_source).grid(row=0, column=2)
-
-        # Make source entry expandable
-        file_frame.columnconfigure(1, weight=1)
+        ttk.Button(file_frame, text="Browse...", command=self._browse_source).pack(side=tk.RIGHT)
 
         # Step 3: Run and View Results
         step3_frame = ttk.LabelFrame(main_frame, text="Step 3: Run Analysis")
@@ -624,69 +596,141 @@ class EnhancedQAAnalyticsApp:
             ttk.Label(stats_grid, text="Error Percentage:").grid(row=4, column=0, sticky=tk.W, padx=5, pady=2)
             ttk.Label(stats_grid, text=f"{error_pct:.2f}%").grid(row=4, column=1, sticky=tk.W, padx=5, pady=2)
 
-        # Group results if available
+        # Group Summary section
+        group_frame = ttk.LabelFrame(summary_frame, text="Group Summary")
+        group_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+
+        # Get summary data and filter out problematic rows
         summary_data = processor_results.get('summary')
-        if summary_data is not None:
-            # Group results table
-            group_frame = ttk.LabelFrame(summary_frame, text="Group Summary")
-            group_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
 
-            # Create treeview for group results
-            columns = ["Group", "GC", "PC", "DNC", "Total", "Error %", "Status"]
-            group_tree = ttk.Treeview(group_frame, columns=columns, show="headings", height=8)
+        # Check if we have valid summary data
+        if summary_data is not None and isinstance(summary_data, pd.DataFrame) and not summary_data.empty:
+            # Get the group_by field
+            group_by_field = None
+            if hasattr(self, 'current_config') and self.current_config:
+                group_by_field = self.current_config.get('reporting', {}).get('group_by')
 
-            # Configure columns
-            group_tree.column("Group", width=150)
-            group_tree.column("GC", width=70, anchor=tk.CENTER)
-            group_tree.column("PC", width=70, anchor=tk.CENTER)
-            group_tree.column("DNC", width=70, anchor=tk.CENTER)
-            group_tree.column("Total", width=70, anchor=tk.CENTER)
-            group_tree.column("Error %", width=70, anchor=tk.CENTER)
-            group_tree.column("Status", width=100, anchor=tk.CENTER)
+            # Remove any rows where the group field value is the same as a column name
+            # This fixes the issue with column headers appearing as data rows
+            if group_by_field and group_by_field in summary_data.columns:
+                # Filter out rows where the group_by field equals any column name
+                for col in summary_data.columns:
+                    summary_data = summary_data[summary_data[group_by_field] != col]
 
-            # Configure headings
-            for col in columns:
-                group_tree.heading(col, text=col)
+            # Check if we still have data after filtering
+            if not summary_data.empty:
+                # Create container for treeview with proper layout
+                tree_container = ttk.Frame(group_frame)
+                tree_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-            # Add scrollbar
-            tree_scroll = ttk.Scrollbar(group_frame, orient="vertical", command=group_tree.yview)
-            group_tree.configure(yscrollcommand=tree_scroll.set)
+                # Configure grid layout
+                tree_container.columnconfigure(0, weight=1)
+                tree_container.rowconfigure(0, weight=1)
 
-            # Pack tree and scrollbar
-            group_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-            tree_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+                # Create treeview columns - use human-readable names
+                if group_by_field:
+                    # Use proper title case for display
+                    group_col_display = " ".join(word.capitalize() for word in group_by_field.split('_'))
+                    columns = (group_col_display, "GC", "PC", "DNC", "Total", "Error %", "Status")
+                else:
+                    columns = ("Group", "GC", "PC", "DNC", "Total", "Error %", "Status")
 
-            # Add data to tree
-            for _, row in summary_data.iterrows():
-                # Get group by field name
-                group_field = self.current_config.get('reporting', {}).get('group_by', '')
-                group_value = row[group_field] if group_field in row else "Unknown"
+                # Create treeview
+                group_tree = ttk.Treeview(tree_container, columns=columns, show="headings", height=8)
 
-                # Get counts
-                gc = row.get('GC', 0)
-                pc = row.get('PC', 0)
-                dnc = row.get('DNC', 0)
-                total = row.get('Total', 0)
-                dnc_pct = row.get('DNC_Percentage', 0)
-                exceeds = row.get('Exceeds_Threshold', False)
+                # Configure columns
+                group_tree.column(columns[0], width=150, stretch=True)
+                group_tree.column("GC", width=70, anchor=tk.CENTER, stretch=False)
+                group_tree.column("PC", width=70, anchor=tk.CENTER, stretch=False)
+                group_tree.column("DNC", width=70, anchor=tk.CENTER, stretch=False)
+                group_tree.column("Total", width=70, anchor=tk.CENTER, stretch=False)
+                group_tree.column("Error %", width=70, anchor=tk.CENTER, stretch=False)
+                group_tree.column("Status", width=150, anchor=tk.CENTER, stretch=True)
 
-                # Add to tree
-                item_id = group_tree.insert("", tk.END, values=(
-                    group_value,
-                    gc,
-                    pc,
-                    dnc,
-                    total,
-                    f"{dnc_pct:.2f}%",
-                    "EXCEEDS" if exceeds else "Within Threshold"
-                ))
+                # Configure headings
+                for col in columns:
+                    group_tree.heading(col, text=col)
 
-                # Color code based on threshold
-                if exceeds:
-                    group_tree.item(item_id, tags=("exceeds",))
+                # Configure tags before adding items
+                group_tree.tag_configure("exceeds", background="#FFE6E6")  # Light red
 
-            # Configure tag colors
-            group_tree.tag_configure("exceeds", background="#FFE6E6")  # Light red
+                # Add scrollbars
+                v_scroll = ttk.Scrollbar(tree_container, orient="vertical", command=group_tree.yview)
+                h_scroll = ttk.Scrollbar(tree_container, orient="horizontal", command=group_tree.xview)
+
+                group_tree.configure(yscrollcommand=v_scroll.set, xscrollcommand=h_scroll.set)
+
+                # Use grid layout for proper scrollbar placement
+                group_tree.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
+                v_scroll.grid(row=0, column=1, sticky=(tk.N, tk.S))
+                h_scroll.grid(row=1, column=0, sticky=(tk.E, tk.W))
+
+                # Add data rows - ensuring proper data types and handling
+                for _, row in summary_data.iterrows():
+                    # Extract values and convert to appropriate types
+                    group_value = row[group_by_field] if group_by_field else "Unknown"
+
+                    try:
+                        gc = int(row.get('GC', 0))
+                    except (ValueError, TypeError):
+                        gc = 0
+
+                    try:
+                        pc = int(row.get('PC', 0))
+                    except (ValueError, TypeError):
+                        pc = 0
+
+                    try:
+                        dnc = int(row.get('DNC', 0))
+                    except (ValueError, TypeError):
+                        dnc = 0
+
+                    try:
+                        total = int(row.get('Total', 0))
+                    except (ValueError, TypeError):
+                        total = gc + pc + dnc  # Fallback
+
+                    try:
+                        error_pct = float(row.get('DNC_Percentage', 0))
+                    except (ValueError, TypeError):
+                        error_pct = (dnc / total * 100) if total > 0 else 0
+
+                    # Determine threshold status
+                    try:
+                        exceeds = bool(row.get('Exceeds_Threshold', False))
+                    except (ValueError, TypeError):
+                        # Fallback to calculating based on threshold from config
+                        threshold = self.current_config.get('thresholds', {}).get('error_percentage', 5.0)
+                        exceeds = error_pct > threshold
+
+                    # Insert row into tree
+                    item_id = group_tree.insert("", tk.END, values=(
+                        group_value,
+                        gc,
+                        pc,
+                        dnc,
+                        total,
+                        f"{error_pct:.2f}%",
+                        "EXCEEDS THRESHOLD" if exceeds else "Within Threshold"
+                    ))
+
+                    # Apply tag if exceeds threshold
+                    if exceeds:
+                        group_tree.item(item_id, tags=("exceeds",))
+            else:
+                # No data after filtering
+                ttk.Label(
+                    group_frame,
+                    text="No valid group summary data available after filtering.",
+                    wraplength=500
+                ).pack(padx=10, pady=10)
+        else:
+            # No summary data at all
+            ttk.Label(
+                group_frame,
+                text="No group summary data available.",
+                wraplength=500
+            ).pack(padx=10, pady=10)
 
         # Detail tab
         detail_frame = ttk.Frame(detail_tab)
@@ -713,6 +757,10 @@ class EnhancedQAAnalyticsApp:
             tree_container = ttk.Frame(detail_frame)
             tree_container.pack(fill=tk.BOTH, expand=True)
 
+            # Configure the container to expand properly
+            tree_container.columnconfigure(0, weight=1)
+            tree_container.rowconfigure(0, weight=1)
+
             # Create treeview for detail results
             detail_tree = ttk.Treeview(tree_container, show="headings")
 
@@ -720,20 +768,33 @@ class EnhancedQAAnalyticsApp:
             columns = list(detail_data.columns)
             detail_tree['columns'] = columns
 
-            # Configure columns and headings
+            # Configure columns and headings with appropriate widths
+            min_col_width = 100  # Minimum column width
+
             for col in columns:
-                detail_tree.column(col, width=100, stretch=True)
+                # Use different widths for specific columns
+                if col == 'Compliance':
+                    width = 100
+                elif col in ['Status', 'Risk_Level']:
+                    width = 120
+                elif col == 'Comments' or 'Date' in col:
+                    width = 150
+                else:
+                    width = min_col_width
+
+                detail_tree.column(col, width=width, stretch=True)
                 detail_tree.heading(col, text=col)
 
-            # Add scrollbars
+            # Add scrollbars using grid
             detail_y_scroll = ttk.Scrollbar(tree_container, orient="vertical", command=detail_tree.yview)
             detail_x_scroll = ttk.Scrollbar(tree_container, orient="horizontal", command=detail_tree.xview)
+
             detail_tree.configure(yscrollcommand=detail_y_scroll.set, xscrollcommand=detail_x_scroll.set)
 
-            # Pack tree and scrollbars
-            detail_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-            detail_y_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-            detail_x_scroll.pack(side=tk.BOTTOM, fill=tk.X)
+            # Use grid to properly place the treeview and scrollbars
+            detail_tree.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
+            detail_y_scroll.grid(row=0, column=1, sticky=(tk.N, tk.S))
+            detail_x_scroll.grid(row=1, column=0, sticky=(tk.E, tk.W))
 
             # Add data rows
             for idx, row in detail_data.iterrows():
@@ -765,25 +826,48 @@ class EnhancedQAAnalyticsApp:
             def apply_filter():
                 filter_value = filter_var.get()
 
-                # Show all rows first
-                for item in detail_tree.get_children():
-                    detail_tree.item(item, open=True)
+                # Clear existing items
+                detail_tree.delete(*detail_tree.get_children())
 
-                # Hide rows that don't match the filter
-                if filter_value != "all":
-                    for item in detail_tree.get_children():
-                        tags = detail_tree.item(item, "tags")
-                        if filter_value not in tags:
-                            detail_tree.detach(item)
+                # Add rows based on filter
+                for idx, row in detail_data.iterrows():
+                    compliance = row.get('Compliance', '')
+
+                    # Skip if doesn't match filter
+                    if filter_value == "gc" and compliance != "GC":
+                        continue
+                    if filter_value == "dnc" and compliance != "DNC":
+                        continue
+                    if filter_value == "pc" and compliance != "PC":
+                        continue
+
+                    # Add the row
+                    values = []
+                    for col in columns:
+                        val = row[col]
+                        # Format date values
+                        if isinstance(val, pd.Timestamp) or isinstance(val, datetime.datetime):
+                            val = val.strftime('%Y-%m-%d %H:%M')
+                        values.append(val)
+
+                    item_id = detail_tree.insert("", tk.END, values=values)
+
+                    # Color code based on compliance
+                    if compliance == 'GC':
+                        detail_tree.item(item_id, tags=("gc",))
+                    elif compliance == 'DNC':
+                        detail_tree.item(item_id, tags=("dnc",))
+                    elif compliance == 'PC':
+                        detail_tree.item(item_id, tags=("pc",))
 
             # Connect radiobuttons to filter function
             for rb in filter_frame.winfo_children():
                 if isinstance(rb, ttk.Radiobutton):
                     rb.config(command=apply_filter)
 
-        # Add buttons for report generation
+        # Add buttons for report generation - place at the bottom of the results section
         button_frame = ttk.Frame(self.results_section)
-        button_frame.pack(fill=tk.X, pady=(0, 10), padx=5)
+        button_frame.pack(fill=tk.X, padx=5, pady=(10, 5), side=tk.BOTTOM)
 
         ttk.Button(
             button_frame,
