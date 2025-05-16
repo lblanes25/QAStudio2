@@ -1,9 +1,13 @@
-pd.Series(
-    np.where(
-        (df['Helper-KPA Contains Key TLM Third Party'] == "Yes") &
-        (df['PRIMARY TLM THIRD PARTY ENGAGEMENT'].isna()),
-        "DNC",
-        "GC"
-    ),
-    index=df.index
-)
+formula: |
+  pd.Series(
+      np.where(
+          (df['Helper-KPA Contains Key TLM Third Party'] == "Yes") &
+          (
+              df['PRIMARY TLM THIRD PARTY ENGAGEMENT'].isna() |
+              (df['PRIMARY TLM THIRD PARTY ENGAGEMENT'].str.strip() == "")
+          ),
+          "DNC",
+          "GC"
+      ),
+      index=df.index
+  )
