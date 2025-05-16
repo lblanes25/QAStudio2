@@ -1,5 +1,3 @@
-import spacy
-
 """
 Excel Formula Parser - Converts Excel-style formulas to pandas expressions.
 
@@ -333,7 +331,12 @@ class ExcelFormulaParser:
         tokens = re.findall(pattern, formula, re.IGNORECASE)
 
         # Clean up tokens (remove leading/trailing whitespace)
-        return [token.strip() for token in tokens]
+        cleaned_tokens = [token.strip() for token in tokens]
+
+        # Debug output
+        logger.debug(f"Tokenized: {cleaned_tokens}")
+
+        return cleaned_tokens
 
     def _pre_process_multi_word_fields(self, tokens: List[str]) -> List[str]:
         """
@@ -401,30 +404,32 @@ class ExcelFormulaParser:
         """
         new_fields = []
 
+        # Handle quoted string literals - must check this FIRST
+        if (token.startswith('"') and token.endswith('"')) or \
+                (token.startswith("'") and token.endswith("'")):
+            # This is a string literal - return as is, without df wrapping
+            return token, new_fields
+
         # If token is an equals sign, convert to double equals
         if token == '=':
             return '==', new_fields
+
+        # Handle other operators
+        if token.upper() in self.operator_map:
+            return self.operator_map[token.upper()], new_fields
+
+        # Handle numeric literals
+        if token.replace('.', '', 1).isdigit():
+            return token, new_fields
 
         # Handle placeholder fields
         if token.startswith('__FIELD_') and token.endswith('__'):
             new_fields.append(token)
             return f"df['{token}']", new_fields
 
-        # Handle string literals
-        if (token.startswith('"') and token.endswith('"')) or (token.startswith("'") and token.endswith("'")):
-            return token, new_fields
-
-        # Handle numeric literals
-        if token.replace('.', '', 1).isdigit():
-            return token, new_fields
-
         # Handle parentheses and punctuation
         if token in "(),.+-*/":
             return token, new_fields
-
-        # Handle operators
-        if token.upper() in self.operator_map:
-            return self.operator_map[token.upper()], new_fields
 
         # Special case for True/False literals
         if token.lower() == 'true':
@@ -432,9 +437,8 @@ class ExcelFormulaParser:
         if token.lower() == 'false':
             return "False", new_fields
 
-        # Assume it's a field name if not recognized as anything else
+        # Only now, after checking all other possibilities, assume it's a field name
         new_fields.append(token)
-        # Use double brackets for proper escaping in eval context
         return f"df['{token}']", new_fields
 
     def _apply_precedence(self, formula_str: str) -> str:
@@ -779,7 +783,8 @@ class ExcelFormulaParser:
         logger.warning(f"Unhandled function: {func_name}")
         return f"{func_name.lower()}", start_idx + 1, new_fields
 
-    def _extract_function_args(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[List[str], int, List[str]]:
+    def _extract_function_args(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[
+        List[str], int, List[str]]:
         """
         Extract function arguments as a list of processed expressions.
 
@@ -806,7 +811,7 @@ class ExcelFormulaParser:
         i += 1  # Skip past opening parenthesis
 
         # Current argument being built
-        current_arg = []
+        arg_tokens = []
         paren_level = 0
 
         while i < len(tokens):
@@ -814,30 +819,119 @@ class ExcelFormulaParser:
 
             if token == '(':
                 paren_level += 1
-                current_arg.append(token)
+                arg_tokens.append(token)
             elif token == ')':
                 if paren_level == 0:
                     # End of arguments
-                    if current_arg:
-                        # Process and add the last argument
-                        arg_expr = self._process_arg_tokens(current_arg, fields_used, new_fields)
+                    if arg_tokens:
+                        # Process the last argument
+                        arg_expr = self._process_function_arg(arg_tokens, fields_used, new_fields)
                         args.append(arg_expr)
                     i += 1  # Skip past closing parenthesis
                     break
                 paren_level -= 1
-                current_arg.append(token)
+                arg_tokens.append(token)
             elif token == ',' and paren_level == 0:
                 # End of current argument
-                if current_arg:
-                    arg_expr = self._process_arg_tokens(current_arg, fields_used, new_fields)
+                if arg_tokens:
+                    arg_expr = self._process_function_arg(arg_tokens, fields_used, new_fields)
                     args.append(arg_expr)
-                current_arg = []
+                arg_tokens = []
             else:
-                current_arg.append(token)
+                arg_tokens.append(token)
 
             i += 1
 
+        # Check if we reached the end without finding a closing parenthesis
+        if i >= len(tokens):
+            logger.error("Function argument extraction reached end of tokens without closing parenthesis.")
+            # If we have a partial argument, process it anyway to be forgiving
+            if arg_tokens:
+                arg_expr = self._process_function_arg(arg_tokens, fields_used, new_fields)
+                args.append(arg_expr)
+
         return args, i, new_fields
+
+    def _process_function_arg(self, tokens: List[str], fields_used: List[str], new_fields: List[str]) -> str:
+        """
+        Process tokens for a function argument, recursively handling nested functions and binary comparisons.
+
+        Args:
+            tokens: List of tokens for the argument
+            fields_used: List of fields used in the formula
+            new_fields: List to add new fields to
+
+        Returns:
+            Processed argument expression
+        """
+        if not tokens:
+            return ""
+
+        i = 0
+        processed_tokens = []
+
+        while i < len(tokens):
+            token = tokens[i]
+
+            # Handle binary comparisons like C3 = "yes" or Amount > 100
+            if (
+                    i + 2 < len(tokens) and
+                    tokens[i + 1] in ['=', '==', '<>', '!=', '<', '<=', '>', '>='] and
+                    (
+                            tokens[i + 2].startswith('"') or tokens[i + 2].startswith("'") or
+                            tokens[i + 2].replace('.', '', 1).isdigit() or
+                            tokens[i + 2].lower() in ['true', 'false']
+                    )
+            ):
+                left_expr, left_fields = self._process_token(tokens[i], fields_used)
+                op_expr, _ = self._process_token(tokens[i + 1], fields_used)
+                right_expr, _ = self._process_token(tokens[i + 2], fields_used)
+
+                processed_tokens.append(f"({left_expr} {op_expr} {right_expr})")
+
+                for field in left_fields:
+                    if field not in fields_used and field not in new_fields:
+                        new_fields.append(field)
+
+                i += 3
+                continue
+
+            # Handle nested function calls like AND(...), ISBLANK(...)
+            if (
+                    i + 1 < len(tokens) and tokens[i + 1] == '(' and
+                    (token.upper() in self.complex_functions or token.upper() in self.simple_function_map)
+            ):
+                func_name = token.upper()
+
+                if func_name in self.complex_functions:
+                    handler = self.complex_functions[func_name]
+                    func_expr, new_i, func_fields = handler(tokens, i, fields_used)
+                    processed_tokens.append(func_expr)
+                    for field in func_fields:
+                        if field not in fields_used and field not in new_fields:
+                            new_fields.append(field)
+                    i = new_i
+                    continue
+
+                elif func_name in self.simple_function_map:
+                    func_expr, new_i, func_fields = self._process_simple_function(func_name, tokens, i, fields_used)
+                    processed_tokens.append(func_expr)
+                    for field in func_fields:
+                        if field not in fields_used and field not in new_fields:
+                            new_fields.append(field)
+                    i = new_i
+                    continue
+
+            # Fallback: treat as normal token
+            processed_token, token_fields = self._process_token(token, fields_used)
+            processed_tokens.append(processed_token)
+            for field in token_fields:
+                if field not in fields_used and field not in new_fields:
+                    new_fields.append(field)
+
+            i += 1
+
+        return " ".join(processed_tokens)
 
     def _process_arg_tokens(self, tokens: List[str], fields_used: List[str], new_fields: List[str]) -> str:
         """
@@ -887,7 +981,7 @@ class ExcelFormulaParser:
         """
         new_fields = []
 
-        # Extract function arguments
+        # Extract function arguments - these will already have nested functions processed
         args, end_idx, arg_fields = self._extract_function_args(tokens, start_idx + 1, fields_used)
         new_fields.extend(arg_fields)
 
@@ -903,12 +997,13 @@ class ExcelFormulaParser:
         conditions = [f"({arg})" for arg in args]
         joined_conditions = " & ".join(conditions)
 
-        # Wrap in a Series for consistent return type
-        result = f"pd.Series({joined_conditions}, index=df.index)"
+        # Wrap in parentheses for proper precedence
+        result = f"({joined_conditions})"
 
         return result, end_idx, new_fields
 
-    def _process_if_function(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[str, int, List[str]]:
+    def _process_if_function(self, tokens: List[str], start_idx: int, fields_used: List[str]) -> Tuple[
+        str, int, List[str]]:
         """
         Process an IF function with condition, true value, and false value.
 
@@ -930,18 +1025,10 @@ class ExcelFormulaParser:
             logger.error(f"IF requires 3 arguments, got {len(args)}")
             return "pd.Series(np.nan, index=df.index)", end_idx, new_fields
 
-        # FIX 2: Ensure Value field is properly converted to numeric for comparisons
+        # Ensure condition is properly wrapped in parentheses
         condition = args[0]
-
-        # Convert Value field to numeric in conditions for proper comparison
-        condition = re.sub(r"df\['Value'\]", r"pd.to_numeric(df['Value'], errors='coerce')", condition)
-
-        # Ensure proper comparison with numeric values
-        condition = re.sub(r'(>|<|>=|<=|==|!=)\s*(\d+)', r'\1 \2', condition)
-
-        # Convert date fields for proper comparison
-        if "Submit_Date" in condition or "Approval_Date" in condition:
-            condition = f"pd.Series({condition}, index=df.index).fillna(False)"
+        if not (condition.startswith('(') and condition.endswith(')')):
+            condition = f"({condition})"
 
         true_value = args[1]
         false_value = args[2]
