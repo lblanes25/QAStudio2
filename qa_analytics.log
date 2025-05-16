@@ -3136,3 +3136,410 @@ Demo complete! The Excel Formula Enhancement is working correctly.
 2025-05-15 15:17:49,271 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
 2025-05-15 15:17:49,273 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
 2025-05-15 15:17:49,279 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:23:46,197 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:23:46,566 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:23:46,568 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:23:46,569 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:23:46,571 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:23:46,572 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:23:46,574 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:23:46,576 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:23:46,578 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:23:46,579 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:23:46,580 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:23:46,581 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:23:46,594 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:23:46,594 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:23:46,598 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:23:46,599 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:23:46,602 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:23:46,608 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:23:46,609 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:23:54,887 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:23:54,902 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:23:54,902 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:23:54,904 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:23:54,906 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:23:54,920 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:23:54,920 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:23:54,926 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:23:54,929 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:23:54,938 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:24:16,872 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:24:16,872 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:24:35,883 - formula_parser - INFO - Parsed formula: a -> (df['a'])
+2025-05-16 14:24:36,171 - formula_parser - INFO - Parsed formula: a= -> (df['a'] ==)
+2025-05-16 14:24:36,324 - formula_parser - INFO - Parsed formula: a -> ((df['a']) == df['b'])
+2025-05-16 14:24:40,044 - qa_analytics - INFO - Successfully generated configuration for template custom_formula
+2025-05-16 14:27:40,795 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:27:40,851 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:27:40,853 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:27:40,854 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:27:40,855 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:27:40,856 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:27:40,857 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:27:40,859 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:27:40,860 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:27:40,862 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:27:40,862 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:27:40,864 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:27:40,877 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:27:40,877 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:27:40,880 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:27:40,881 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:27:40,884 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:27:40,890 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:27:40,890 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:27:45,479 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:27:45,479 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:27:59,134 - formula_parser - INFO - Parsed formula: A -> (df['A'])
+2025-05-16 14:27:59,315 - formula_parser - INFO - Parsed formula: Au -> (df['Au'])
+2025-05-16 14:27:59,388 - formula_parser - INFO - Parsed formula: Aud -> (df['Aud'])
+2025-05-16 14:27:59,499 - formula_parser - INFO - Parsed formula: Audi -> (df['Audi'])
+2025-05-16 14:27:59,612 - formula_parser - INFO - Parsed formula: Audit -> (df['Audit'])
+2025-05-16 14:27:59,708 - formula_parser - INFO - Parsed formula: Audit  -> (df['Audit'])
+2025-05-16 14:27:59,859 - formula_parser - INFO - Parsed formula: Audit L -> (df['Audit'] df['L'])
+2025-05-16 14:28:00,011 - formula_parser - INFO - Parsed formula: Audit Le -> (df['Audit'] df['Le'])
+2025-05-16 14:28:00,108 - formula_parser - INFO - Parsed formula: Audit Lea -> (df['Audit'] df['Lea'])
+2025-05-16 14:28:00,227 - formula_parser - INFO - Parsed formula: Audit Lead -> (df['Audit'] df['Lead'])
+2025-05-16 14:28:00,436 - formula_parser - INFO - Parsed formula: Audit Leade -> (df['Audit'] df['Leade'])
+2025-05-16 14:28:00,476 - formula_parser - INFO - Parsed formula: Audit Leader -> (df['Audit'] df['Leader'])
+2025-05-16 14:28:00,532 - formula_parser - INFO - Parsed formula: Audit Leader  -> (df['Audit'] df['Leader'])
+2025-05-16 14:28:00,730 - formula_parser - INFO - Parsed formula: Audit Leader = -> (df['Audit Leader'] ==)
+2025-05-16 14:28:00,852 - formula_parser - INFO - Parsed formula: Audit Leader =  -> (df['Audit Leader'] ==)
+2025-05-16 14:28:01,099 - formula_parser - INFO - Parsed formula: Audit Leader -> ((df['Audit'] df['Leader']) == df['A'])
+2025-05-16 14:28:01,365 - formula_parser - INFO - Parsed formula: Audit Leader -> ((df['Audit'] df['Leader']) == df['Al'])
+2025-05-16 14:28:01,812 - formula_parser - INFO - Parsed formula: Audit Leader -> ((df['Audit'] df['Leader']) == df['A'])
+2025-05-16 14:28:02,035 - formula_parser - INFO - Parsed formula: Audit Leader -> ((df['Audit'] df['Leader']) == df['AL'])
+2025-05-16 14:28:02,227 - formula_parser - INFO - Parsed formula: Audit Leader  -> ((df['Audit'] df['Leader']) == df['AL'])
+2025-05-16 14:28:02,429 - formula_parser - INFO - Parsed formula: Audit Leader A -> ((df['Audit'] df['Leader'] df['A']) == df['AL'])
+2025-05-16 14:28:02,676 - formula_parser - INFO - Parsed formula: Audit Leader Ap -> ((df['Audit'] df['Leader'] df['Ap']) == df['AL'])
+2025-05-16 14:28:02,853 - formula_parser - INFO - Parsed formula: Audit Leader App -> ((df['Audit'] df['Leader'] df['App']) == df['AL'])
+2025-05-16 14:28:02,916 - formula_parser - INFO - Parsed formula: Audit Leader Appr -> ((df['Audit'] df['Leader'] df['Appr']) == df['AL'])
+2025-05-16 14:28:03,027 - formula_parser - INFO - Parsed formula: Audit Leader Appro -> ((df['Audit'] df['Leader'] df['Appro']) == df['AL'])
+2025-05-16 14:28:03,116 - formula_parser - INFO - Parsed formula: Audit Leader Approv -> ((df['Audit'] df['Leader'] df['Approv']) == df['AL'])
+2025-05-16 14:28:03,203 - formula_parser - INFO - Parsed formula: Audit Leader Approve -> ((df['Audit'] df['Leader'] df['Approve']) == df['AL'])
+2025-05-16 14:28:03,284 - formula_parser - INFO - Parsed formula: Audit Leader Approver -> ((df['Audit'] df['Leader'] df['Approver']) == df['AL'])
+2025-05-16 14:28:06,300 - formula_parser - INFO - Parsed formula: Audit Leader Approver` -> ((df['Audit'] df['Leader'] df['Approver']) == df['AL'])
+2025-05-16 14:28:08,259 - formula_parser - INFO - Parsed formula: Audit Leader = __FIELD_0__ -> (df['Audit Leader'] == df['AL Approver'])
+2025-05-16 14:28:12,995 - formula_parser - INFO - Parsed formula: Audit Leader Approver` -> ((df['Audit'] df['Leader'] df['Approver']) == df['AL'])
+2025-05-16 14:28:18,507 - formula_parser - INFO - Parsed formula: Audit Leader Approver` -> ((df['Audit'] df['Leader'] df['Approver']) == df['1AL'])
+2025-05-16 14:28:19,340 - formula_parser - INFO - Parsed formula: Audit Leader Approver` -> ((df['Audit'] df['Leader'] df['Approver']) == df['AL'])
+2025-05-16 14:28:19,444 - formula_parser - INFO - Parsed formula: Audit Leader = __FIELD_0__ -> (df['Audit Leader'] == df['AL Approver'])
+2025-05-16 14:28:24,420 - formula_parser - INFO - Parsed formula: Audit Leader Approver` -> ((df['Audit'] df['Leader'] df['Approver']) == df['AL'])
+2025-05-16 14:28:25,332 - formula_parser - INFO - Parsed formula: Audit Leader = __FIELD_0__ -> (df['Audit Leader'] == df['AL Approver'])
+2025-05-16 14:28:29,550 - qa_analytics - INFO - Successfully generated configuration for template custom_formula
+2025-05-16 14:29:44,441 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:29:44,453 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:29:44,453 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:29:44,455 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:29:44,458 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:29:44,466 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:29:44,466 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:29:44,471 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:29:44,473 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:29:44,479 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:31:55,088 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:31:55,143 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:31:55,145 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:31:55,146 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:31:55,147 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:31:55,148 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:31:55,149 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:31:55,150 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:31:55,152 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:31:55,154 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:31:55,154 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:31:55,156 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:31:55,168 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:31:55,168 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:31:55,172 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:31:55,173 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:31:55,175 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:31:55,180 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:31:55,181 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:32:03,500 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:32:03,512 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:32:03,515 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:32:03,521 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:32:03,524 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:32:03,532 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:32:03,532 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:32:03,539 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:32:03,542 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:32:03,549 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:32:03,553 - qa_analytics - INFO - Processor results keys: dict_keys(['detail', 'summary', 'warnings'])
+2025-05-16 14:32:03,553 - qa_analytics - INFO - Summary data shape: (6, 7)
+2025-05-16 14:32:03,553 - qa_analytics - INFO - Summary data columns: ['Audit_Entity', 'GC', 'PC', 'DNC', 'Total', 'DNC_Percentage', 'Exceeds_Threshold']
+2025-05-16 14:32:03,553 - qa_analytics - INFO - First row of summary data: {'Audit_Entity': 'Compliance', 'GC': 5, 'PC': 0, 'DNC': 1, 'Total': 6, 'DNC_Percentage': 16.67, 'Exceeds_Threshold': True}
+2025-05-16 14:32:03,555 - qa_analytics - INFO - Statistics - Total: 30, GC: 21, DNC: 9, PC: 0
+2025-05-16 14:32:03,559 - qa_analytics - INFO - Current config: {'detail_required': True, 'group_by': 'Audit_Entity', 'summary_fields': ['GC', 'PC', 'DNC', 'Total', 'DNC_Percentage']}
+2025-05-16 14:32:03,559 - qa_analytics - INFO - Group by field: Audit_Entity
+2025-05-16 14:32:03,559 - qa_analytics - INFO - Summary data found with 6 rows
+2025-05-16 14:32:03,559 - qa_analytics - INFO - Group by field 'Audit_Entity' found in summary data
+2025-05-16 14:32:03,559 - qa_analytics - INFO - Unique values: ['Compliance' 'Finance Dept' 'HR' 'IT Security' 'Legal' 'Operations']
+2025-05-16 14:32:03,561 - qa_analytics - INFO - Starting to process 6 summary rows
+2025-05-16 14:32:03,561 - qa_analytics - INFO - Added 6 rows to summary treeview
+2025-05-16 14:32:03,569 - qa_analytics - INFO - Results display update completed
+2025-05-16 14:34:27,793 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:34:27,855 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:34:27,857 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:34:27,858 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:34:27,860 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:34:27,861 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:34:27,862 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:34:27,863 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:34:27,865 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:34:27,866 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:34:27,867 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:34:27,869 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:34:27,881 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:34:27,881 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:34:27,885 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:34:27,886 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:34:27,890 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:34:27,895 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:34:27,896 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:34:33,226 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:34:33,240 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:34:33,241 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:34:33,243 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:34:33,245 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:34:33,252 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:34:33,252 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:34:33,257 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:34:33,259 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:34:33,265 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:34:33,267 - qa_analytics - INFO - Processor results keys: dict_keys(['detail', 'summary', 'warnings'])
+2025-05-16 14:34:33,267 - qa_analytics - INFO - Summary data shape: (6, 7)
+2025-05-16 14:34:33,267 - qa_analytics - INFO - Summary data columns: ['Audit_Entity', 'GC', 'PC', 'DNC', 'Total', 'DNC_Percentage', 'Exceeds_Threshold']
+2025-05-16 14:34:33,268 - qa_analytics - INFO - First row of summary data: {'Audit_Entity': 'Compliance', 'GC': 5, 'PC': 0, 'DNC': 1, 'Total': 6, 'DNC_Percentage': 16.67, 'Exceeds_Threshold': True}
+2025-05-16 14:34:33,269 - qa_analytics - INFO - Statistics - Total: 30, GC: 21, DNC: 9, PC: 0
+2025-05-16 14:34:33,272 - qa_analytics - INFO - Summary data found with 6 rows
+2025-05-16 14:34:33,283 - qa_analytics - INFO - Added 6 rows to summary grid
+2025-05-16 14:34:33,288 - qa_analytics - INFO - Results display update completed
+2025-05-16 14:35:18,812 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:35:18,869 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:35:18,871 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:35:18,872 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:35:18,873 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:35:18,874 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:35:18,875 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:35:18,877 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:35:18,878 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:35:18,880 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:35:18,880 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:35:18,882 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:35:18,894 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:35:18,895 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:35:18,898 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:35:18,900 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:35:18,902 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:35:18,908 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:35:18,908 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:35:23,870 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:35:23,883 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:35:23,884 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:35:23,886 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:35:23,888 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:35:23,895 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:35:23,896 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:35:23,900 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:35:23,902 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:35:23,908 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:35:23,910 - qa_analytics - INFO - Processor results keys: dict_keys(['detail', 'summary', 'warnings'])
+2025-05-16 14:35:23,910 - qa_analytics - INFO - Summary data shape: (6, 7)
+2025-05-16 14:35:23,910 - qa_analytics - INFO - Summary data columns: ['Audit_Entity', 'GC', 'PC', 'DNC', 'Total', 'DNC_Percentage', 'Exceeds_Threshold']
+2025-05-16 14:35:23,911 - qa_analytics - INFO - First row of summary data: {'Audit_Entity': 'Compliance', 'GC': 5, 'PC': 0, 'DNC': 1, 'Total': 6, 'DNC_Percentage': 16.67, 'Exceeds_Threshold': True}
+2025-05-16 14:35:23,912 - qa_analytics - INFO - Statistics - Total: 30, GC: 21, DNC: 9, PC: 0
+2025-05-16 14:35:23,915 - qa_analytics - INFO - Debug: Inserting 6 rows to text widget
+2025-05-16 14:35:23,915 - qa_analytics - INFO - Added 6 rows to text display
+2025-05-16 14:35:23,921 - qa_analytics - INFO - Results display update completed
+2025-05-16 14:36:41,205 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:36:41,262 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:36:41,264 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:36:41,265 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:36:41,266 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:36:41,267 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:36:41,268 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:36:41,270 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:36:41,271 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:36:41,273 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:36:41,273 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:36:41,275 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:36:41,287 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:36:41,287 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:36:41,290 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:36:41,291 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:36:41,294 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:36:41,299 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:36:41,300 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:36:46,847 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:36:46,859 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:36:46,862 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:36:46,867 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:36:46,871 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:36:46,880 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:36:46,880 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:36:46,890 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:36:46,893 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:36:46,902 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:36:46,906 - qa_analytics - INFO - Processor results keys: dict_keys(['detail', 'summary', 'warnings'])
+2025-05-16 14:36:46,907 - qa_analytics - INFO - Summary data shape: (6, 7)
+2025-05-16 14:36:46,907 - qa_analytics - INFO - Summary data columns: ['Audit_Entity', 'GC', 'PC', 'DNC', 'Total', 'DNC_Percentage', 'Exceeds_Threshold']
+2025-05-16 14:36:46,907 - qa_analytics - INFO - First row of summary data: {'Audit_Entity': 'Compliance', 'GC': 5, 'PC': 0, 'DNC': 1, 'Total': 6, 'DNC_Percentage': 16.67, 'Exceeds_Threshold': True}
+2025-05-16 14:36:46,909 - qa_analytics - INFO - Statistics - Total: 30, GC: 21, DNC: 9, PC: 0
+2025-05-16 14:36:47,009 - qa_analytics - INFO - Added 6 rows to responsive summary display
+2025-05-16 14:36:47,016 - qa_analytics - INFO - Results display update completed
+2025-05-16 14:38:44,982 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:38:45,041 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:38:45,043 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:38:45,044 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:38:45,045 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:38:45,046 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:38:45,047 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:38:45,048 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:38:45,050 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:38:45,051 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:38:45,052 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:38:45,053 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:38:45,065 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:38:45,066 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:38:45,069 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:38:45,070 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:38:45,073 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:38:45,078 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:38:45,079 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:38:49,646 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:38:49,659 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:38:49,660 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:38:49,662 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:38:49,665 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:38:49,672 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:38:49,672 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:38:49,676 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:38:49,678 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:38:49,684 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:38:49,686 - qa_analytics - INFO - Processor results keys: dict_keys(['detail', 'summary', 'warnings'])
+2025-05-16 14:38:49,686 - qa_analytics - INFO - Summary data shape: (6, 7)
+2025-05-16 14:38:49,686 - qa_analytics - INFO - Summary data columns: ['Audit_Entity', 'GC', 'PC', 'DNC', 'Total', 'DNC_Percentage', 'Exceeds_Threshold']
+2025-05-16 14:38:49,687 - qa_analytics - INFO - First row of summary data: {'Audit_Entity': 'Compliance', 'GC': 5, 'PC': 0, 'DNC': 1, 'Total': 6, 'DNC_Percentage': 16.67, 'Exceeds_Threshold': True}
+2025-05-16 14:38:49,688 - qa_analytics - INFO - Statistics - Total: 30, GC: 21, DNC: 9, PC: 0
+2025-05-16 14:38:49,729 - qa_analytics - INFO - Added 6 rows to fixed table layout
+2025-05-16 14:38:49,735 - qa_analytics - INFO - Results display update completed
+2025-05-16 14:42:27,647 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:42:27,700 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:42:27,702 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:42:27,703 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:42:27,704 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:42:27,705 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:42:27,706 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:42:27,708 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:42:27,709 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:42:27,710 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:42:27,711 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:42:27,712 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:42:27,724 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:42:27,724 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:42:27,728 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:42:27,729 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:42:27,732 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:42:27,737 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:42:27,738 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:42:41,011 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:42:41,023 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:42:41,023 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:42:41,027 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:42:41,031 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:42:41,038 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:42:41,038 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:42:41,046 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:42:41,049 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:42:41,057 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:43:56,129 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:43:56,144 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:43:56,144 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:43:56,147 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:43:56,150 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:43:56,156 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:43:56,156 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:43:56,160 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:43:56,161 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:43:56,166 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:48:08,951 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:48:09,007 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:48:09,009 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:48:09,010 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:48:09,011 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:48:09,012 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:48:09,014 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:48:09,015 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:48:09,016 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:48:09,017 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:48:09,018 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:48:09,019 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:48:09,031 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:48:09,031 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:48:09,036 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:48:09,037 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:48:09,040 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:48:09,045 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:48:09,045 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:48:14,369 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:48:14,381 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:48:14,382 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:48:14,386 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:48:14,390 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:48:14,396 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:48:14,397 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:48:14,403 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:48:14,406 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:48:14,413 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:50:35,420 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:50:35,492 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:50:35,494 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:50:35,495 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:50:35,496 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:50:35,497 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:50:35,498 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:50:35,499 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:50:35,500 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:50:35,502 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:50:35,502 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:50:35,503 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:50:35,515 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:50:35,515 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:50:35,519 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:50:35,520 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:50:35,523 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:50:35,528 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:50:35,529 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml
+2025-05-16 14:50:40,589 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:50:40,600 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:50:40,601 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:50:40,604 - qa_analytics - INFO - Starting processing for QA-ID 99
+2025-05-16 14:50:40,610 - qa_analytics - INFO - Loading data from registered data source 'audit_workpapers_2025q2'
+2025-05-16 14:50:40,618 - qa_analytics - INFO - Loaded data source 'audit_workpapers_2025q2' from C:/Users/luria/PycharmProjects/AuditQAStudio/audit_workpapers_2025Q2.xlsx (30 rows)
+2025-05-16 14:50:40,618 - qa_analytics - INFO - Successfully loaded source data with 30 rows
+2025-05-16 14:50:40,625 - qa_analytics - INFO - Validation 'custom_formula' completed - 21 of 30 records conform
+2025-05-16 14:50:40,629 - qa_analytics - INFO - Validation complete: 21 GC, 9 DNC
+2025-05-16 14:50:40,638 - qa_analytics - INFO - Generated summary with 6 groups
+2025-05-16 14:51:45,810 - qa_analytics - INFO - Starting Enhanced QA Analytics in GUI mode
+2025-05-16 14:51:45,875 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:51:45,878 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:51:45,878 - qa_analytics - INFO - Loaded config for QA-ID 1
+2025-05-16 14:51:45,880 - qa_analytics - INFO - Loaded config for QA-ID 100
+2025-05-16 14:51:45,881 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:51:45,882 - qa_analytics - ERROR - Data source config missing required_fields
+2025-05-16 14:51:45,883 - qa_analytics - INFO - Loaded config for QA-ID 103
+2025-05-16 14:51:45,884 - qa_analytics - INFO - Loaded config for QA-ID 99
+2025-05-16 14:51:45,886 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:51:45,887 - qa_analytics - ERROR - Missing required config key: analytic_id
+2025-05-16 14:51:45,888 - qa_analytics - INFO - Loaded reference data config from configs/reference_data.yaml
+2025-05-16 14:51:45,901 - qa_analytics - INFO - Loaded data source registry from configs/data_sources.yaml
+2025-05-16 14:51:45,902 - qa_analytics - INFO - Found 6 data sources and 10 analytic mappings
+2025-05-16 14:51:45,905 - qa_analytics - INFO - Loaded template 'approval_workflow' from approval_workflow_template.yaml
+2025-05-16 14:51:45,906 - qa_analytics - INFO - Loaded template 'custom_formula' from custom_formula_template.yaml
+2025-05-16 14:51:45,909 - qa_analytics - INFO - Loaded template 'risk_assessment' from risk_assessment_template.yaml
+2025-05-16 14:51:45,914 - qa_analytics - INFO - Loaded template metadata
+2025-05-16 14:51:45,915 - qa_analytics - INFO - Loaded scheduler configuration from configs/scheduler.yaml

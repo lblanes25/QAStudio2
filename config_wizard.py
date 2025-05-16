@@ -41,7 +41,11 @@ class ConfigWizard:
         self.analytics_id_var = tk.StringVar()
         self.analytics_name_var = tk.StringVar()
         self.analytics_desc_var = tk.StringVar()
-        self.data_source_var = tk.StringVar()
+
+        # FIXED: Use separate variables for data source name and test data source type
+        self.data_source_name_var = tk.StringVar()  # For actual data source in step 2
+        self.test_data_source_var = tk.StringVar(value="generate")  # For test data source option in step 3
+
         self.threshold_var = tk.StringVar(value="5.0")
         self.group_by_var = tk.StringVar()
 
@@ -200,7 +204,8 @@ class ConfigWizard:
         except:
             data_sources = []
 
-        data_source_combo = ttk.Combobox(frame, textvariable=self.data_source_var,
+        # FIXED: Use self.data_source_name_var instead of self.data_source_var
+        data_source_combo = ttk.Combobox(frame, textvariable=self.data_source_name_var,
                                          values=data_sources, width=40)
         data_source_combo.grid(row=3, column=1, columnspan=2, sticky=tk.W, pady=(10, 5))
 
@@ -418,11 +423,12 @@ class ConfigWizard:
             test_options_frame = ttk.Frame(test_frame)
             test_options_frame.pack(fill=tk.X, padx=10)
 
-            self.data_source_var = tk.StringVar(value="generate")
+            # FIXED: Use self.test_data_source_var instead of self.data_source_var
+            self.test_data_source_var = tk.StringVar(value="generate")
             generate_radio = ttk.Radiobutton(
                 test_options_frame,
                 text="Generate Sample Data",
-                variable=self.data_source_var,
+                variable=self.test_data_source_var,
                 value="generate",
                 command=self._update_test_options
             )
@@ -431,7 +437,7 @@ class ConfigWizard:
             existing_radio = ttk.Radiobutton(
                 test_options_frame,
                 text="Use Existing Data",
-                variable=self.data_source_var,
+                variable=self.test_data_source_var,
                 value="existing",
                 command=self._update_test_options
             )
@@ -483,6 +489,7 @@ class ConfigWizard:
                 except ImportError:
                     logger.error("Could not import ExcelFormulaParser")
 
+        # ... rest of method remains the same ...
         # Create fields for each parameter
         for param in self.template_parameters:
             param_name = param.get('name', 'Parameter')
@@ -537,10 +544,10 @@ class ConfigWizard:
 
     def _update_test_options(self):
         """Update test options based on selection"""
-        if not hasattr(self, 'data_source_var'):
+        if not hasattr(self, 'test_data_source_var'):  # FIXED: Using test_data_source_var instead of data_source_var
             return
 
-        source = self.data_source_var.get()
+        source = self.test_data_source_var.get()  # FIXED: Using test_data_source_var
 
         if source == "generate":
             if hasattr(self, 'sample_frame'):
@@ -589,6 +596,11 @@ class ConfigWizard:
             self.validation_params = {
                 'original_formula': formula,
                 'formula': parsed_formula,
+                'fields_used': fields_used  # Store the field names used in the formula
+            }
+
+            # Store fields used for validation and documentation
+            self.validation_metadata = {
                 'fields_used': fields_used
             }
 
@@ -766,7 +778,7 @@ class ConfigWizard:
         values['analytic_id'] = self.analytics_id_var.get()
         values['analytic_name'] = self.analytics_name_var.get()
         values['analytic_description'] = self.analytics_desc_var.get()
-        values['data_source'] = self.data_source_var.get()
+        values['data_source'] = self.data_source_name_var.get()  # FIXED: Using data_source_name_var
         values['threshold_percentage'] = self.threshold_var.get()
         values['group_by'] = self.group_by_var.get()
 
@@ -797,7 +809,7 @@ class ConfigWizard:
                              any(v.get('rule', '') == 'custom_formula'
                                  for v in config.get('validations', [])))
 
-        if is_custom_formula and 'validation_params' in self.__dict__ and self.validation_params:
+        if is_custom_formula and hasattr(self, 'validation_params') and self.validation_params:
             # Find and update the custom formula validation
             for validation in config.get('validations', []):
                 if validation.get('rule') == 'custom_formula':
@@ -805,8 +817,23 @@ class ConfigWizard:
                     validation['parameters'] = self.validation_params
 
                     # Add metadata if available
-                    if 'validation_metadata' in self.__dict__ and self.validation_metadata:
+                    if hasattr(self, 'validation_metadata') and self.validation_metadata:
                         validation['metadata'] = self.validation_metadata
+
+                    # Extract fields used in the formula and add to required_fields
+                    if 'fields_used' in self.validation_params:
+                        # Ensure data_source section exists
+                        if 'data_source' not in config:
+                            config['data_source'] = {'name': self.data_source_name_var.get(), 'required_fields': []}
+
+                        # Ensure required_fields exists
+                        if 'required_fields' not in config['data_source']:
+                            config['data_source']['required_fields'] = []
+
+                        # Add fields from formula to required_fields
+                        for field in self.validation_params['fields_used']:
+                            if field not in config['data_source']['required_fields']:
+                                config['data_source']['required_fields'].append(field)
 
                     break
 
