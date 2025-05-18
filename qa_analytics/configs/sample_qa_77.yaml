@@ -1,0 +1,71 @@
+analytic_description: This analytic evaluates workpaper approvals to ensure proper
+  segregation of duties, correct approval sequences, and appropriate approval authority
+  based on job titles.
+analytic_id: 77
+analytic_name: Audit Test Workpaper Approvals
+data_source:
+  name: audit_workpaper_approvals
+  required_fields:
+  - Audit TW ID
+  - TW submitter
+  - TL approver
+  - AL approver
+  - Submit Date
+  - TL Approval Date
+  - AL Approval Date
+reference_data:
+  HR_Titles: {}
+report_metadata:
+  contact_email: qa_analytics@example.com
+  last_revised: '2025-05-01'
+  owner: Quality Assurance Team
+  review_frequency: Monthly
+  version: '1.0'
+reporting:
+  detail_required: true
+  group_by: AL approver
+  summary_fields:
+  - GC
+  - PC
+  - DNC
+  - Total
+  - DNC_Percentage
+thresholds:
+  error_percentage: 5.0
+  rationale: Industry standard for audit workpapers allows for up to 5% error rate.
+validations:
+- description: Submitter cannot be TL or AL
+  parameters:
+    approver_fields:
+    - TL approver
+    - AL approver
+    submitter_field: TW submitter
+  rationale: Ensures independent review by preventing the submitter from also being
+    an approver.
+  rule: segregation_of_duties
+- description: 'Approvals must be in order: Submit -> TL -> AL'
+  parameters:
+    date_fields_in_order:
+    - Submit Date
+    - TL Approval Date
+    - AL Approval Date
+  rationale: Maintains proper workflow sequence to ensure the Team Lead reviews before
+    the Audit Leader.
+  rule: approval_sequence
+- description: AL must have appropriate title
+  parameters:
+    allowed_titles:
+    - Audit Leader
+    - Executive Auditor
+    - Audit Manager
+    approver_field: AL approver
+    title_reference: HR_Titles
+  rationale: Ensures approval authority is limited to those with appropriate job titles.
+  rule: title_based_approval
+- description: Custom validation using Excel formula
+  parameters:
+    display_name: Custom Validation
+    original_formula: =AND(NOT(ISBLANK(`TW submitter`)), `Submit Date` <= `TL Approval
+      Date`)
+  rationale: Allows complex validation logic using familiar Excel syntax.
+  rule: custom_formula

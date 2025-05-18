@@ -10,6 +10,11 @@ template_parameters:
     data_type: formula
     required: true
     example: "Submitter <> Approver AND `Submit Date` <= `TL Date`"
+  - name: display_name
+    description: Display name for the validation result column
+    data_type: string
+    required: false
+    example: "Valid Approval Process"
 
 generated_validations:
   - rule: custom_formula
@@ -17,6 +22,7 @@ generated_validations:
     parameters_mapping:
       original_formula: "{original_formula}"
       formula: "{original_formula_parsed}"
+      display_name: "{display_name}"
 
 default_thresholds:
   error_percentage: 5.0

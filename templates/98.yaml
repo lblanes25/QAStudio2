@@ -1,0 +1,44 @@
+default_reporting:
+  detail_required: true
+  group_by: '{group_by}'
+  summary_fields:
+  - GC
+  - PC
+  - DNC
+  - Total
+  - DNC_Percentage
+default_thresholds:
+  error_percentage: 5.0
+  rationale: Standard error threshold.
+generated_validations: []
+template_category: Audit Validation
+template_description: 98test
+template_id: '98'
+template_name: 98test
+template_parameters:
+- data_type: string
+  description: Unique identifier for this analytic
+  example: ''
+  name: analytic_id
+  required: true
+- data_type: string
+  description: Descriptive name for this analytic
+  example: ''
+  name: analytic_name
+  required: true
+- data_type: data_source
+  description: Data source containing the data
+  example: ''
+  name: data_source
+  required: true
+- data_type: string
+  description: Field to group results by
+  example: ''
+  name: group_by
+  required: true
+- data_type: number
+  description: Maximum acceptable error percentage
+  example: '5.0'
+  name: threshold_percentage
+  required: true
+template_version: '1.0'

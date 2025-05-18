@@ -1,98 +1,84 @@
-# Risk Assessment Template
-# This template is designed for validating risk assessments, particularly for third party risk
+# Path: templates/risk_assessment_template.yaml
+# This is a sample template for risk assessment validations
 
-template_id: risk_assessment
-template_name: "Risk Assessment Validation"
-template_description: "Validates risk assessments to ensure proper risk ratings and completeness"
+template_id: "risk_assessment_template"
+template_name: "Third Party Risk Assessment"
+template_description: "Validates third party risk assessments for proper risk evaluation and documentation"
+template_category: "risk_assessment"
 template_version: "1.0"
-template_category: "Risk"
 
-# Parameters that need to be customized by the user
 template_parameters:
-  # Risk Assessment Fields
-  - name: entity_id_field
-    description: "Field containing the entity ID"
-    required: true
-    example: "Assessment ID"
+  - name: "analytic_id"
+    description: "Unique identifier for this analytic"
     data_type: "string"
-  
-  - name: entity_name_field
-    description: "Field containing the entity name"
     required: true
-    example: "Assessment Name"
+    example: "78"
+
+  - name: "analytic_name"
+    description: "Descriptive name for this analytic"
     data_type: "string"
-  
-  - name: owner_field
-    description: "Field containing the assessment owner"
     required: true
-    example: "Assessment Owner"
+    example: "Third Party Risk Assessment Validation"
+
+  - name: "data_source"
+    description: "Data source containing risk assessment data"
+    data_type: "data_source"
+    required: true
+    example: "third_party_risk"
+
+  - name: "vendor_field"
+    description: "Field containing the third party vendor name"
     data_type: "string"
-  
-  - name: third_party_field
-    description: "Field containing third party information"
     required: true
     example: "Third Party Vendors"
-    data_type: "string"
-  
-  - name: risk_rating_field
+
+  - name: "risk_field"
     description: "Field containing the risk rating"
+    data_type: "string"
     required: true
     example: "Vendor Risk Rating"
+
+  - name: "group_by"
+    description: "Field to group results by"
     data_type: "string"
-  
-  - name: valid_risk_ratings
-    description: "Valid risk rating values"
     required: true
-    example: "['Critical', 'High', 'Medium', 'Low', 'N/A']"
-    data_type: "list"
+    example: "Assessment Owner"
 
-  - name: risk_categories_reference
-    description: "Reference data containing risk categories"
-    required: false
-    example: "Risk_Categories"
-    data_type: "reference"
+  - name: "original_formula"
+    description: "Excel formula for validation"
+    data_type: "string"
+    required: true
+    example: "=IF(NOT(ISBLANK(Third Party Vendors)), Vendor Risk Rating<>\"N/A\", Vendor Risk Rating=\"N/A\")"
 
-# The validation rules this template will generate
+  - name: "threshold_percentage"
+    description: "Maximum acceptable error percentage"
+    data_type: "number"
+    required: true
+    example: "5.0"
+
 generated_validations:
-  - rule: third_party_risk_validation
-    description: "Risk rating must be assigned for entities with third parties"
+  - rule: "custom_formula"
+    description: "Third party risk validation"
     parameters_mapping:
-      third_party_field: "{third_party_field}"
-      risk_level_field: "{risk_rating_field}"
-  
-  - rule: enumeration_validation
-    description: "Risk rating must be a valid value"
-    parameters_mapping:
-      field_name: "{risk_rating_field}"
-      valid_values: "{valid_risk_ratings}"
+      original_formula: "{original_formula}"
+      display_name: "Third Party Risk Validation"
 
-# Example field mappings for common data sources
-example_mappings:
-  archer_risk_assessment:
-    entity_id_field: "Assessment ID"
-    entity_name_field: "Assessment Name"
-    owner_field: "Assessment Owner"
-    third_party_field: "Third Party Vendors"
-    risk_rating_field: "Vendor Risk Rating"
-    valid_risk_ratings: ["Critical", "High", "Medium", "Low", "N/A"]
-    risk_categories_reference: "Risk_Categories"
-  
-  vendor_management:
-    entity_id_field: "Vendor ID"
-    entity_name_field: "Vendor Name"
-    owner_field: "Relationship Manager"
-    third_party_field: "Subcontractors"
-    risk_rating_field: "Risk Level"
-    valid_risk_ratings: ["High", "Medium", "Low", "Not Applicable"]
-    risk_categories_reference: "Risk_Categories"
-
-# Default thresholds for this template
 default_thresholds:
-  error_percentage: 3.0
-  rationale: "Risk assessments require higher accuracy due to regulatory requirements."
+  error_percentage: 5.0
+  rationale: "Industry standard for risk assessment error threshold."
 
-# Default reporting configuration
 default_reporting:
-  group_by: "{owner_field}"
+  group_by: "{group_by}"
   summary_fields: ["GC", "PC", "DNC", "Total", "DNC_Percentage"]
   detail_required: true
+
+example_mappings:
+  third_party_risk:
+    analytic_id: "78"
+    analytic_name: "Third Party Risk Assessment Validation"
+    data_source: "third_party_risk"
+    vendor_field: "Third Party Vendors"
+    risk_field: "Vendor Risk Rating"
+    group_by: "Assessment Owner"
+    original_formula: "=IF(NOT(ISBLANK(Third Party Vendors)), Vendor Risk Rating<>\"N/A\", Vendor Risk Rating=\"N/A\")"
+    threshold_percentage: "5.0"

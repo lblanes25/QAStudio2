@@ -1,0 +1,77 @@
+default_reporting:
+  detail_required: true
+  group_by: '{group_by}'
+  summary_fields:
+  - GC
+  - PC
+  - DNC
+  - Total
+  - DNC_Percentage
+default_thresholds:
+  error_percentage: 5.0
+  rationale: Industry standard for risk assessment error threshold.
+example_mappings:
+  third_party_risk:
+    analytic_id: '78'
+    analytic_name: Third Party Risk Assessment Validation
+    data_source: third_party_risk
+    group_by: Assessment Owner
+    original_formula: =IF(NOT(ISBLANK(Third Party Vendors)), Vendor Risk Rating<>"N/A",
+      Vendor Risk Rating="N/A")
+    risk_field: Vendor Risk Rating
+    threshold_percentage: '5.0'
+    vendor_field: Third Party Vendors
+generated_validations:
+- description: Third party risk validation
+  parameters_mapping:
+    display_name: Third Party Risk Validation
+    original_formula: '{original_formula}'
+  rule: custom_formula
+template_category: risk_assessment
+template_description: Validates third party risk assessments for proper risk evaluation
+  and documentation
+template_id: risk_assessment_template
+template_name: Third Party Risk Assessment
+template_parameters:
+- data_type: string
+  description: Unique identifier for this analytic
+  example: '78'
+  name: analytic_id
+  required: true
+- data_type: string
+  description: Descriptive name for this analytic
+  example: Third Party Risk Assessment Validation
+  name: analytic_name
+  required: true
+- data_type: data_source
+  description: Data source containing risk assessment data
+  example: third_party_risk
+  name: data_source
+  required: true
+- data_type: string
+  description: Field containing the third party vendor name
+  example: Third Party Vendors
+  name: vendor_field
+  required: true
+- data_type: string
+  description: Field containing the risk rating
+  example: Vendor Risk Rating
+  name: risk_field
+  required: true
+- data_type: string
+  description: Field to group results by
+  example: Assessment Owner
+  name: group_by
+  required: true
+- data_type: string
+  description: Excel formula for validation
+  example: =IF(NOT(ISBLANK(Third Party Vendors)), Vendor Risk Rating<>"N/A", Vendor
+    Risk Rating="N/A")
+  name: original_formula
+  required: true
+- data_type: number
+  description: Maximum acceptable error percentage
+  example: '5.0'
+  name: threshold_percentage
+  required: true
+template_version: '1.0'

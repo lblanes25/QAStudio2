@@ -1,0 +1,98 @@
+default_reporting:
+  detail_required: true
+  group_by: '{group_by}'
+  summary_fields:
+  - GC
+  - PC
+  - DNC
+  - Total
+  - DNC_Percentage
+default_thresholds:
+  error_percentage: 5.0
+  rationale: Industry standard for audit workpapers allows for up to 5% error rate.
+example_mappings:
+  workpaper_approvals:
+    al_approval_date_field: AL Approval Date
+    al_approver_field: AL approver
+    analytic_id: '77'
+    analytic_name: Audit Test Workpaper Approvals
+    data_source: audit_workpaper_approvals
+    group_by: AL approver
+    submit_date_field: Submit Date
+    submitter_field: TW submitter
+    threshold_percentage: '5.0'
+    tl_approval_date_field: TL Approval Date
+    tl_approver_field: TL approver
+generated_validations:
+- description: Submitter cannot be TL or AL
+  parameters_mapping:
+    approver_fields: '[''{tl_approver_field}'', ''{al_approver_field}'']'
+    submitter_field: '{submitter_field}'
+  rule: segregation_of_duties
+- description: 'Approvals must be in order: Submit -> TL -> AL'
+  parameters_mapping:
+    date_fields_in_order: '[''{submit_date_field}'', ''{tl_approval_date_field}'',
+      ''{al_approval_date_field}'']'
+  rule: approval_sequence
+template_category: audit_validation
+template_description: Validates audit workpaper approvals for proper segregation of
+  duties and approval sequences
+template_id: audit_workpaper_template
+template_name: Audit Workpaper Approvals
+template_parameters:
+- data_type: string
+  description: Unique identifier for this analytic
+  example: '77'
+  name: analytic_id
+  required: true
+- data_type: string
+  description: Descriptive name for this analytic
+  example: Audit Test Workpaper Approvals
+  name: analytic_name
+  required: true
+- data_type: data_source
+  description: Data source containing approval data
+  example: audit_workpaper_approvals
+  name: data_source
+  required: true
+- data_type: string
+  description: Field containing the submitter name
+  example: TW submitter
+  name: submitter_field
+  required: true
+- data_type: string
+  description: Field containing the team lead approver name
+  example: TL approver
+  name: tl_approver_field
+  required: true
+- data_type: string
+  description: Field containing the audit leader approver name
+  example: AL approver
+  name: al_approver_field
+  required: true
+- data_type: string
+  description: Field containing the submission date
+  example: Submit Date
+  name: submit_date_field
+  required: true
+- data_type: string
+  description: Field containing the team lead approval date
+  example: TL Approval Date
+  name: tl_approval_date_field
+  required: true
+- data_type: string
+  description: Field containing the audit leader approval date
+  example: AL Approval Date
+  name: al_approval_date_field
+  required: true
+- data_type: string
+  description: Field to group results by
+  example: AL approver
+  name: group_by
+  required: true
+- data_type: number
+  description: Maximum acceptable error percentage
+  example: '5.0'
+  name: threshold_percentage
+  required: true
+template_version: '1.0'

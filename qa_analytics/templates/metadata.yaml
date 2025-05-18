@@ -12,18 +12,6 @@ categories:
     icon: alert-triangle
     name: Risk Assessment
 templates:
-  97test:
-    difficulty: Medium
-    suitable_for: []
-    validation_rules: []
-  '98':
-    difficulty: Medium
-    suitable_for: []
-    validation_rules: []
-  '99':
-    difficulty: Medium
-    suitable_for: []
-    validation_rules: []
   audit_workpaper_template:
     difficulty: Medium
     suitable_for:

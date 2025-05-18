@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c101dd07-7e18-47f6-97e9-80ecbb4e6e94" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/AuditQAStudio2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/automation/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/enhanced_qa_analytics_app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/reporting/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/config_wizard_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/data_sources_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/reference_data_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/run_analytics_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/scheduler_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tabs/testing_tab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/templates/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/tests/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/ui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/ui/components/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/utils/logging_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/utils/modern_theme_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qa_analytics/utils/theme_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/AuditQAStudio.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExceltoYAMLreadme.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation files/ExceltoYAMLreadme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Full_QA_Analytics_Implementation_Tracker.csv" beforeDir="false" afterPath="$PROJECT_DIR$/documentation files/Full_QA_Analytics_Implementation_Tracker.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit_workpapers_2025Q2.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/test_data/audit_workpapers_2025Q2.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit_workpapers_2025Q2.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/automation_scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/automation/automation_scheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/core/config_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_wizard.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_01.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_1.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_100.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_101.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_102.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_103.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/qa_99.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/test.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_formula_validation.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/utils/custom_formula_validation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_source_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/core/data_source_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enhanced_data_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/core/enhanced_data_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enhanced_qa_analytics.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/enhanced_qa_analytics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enhanced_qa_analytics_app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/enhanced_report_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/reporting/enhanced_report_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel-formula-enhancement-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation files/excel-formula-enhancement-plan.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel-formula-parser-tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_formula_converter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_formula_parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_formula_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_formula_test_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_formula_ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/excel_to_yaml_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/utils/excel_to_yaml_converter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/merge_data_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/utils/merge_data_source.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qa-analytics-implementation-tracker.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation files/qa-analytics-implementation-tracker.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qa_100_test_data.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qa_100_test_data.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qa_analytics.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/qa_analytics.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reference_data_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/core/reference_data_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation files/requirements.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step_tracker.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/utils/step_tracker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/templates/template_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/approval_workflow_template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/audit_workpaper_template.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/custom_formula_template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_formula_template.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/metadata.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/metadata.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/risk_assessment_template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/risk_assessment_template.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_custom_formula.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_data/preferences.json" beforeDir="false" afterPath="$PROJECT_DIR$/user_data/preferences.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validation_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/qa_analytics/core/validation_rules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vinci1it2000-formulas-v1.2.9-0-g34e3911.tar.gz" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2xEYfGCXdizdmmCAWISKuim5fHu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.enhanced_qa_analytics_app.executor": "Run",
+    "Python.template_manager.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.codeInspection.ui.actions.InspectionResultsExportActionProvider.location": "C:/Users/luria/PycharmProjects/AuditQAStudio2",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/luria/PycharmProjects/AuditQAStudio2/qa_analytics/enhanced_qa_analytics_app.py",
+    "run.code.analysis.last.selected.profile": "pProject Default"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\luria\PycharmProjects\AuditQAStudio2\qa_analytics\ui\components" />
+      <recent name="C:\Users\luria\PycharmProjects\AuditQAStudio2\qa_analytics\utils" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="enhanced_qa_analytics_app" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="AuditQAStudio2" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (AuditQAStudio2)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/qa_analytics/enhanced_qa_analytics_app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c101dd07-7e18-47f6-97e9-80ecbb4e6e94" name="Changes" comment="" />
+      <created>1747504802014</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747504802014</updated>
+    </task>
+    <servers />
+  </component>
+</project>

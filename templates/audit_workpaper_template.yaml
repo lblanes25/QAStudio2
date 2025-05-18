@@ -1,0 +1,110 @@
+# Path: templates/audit_workpaper_template.yaml
+# This is a sample template for audit workpaper validations
+
+template_id: "audit_workpaper_template"
+template_name: "Audit Workpaper Approvals"
+template_description: "Validates audit workpaper approvals for proper segregation of duties and approval sequences"
+template_category: "audit_validation"
+template_version: "1.0"
+
+template_parameters:
+  - name: "analytic_id"
+    description: "Unique identifier for this analytic"
+    data_type: "string"
+    required: true
+    example: "77"
+
+  - name: "analytic_name"
+    description: "Descriptive name for this analytic"
+    data_type: "string"
+    required: true
+    example: "Audit Test Workpaper Approvals"
+
+  - name: "data_source"
+    description: "Data source containing approval data"
+    data_type: "data_source"
+    required: true
+    example: "audit_workpaper_approvals"
+
+  - name: "submitter_field"
+    description: "Field containing the submitter name"
+    data_type: "string"
+    required: true
+    example: "TW submitter"
+
+  - name: "tl_approver_field"
+    description: "Field containing the team lead approver name"
+    data_type: "string"
+    required: true
+    example: "TL approver"
+
+  - name: "al_approver_field"
+    description: "Field containing the audit leader approver name"
+    data_type: "string"
+    required: true
+    example: "AL approver"
+
+  - name: "submit_date_field"
+    description: "Field containing the submission date"
+    data_type: "string"
+    required: true
+    example: "Submit Date"
+
+  - name: "tl_approval_date_field"
+    description: "Field containing the team lead approval date"
+    data_type: "string"
+    required: true
+    example: "TL Approval Date"
+
+  - name: "al_approval_date_field"
+    description: "Field containing the audit leader approval date"
+    data_type: "string"
+    required: true
+    example: "AL Approval Date"
+
+  - name: "group_by"
+    description: "Field to group results by"
+    data_type: "string"
+    required: true
+    example: "AL approver"
+
+  - name: "threshold_percentage"
+    description: "Maximum acceptable error percentage"
+    data_type: "number"
+    required: true
+    example: "5.0"
+
+generated_validations:
+  - rule: "segregation_of_duties"
+    description: "Submitter cannot be TL or AL"
+    parameters_mapping:
+      submitter_field: "{submitter_field}"
+      approver_fields: "['{tl_approver_field}', '{al_approver_field}']"
+
+  - rule: "approval_sequence"
+    description: "Approvals must be in order: Submit -> TL -> AL"
+    parameters_mapping:
+      date_fields_in_order: "['{submit_date_field}', '{tl_approval_date_field}', '{al_approval_date_field}']"
+
+default_thresholds:
+  error_percentage: 5.0
+  rationale: "Industry standard for audit workpapers allows for up to 5% error rate."
+
+default_reporting:
+  group_by: "{group_by}"
+  summary_fields: ["GC", "PC", "DNC", "Total", "DNC_Percentage"]
+  detail_required: true
+
+example_mappings:
+  workpaper_approvals:
+    analytic_id: "77"
+    analytic_name: "Audit Test Workpaper Approvals"
+    data_source: "audit_workpaper_approvals"
+    submitter_field: "TW submitter"
+    tl_approver_field: "TL approver"
+    al_approver_field: "AL approver"
+    submit_date_field: "Submit Date"
+    tl_approval_date_field: "TL Approval Date"
+    al_approval_date_field: "AL Approval Date"
+    group_by: "AL approver"
+    threshold_percentage: "5.0"
