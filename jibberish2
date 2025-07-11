@@ -6,120 +6,72 @@
 - Client Team: Sarah, Laleh, Cynthia (IAG Professional Practices - Board Reporting Team)
 - QA Team: Elaine, [Auditor Name]
 
-**Purpose:** To understand the design and operation of the CAE Letter and Risk Roll-up Process, including risk assessment standardization, quality validation procedures, and leadership review mechanisms.
+**Purpose:** To understand the design and operation of the annual CAE Letter and Risk Roll-up Process.
 
 ---
 
 ## Executive Summary
 
-The walkthrough of the CAE Letter and Risk Roll-up Process revealed a structured annual process that effectively aggregates risk assessments across IAG's portfolio to support board oversight. The process demonstrates clear accountability through Risk Category Owner (RCO) ownership, standardized assessment templates, and multiple levels of review including Portfolio General Auditor (PGA) approval and Independent Leadership Team (ILT) challenge. While the process operates effectively, opportunities exist to enhance formal documentation of meeting minutes and quality review criteria.
+The walkthrough of the CAE Letter and Risk Roll-up Process revealed an effectively designed annual process that aggregates risk assessments across IAG's portfolio. The process maintains clear RCO accountability while providing standardized templates and data support. Multiple review levels, including PGA approval and Independent Leadership Team challenge, ensure quality and consistency. Enhancement opportunities primarily relate to formalizing documentation practices rather than addressing control deficiencies.
 
 ## Process Overview
 
-The CAE Letter represents IAG's annual comprehensive risk assessment communication to audit committees, synthesizing individual risk category evaluations into an integrated view of the organization's risk landscape. The Risk Roll-up Process that supports this letter operates on an annual cycle beginning in September/October and concluding with final approval in January, aligned with audit committee reporting schedules.
+The CAE Letter represents IAG's annual comprehensive risk assessment communication to audit committees. Supporting this letter, the Risk Roll-up Process operates from September through January, culminating in board committee presentations. The Board Reporting Team facilitates this process while Risk Category Owners maintain responsibility for their individual assessments and ratings.
 
-During our walkthrough, the Board Reporting Team demonstrated how they facilitate this process while maintaining appropriate RCO accountability for risk assessments. The process incorporates regulatory considerations, particularly OCC Heightened Standards for bank-affiliated portions, and includes systematic procedures for identifying and reconciling discrepancies between internal audit and second-line risk assessments.
+## Process Walkthrough
 
-## Detailed Process Walkthrough
+### Process Initiation and Standardization
 
-### Phase 1: Process Initiation and Standardization (September/October)
+The annual cycle begins in September or October when the Board Reporting Team sends a comprehensive kickoff email to all Risk Category Owners. Sarah explained that this communication establishes the framework for the entire process, detailing RCO responsibilities, setting the November submission deadline, and providing the standardized Risk Roll-up Assessment Template.
 
-The annual Risk Roll-up Process begins with a structured initiation phase designed to ensure consistency and clarity across all risk categories. Sarah explained that the Board Reporting Team sends a comprehensive kickoff email to all Risk Category Owners in September or October, marking the formal commencement of the assessment cycle. This communication serves multiple purposes beyond simple notification.
+The team provides substantial data support with this initial communication. Each RCO receives their prior year's assessment results, current audit findings relevant to their risk category, updated MRA status reports, and trend analyses covering multiple years. This supporting information enables informed assessments while maintaining RCO independence in reaching conclusions.
 
-The kickoff email details specific responsibilities for each RCO, establishing clear expectations for the assessment process. It sets a firm November deadline for initial submissions, providing approximately 6-8 weeks for RCOs to complete their evaluations. Importantly, the email includes the standardized Risk Roll-up Assessment Template that all RCOs must use, ensuring consistency in format and content across diverse risk categories.
+All templates and supporting materials are stored centrally in SharePoint, ensuring version control and accessibility. Laleh emphasized a critical principle: while the Board Reporting Team provides comprehensive analytical support, each RCO retains sole accountability for their assessment content and risk ratings. This structure preserves the independence of risk assessments while ensuring consistency in approach.
 
-Accompanying the template, the Board Reporting Team provides compiled quantitative data and analysis to support RCO assessments. This supporting information includes prior year assessment results for comparative analysis, updated audit findings relevant to each risk category, matters requiring attention (MRA) data with current status, regulatory developments impacting specific risk areas, and trend analysis showing multi-year patterns. Laleh emphasized that while the team provides comprehensive data support, the final assessment and risk rating decisions remain entirely within each RCO's discretion and accountability.
+### RCO Assessment Process and Quality Validation
 
-The standardized Risk Roll-up Assessment Templates are stored centrally in a designated SharePoint location, providing a single source of truth for all participants. This centralized repository ensures version control and allows RCOs to access historical templates for reference. The templates themselves have been designed to balance standardization with flexibility, incorporating required fields for consistency while allowing narrative sections for RCO-specific insights and forward-looking commentary.
+Throughout October and November, RCOs work independently to complete their assessments using the standardized templates. The Board Reporting Team remains available for consultation, maintaining a log of common questions to ensure consistent guidance across risk categories. This support proves particularly valuable for newer RCOs or those addressing emerging risk areas without extensive historical precedent.
 
-### Phase 2: Data Compilation and RCO Support (October/November)
+The templates require RCOs to address several key elements. They must provide their current risk rating with detailed rationale, explain any changes from prior year ratings, incorporate relevant audit findings, consider regulatory developments, and articulate forward-looking risk considerations. The structured format ensures comprehensive coverage while allowing flexibility for risk-specific insights.
 
-Following process initiation, the Board Reporting Team shifts into an active support role, working to ensure RCOs have access to comprehensive data for their assessments. This phase demonstrates the collaborative nature of the process while maintaining clear boundaries of accountability.
+As submissions arrive in November, the Board Reporting Team performs initial quality validation. They verify template completeness, check mathematical accuracy of quantitative metrics, ensure consistency between narratives and assigned ratings, and confirm alignment with provided supporting data. When issues arise, the team works directly with RCOs to resolve discrepancies. Cynthia noted that approximately 20-30% of submissions require two to three rounds of clarification before finalization.
 
-The team explained their systematic approach to data compilation. They extract relevant metrics from multiple sources including Veracity for audit finding trends, regulatory reporting systems for MRA and enforcement action updates, committee reporting packages for prior period assessments, and external sources for industry benchmarking where applicable. This data is then organized by risk category and provided to RCOs in a standardized format that facilitates year-over-year comparison and trend identification.
+A crucial control point occurs with the Portfolio General Auditor approval requirement. Each assessment must receive PGA approval before acceptance, and this review involves substantive evaluation rather than mere administrative sign-off. The PGA considers the assessment's conclusions, supporting evidence, and alignment with broader portfolio perspectives.
 
-A critical aspect of this phase involves the balance between support and independence. While the Board Reporting Team provides extensive analytical support, they emphasized that RCOs retain sole accountability for the content and ratings in their submissions. This structure ensures that risk assessments reflect the professional judgment of subject matter experts while benefiting from consistent data and analytical support.
+### Leadership Review and Challenge
 
-The team also provides consultative support during this phase, fielding questions about template completion, data interpretation, and assessment methodology. They maintain a log of common questions and responses to ensure consistent guidance across all risk categories. This approach has proven particularly valuable for newer RCOs or those dealing with emerging risk areas that may not have extensive historical data.
+The December Independent Leadership Team review represents a critical governance milestone. The ILT, including the Chief Audit Executive, convenes to review all risk assessments collectively. This holistic approach enables identification of cross-portfolio themes and potential inconsistencies in rating methodologies.
 
-### Phase 3: RCO Assessment Completion and Quality Validation (November)
+The team demonstrated how the ILT systematically compares internal audit assessments with second-line risk ratings. When discrepancies arise, they conduct root cause analysis to understand the differences. For instance, they described a situation where internal audit rated operational risk as "High" while the second-line assessed it as "Moderate-High." Investigation revealed different weightings of recent control enhancements, leading to additional evidence gathering to support the final determination.
 
-The November assessment phase represents the core execution period for the Risk Roll-up Process. RCOs work independently to complete their risk assessments using the provided templates and supporting data. The walkthrough revealed several key design features that promote quality and consistency during this critical phase.
+While the challenge process operates effectively, the team acknowledged that formal meeting minutes are not prepared. Instead, they maintain documentation through meeting agendas, email threads capturing challenge questions and responses, and follow-up communications summarizing decisions. Sarah recognized that formal minutes would enhance the governance record, though the current approach provides an adequate audit trail.
 
-Each RCO must complete specific sections of the assessment template that address current period risk rating with supporting rationale, comparison to prior year ratings with explanation of changes, key audit findings impacting the risk assessment, regulatory developments and their potential impact, forward-looking risk considerations, and thematic issues identified across the portfolio. The template's structured format ensures that all essential elements are addressed while providing flexibility for RCO-specific insights.
+### Finalization and Board Integration
 
-Quality validation begins as RCOs submit their completed assessments. The Board Reporting Team performs an initial review focusing on completeness of all required template sections, mathematical accuracy of quantitative metrics, consistency between narrative explanations and assigned ratings, and alignment with supporting data provided. When issues are identified, the team works directly with RCOs to resolve discrepancies or obtain additional information. Cynthia noted that this iterative process typically involves 2-3 rounds of clarification for approximately 20-30% of submissions.
+January brings the final phase of the process, with activities carefully orchestrated to meet committee reporting deadlines. RCOs may perform "true-ups" to incorporate year-end data, with any material changes requiring expedited PGA review. The CAE provides final approval for all assessments between January 10-17, timing that aligns precisely with committee material preparation schedules.
 
-An important control point occurs with the Portfolio General Auditor (PGA) approval requirement. Each RCO must obtain their PGA's approval before the assessment is considered final. This approval is not merely administrative but involves substantive review of the assessment's conclusions and supporting rationale. The PGA review adds an additional layer of quality control and ensures alignment with broader portfolio perspectives.
+The Board Reporting Team then synthesizes individual assessments into the CAE Letter narrative. They draft initial content using standardized language while preserving RCO-specific insights, submit the draft for CAE review and revision, and integrate the final letter into committee packages. The resulting communication provides audit committees with comprehensive insight into IAG's risk landscape, highlighting key themes and emerging concerns.
 
-### Phase 4: Leadership Review and Challenge Process (December)
+## Special Considerations
 
-The December Independent Leadership Team (ILT) review represents a critical governance milestone in the Risk Roll-up Process. This phase introduces systematic challenge and validation of the consolidated risk assessments before they are finalized for board reporting.
+### Regulatory Integration
 
-The ILT, comprising senior IAG leadership including the Chief Audit Executive, convenes to review all risk category assessments collectively. This holistic review enables identification of cross-portfolio themes and potential inconsistencies in risk rating approaches. The team provided examples of how preliminary ratings based on December data undergo scrutiny, with particular attention paid to significant rating changes from prior periods, inconsistencies between related risk categories, alignment with second-line risk assessments, and coverage of emerging risks or regulatory concerns.
+For bank-affiliated entities, OCC Heightened Standards requirements receive particular attention throughout the process. Templates include specific sections addressing regulatory compliance, documentation requirements are enhanced for regulated entities, and ILT reviews include participation from compliance representatives. This regulatory integration has become increasingly important as examination standards continue to evolve.
 
-A notable feature of the ILT review involves the systematic comparison with second-line risk ratings. The team demonstrated how discrepancies between internal audit and second-line assessments are identified and analyzed. For example, they shared an instance where internal audit rated operational risk as "High" while the second-line assessed it as "Moderate-High." This variance triggered a root cause analysis that revealed differences in weighting recent control enhancements, ultimately resulting in additional evidence gathering to support the final rating determination.
+### Escalation Procedures
 
-The challenge process operates through structured discussion and documentation. While formal meeting minutes are not prepared, the team maintains evidence of the review through meeting agendas dated for each session, email threads documenting specific challenge questions and RCO responses, follow-up communications summarizing rating changes or enhancement requests, and action items for additional analysis or evidence gathering. Sarah acknowledged that while this documentation approach provides an audit trail, formal minutes would enhance the governance record.
+The process includes well-defined escalation paths for both timing and quality issues. For late submissions, escalation begins with reminder emails to RCOs, progresses to PGA involvement if needed, and ultimately may require CAE notification. As a last resort, prior period assessments may be used with appropriate disclosure. Quality escalations focus on resolution through specific feedback, focused review sessions, and subject matter expert involvement when needed.
 
-### Phase 5: Finalization and Integration (January)
+## Enhancement Opportunities
 
-The final phase of the Risk Roll-up Process occurs in January, with activities carefully timed to align with audit committee reporting schedules. This phase demonstrates the integration between the risk assessment process and broader committee reporting activities.
+While the Risk Roll-up Process operates effectively, several opportunities could strengthen documentation and governance. Developing formal quality criteria would move beyond professional judgment to provide explicit standards for assessment reviews. This would enhance consistency, clarify RCO expectations, and facilitate training of new team members.
 
-True-up procedures in January ensure that year-end data is fully reflected in the risk assessments. RCOs may update their assessments based on December 31 metrics, final audit results, or late-breaking regulatory developments. These updates follow an expedited review process given the compressed timeline, with PGA approval required for any material changes to previously reviewed assessments.
+Implementing formal ILT meeting minutes would create a consolidated governance record. While current email documentation provides an audit trail, formal minutes would better capture discussion nuances, document decision rationale, and demonstrate the robustness of the challenge process for regulatory reviews.
 
-The CAE provides final approval for all risk assessments before they are incorporated into the audit committee deck. This approval typically occurs between January 10-17, aligned with committee material preparation schedules. The team emphasized that this timing is critical and closely managed to ensure no delays in the broader committee reporting process.
-
-Integration with committee materials involves synthesizing individual risk assessments into the CAE Letter narrative. The Board Reporting Team drafts the initial letter using standardized language for risk descriptions while preserving RCO-specific insights and conclusions. The draft undergoes CAE review and revision before final incorporation into committee packages. The resulting CAE Letter provides audit committees with a comprehensive view of IAG's risk assessment, highlighting key themes, emerging risks, and areas requiring enhanced focus.
-
-### Phase 6: Regulatory and Compliance Considerations
-
-Throughout the walkthrough, the team emphasized how regulatory requirements are embedded within the Risk Roll-up Process. For bank-affiliated entities, OCC Heightened Standards requirements receive particular attention, influencing both the assessment methodology and reporting format.
-
-The process incorporates regulatory considerations through multiple mechanisms. Risk assessment templates include specific sections addressing regulatory expectations and compliance status. RCOs must explicitly consider recent examination findings and regulatory guidance in their assessments. The ILT review includes participation from compliance and regulatory relations representatives to ensure appropriate regulatory perspective. Final assessments are reviewed against regulatory requirements before board distribution.
-
-Special procedures apply for assessments affecting regulated bank entities. These assessments undergo additional review to ensure compliance with heightened standards for risk governance frameworks. Documentation requirements are enhanced to demonstrate consideration of regulatory expectations. The team noted that this regulatory integration has become increasingly important as examination standards evolve.
-
-## Process Controls and Escalation Procedures
-
-The walkthrough revealed well-defined escalation procedures for managing process exceptions and timing issues. These procedures ensure that the annual cycle completes successfully despite potential individual delays or quality issues.
-
-For late submissions, the process includes escalation emails sent to RCOs who miss initial deadlines, PGA involvement to expedite completion and approval, CAE notification for persistent delays impacting overall timeline, and potential use of prior period assessments with appropriate disclosure if updates cannot be obtained. The team provided an example from the current cycle where a technology risk assessment was submitted late due to competing priorities. The escalation process resulted in PGA intervention and successful completion within the extended deadline, with no impact to the overall committee reporting schedule.
-
-Quality-related escalations follow a different path, focusing on resolution rather than timeline management. When significant quality issues are identified, the Board Reporting Team provides specific feedback and required corrections, schedules focused review sessions with affected RCOs, involves subject matter experts for technical risk areas if needed, and may request PGA involvement for persistent quality concerns. The team emphasized that quality escalations are rare due to the standardized templates and upfront guidance provided.
-
-## Documentation and Evidence Retention
-
-The Risk Roll-up Process maintains comprehensive documentation to support both internal quality assurance and potential regulatory review. The team demonstrated their structured approach to evidence retention across multiple repositories.
-
-SharePoint serves as the primary repository for process documentation, including all versions of Risk Roll-up Assessment Templates, completed assessments with approval evidence, supporting data packages provided to RCOs, and process guidance documents. The centralized storage enables efficient retrieval and version control while maintaining appropriate access restrictions.
-
-Email communications provide important supplementary documentation, particularly for the approval and challenge processes. The team retains kickoff communications with process timeline and requirements, PGA approval emails for each risk assessment, ILT challenge questions and RCO responses, and final CAE approval for committee integration. While email retention follows IAG standards, the team acknowledged that consolidating key decisions into formal documentation would enhance the governance record.
-
-## Opportunities for Enhancement
-
-While the Risk Roll-up Process operates effectively to support the CAE Letter and board oversight, the walkthrough identified several opportunities for enhancement that could further strengthen the process.
-
-Documentation of quality criteria represents a primary opportunity. Currently, the Board Reporting Team applies professional judgment in assessing submission quality without formal documented criteria. Developing explicit quality standards would enhance consistency and transparency in the review process, provide clearer expectations for RCOs, and facilitate training of new team members.
-
-Meeting minute formalization for ILT reviews would strengthen governance documentation. While current email-based documentation provides an audit trail, formal minutes would create a consolidated record of discussions and decisions, enhance accountability for follow-up actions, and provide clearer evidence of the challenge process for regulatory review.
-
-The team also identified potential enhancements to the risk assessment templates themselves. Considerations include incorporating more quantitative risk indicators to supplement qualitative assessments, enhancing forward-looking risk sections to better capture emerging threats, and developing risk category-specific template variations while maintaining overall standardization.
-
-## Integration with Broader Governance Framework
-
-The CAE Letter and Risk Roll-up Process operates as a critical component of IAG's broader governance framework. The walkthrough revealed multiple integration points that ensure risk assessments inform ongoing audit activities and governance decisions.
-
-Risk assessments directly influence audit planning for the subsequent year, with higher-rated risk areas receiving enhanced audit coverage. The CAE Letter provides audit committees with essential context for understanding audit results and resource allocation decisions. Themes identified through the roll-up process inform IAG's continuous monitoring activities and may trigger special projects or deep-dive reviews.
-
-The process also supports regulatory dialogue by providing a comprehensive view of IAG's risk perspective. Regulators frequently request the CAE Letter as part of their examination procedures, recognizing its value in understanding internal audit's independent assessment of organizational risks. The standardized methodology and comprehensive documentation support regulatory confidence in the assessment process.
+The team also identified potential template enhancements, including incorporation of more quantitative risk indicators, expansion of forward-looking risk sections, and development of risk category-specific variations while maintaining overall standardization.
 
 ## Conclusion
 
-The CAE Letter and Risk Roll-up Process demonstrates effective design in aggregating risk assessments across IAG's portfolio while maintaining appropriate RCO accountability. The process successfully balances standardization with professional judgment, incorporates multiple levels of review and challenge, and provides audit committees with meaningful insights into organizational risks.
+The CAE Letter and Risk Roll-up Process effectively fulfills its objective of providing audit committees with an independent, comprehensive view of organizational risks. The process successfully balances standardization with professional judgment, maintains appropriate RCO accountability, and incorporates multiple review levels to ensure quality.
 
-Key strengths observed during the walkthrough include standardized templates that promote consistency while preserving RCO discretion, comprehensive data support that enables informed risk assessments, multi-level review processes including PGA approval and ILT challenge, clear escalation procedures for managing exceptions, and integration with regulatory requirements and broader governance processes.
-
-The identified enhancement opportunities primarily relate to formal documentation rather than process design. Implementing formal quality criteria and meeting minutes would strengthen an already effective process. The Board Reporting Team's facilitation of this annual process provides important support to IAG's governance responsibilities while maintaining appropriate independence and objectivity in risk assessments.
-
-Through this structured approach to risk aggregation and reporting, IAG effectively fulfills its obligation to provide audit committees with an independent, comprehensive view of organizational risks, supporting informed governance decisions and regulatory compliance.
+The identified enhancement opportunities represent refinements to strengthen documentation and governance rather than remediation of control deficiencies. Through this structured approach to risk assessment and reporting, IAG demonstrates strong support for board oversight responsibilities and regulatory compliance requirements.
