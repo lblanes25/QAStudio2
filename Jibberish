@@ -3,7 +3,7 @@
 
 **Date:** May 13, 2025  
 **Participants:**
-- Client TeA,B,C (IAG Professional Practices - Board Reporting Team)
+- Client Team: Sarah, Laleh, Cynthia (IAG Professional Practices - Board Reporting Team)
 - QA Team: Elaine, [Auditor Name]
 
 **Purpose:** To understand the design and operation of the committee reporting process, including validation procedures, regulatory compliance framework, and international committee coordination.
@@ -12,112 +12,58 @@
 
 ## Executive Summary
 
-The walkthrough of the committee reporting process revealed a well-designed system with significant improvements since the prior review conducted four years ago. The IAG Professional Practices - Board Reporting Team has implemented comprehensive standard operating procedures, formal regulatory mapping, and robust data validation processes that effectively address previous audit findings. The process demonstrates strong controls over data accuracy, regulatory compliance, and appropriate approval workflows.
+The walkthrough of the committee reporting process revealed significant improvements since the prior review conducted four years ago. The Board Reporting Team has successfully implemented comprehensive standard operating procedures, formal regulatory mapping, and robust data validation processes that address previous audit findings. The process demonstrates effective controls over quarterly committee reporting for five of six board committees.
 
 ## Process Overview
 
-The committee reporting process encompasses the preparation of materials for multiple board committees on a quarterly basis. The Board Reporting Team maintains responsibility for five of six committees, with one committee handled by a separate team. The process follows a structured timeline beginning 4-8 weeks prior to committee meetings and concludes with distribution through BoardVantage four business days before each meeting.
+The committee reporting process follows a structured timeline beginning 4-8 weeks before each quarterly committee meeting. During our walkthrough, the team demonstrated how they transform raw audit data into comprehensive board materials while ensuring regulatory compliance with FRB SR-13-1 and OCC Heightened Standards. The process culminates with secure distribution through BoardVantage four business days before each meeting.
 
-During our walkthrough, we observed that the process has evolved significantly to incorporate regulatory requirements from FRB SR-13-1, OCC Heightened Standards, and other applicable guidance. The team demonstrated a systematic approach to data collection, validation, and report preparation that ensures accurate and timely delivery of committee materials.
+## Process Walkthrough
 
-## Detailed Process Walkthrough
+### Initial Planning and Preparation
 
-### Phase 1: Process Initiation and Preparation (4-8 Weeks Prior)
+The process begins with the team retrieving the prior year's committee deck from the shared drive, which serves as their baseline template. Sarah explained that this approach ensures consistency while allowing for periodic updates and improvements. During the planning phase, the team reviews multiple inputs including the committee charter requirements, annual reporting calendars, and agenda topics provided by the Corporate Secretary's Office.
 
-The committee reporting process begins with the retrieval of the prior year's deck from the shared drive, which serves as the baseline template for the current period's reporting. Sarah explained that this approach ensures consistency while allowing for iterative improvements and updates specific to each reporting cycle.
+A critical early step involves establishing the reporting cut-off date in coordination with the Vice President. These dates, typically aligned with month or quarter-end, define the "as-of date" for all reported information. Laleh emphasized that while these cut-offs provide necessary structure, the process accommodates post-cutoff inclusion of significant developments with appropriate CAE approval and disclosure.
 
-The team conducts several preparatory review activities during this phase. They examine the Audit Committee presentation topics and timelines in the deliverable calendar to ensure all required elements will be addressed throughout the year. The prior year's Audit Committee package undergoes review to maintain continuity and identify any items that may have been deferred to later periods. The Committee Charter Checklist provides the framework for ensuring all mandated requirements are met, while agenda topics provided by the Corporate Secretary's Office (CSO) are verified for accuracy.
+### Regulatory Compliance Framework
 
-A critical element of this phase involves establishing the reporting cut-off period in coordination with the Vice President. These cut-off dates, typically aligned with quarter-end or month-end dates, create the "as-of date" for reporting purposes. Laleh emphasized that while the cut-off provides structure, significant audit results and developments may be incorporated after the cut-off date when required. In such instances, the Chief Audit Executive (CAE) communicates the decision to include post-cutoff content and provides updates either verbally or within the committee reporting package, with supplemental information in subsequent reports.
+The team has developed a comprehensive regulatory mapping framework that represents a significant improvement from the prior review. Previously, the review noted that regulatory requirements were considered without specific reference or documentation. Now, the team maintains formal mapping that explicitly links each report component to its regulatory source, whether from FRB SR-13-1, OCC Heightened Standards, or other applicable guidance.
 
-### Phase 2: Regulatory Compliance Framework
+This mapping undergoes validation through multiple mechanisms. The team received a favorable external quality assessment from EY and conducts periodic third-party reviews focused on specific areas like AML compliance. During each reporting cycle, they cross-reference their content against this regulatory mapping to ensure no required elements are omitted.
 
-During the walkthrough, the team demonstrated their comprehensive regulatory compliance framework. The regulatory mapping is cross-referenced during each reporting cycle to ensure no required items are missed. This mapping covers FRB SR-13-1, OCC Heightened Standards, and other applicable guidance specific to each committee's oversight responsibilities.
+### Data Collection and Validation
 
-The team has established external validation mechanisms to confirm regulatory compliance. They highlighted the EY external quality assessment, which provided a favorable result, and third-party AML-focused reviews that offer additional assurance. This multi-layered approach to regulatory compliance represents a significant improvement from the prior review, which indicated that requirements were reviewed without specific regulatory reference. The current process now includes formal regulatory mapping that explicitly links each content element to its corresponding regulatory requirement.
+Approximately four weeks before the committee meeting, the Board Reporting Team initiates formal data requests to various teams across IAG. The Professional Practices team provides audit plan status, findings data, and regulatory information. The CPI Team supplies IT MRA and Audit Next Gen updates, while the QA Director provides quality assurance metrics. Administrative updates come from the Director of Operations, and the Chief of Staff provides staffing metrics through the Project Triangle system.
 
-### Phase 3: Data Collection and Validation (4 Weeks Prior)
+The team accesses Veracity through https://veracity.aexp.com/#/iag/committee to extract automated reports. The system provides two primary data streams: regulatory action plan information and audit plan/findings data. After filtering by committee and timeframe, they export the data for integration into the committee materials.
 
-The data collection phase begins approximately four weeks before the committee meeting. The Board Reporting Team initiates requests for supporting documentation from various data owners across IAG. These requests follow a standardized format and timeline to ensure timely receipt of all necessary information.
+The critical validation step occurs two weeks before the meeting. Cynthia demonstrated how they reconcile the Veracity extractions against three manually-maintained Excel reports stored at \\nyc-fs01.aexp.com\Group30\IAG\Reporting\Monthly Reports. The Issue Management Report (ME-1) provides comprehensive finding details, the RAP All Report tracks regulatory actions, and the Audit Reports Issued Log confirms audit activity completeness. When discrepancies arise, the team investigates root causes and makes necessary corrections. For system-related issues, they engage support teams who create user stories for permanent fixes.
 
-The team accesses two primary system options for preset reporting files through Veracity. Option 1 provides regulatory action plan data, including MRA status, corrective actions, and regulatory finding details. Option 2 contains audit plan and findings information, encompassing planned, in-progress, and completed audits with associated findings and ratings. Sarah demonstrated the system navigation, showing how data is filtered by specific committee requirements and relevant timeframes to ensure appropriate scope for each committee package.
+### Content Development and Review
 
-Supporting documentation requests are sent to multiple teams across IAG. The audit plan, findings, and regulatory data come from the Professional Practices team. IT MRA and Audit Next Gen information is sourced from the CPI Team. Quality assurance updates are obtained from the QA Director, while administrative updates come from Professional Practices and the Director of Operations. The IAG Chief of Staff provides Project Triangle staffing information, and special projects are incorporated as needed based on current initiatives and committee interests.
+The validated data is incorporated into a standardized package structure. The Executive Summary spans 1-6 pages and includes the CAE's key messages and risk framework assessment. The Full Committee Report, typically 60-80 pages, provides detailed audit results, findings summaries, and regulatory updates. Appendices vary by committee needs, while Executive Session materials address confidential matters separately.
 
-Once materials are received, the Board Reporting Team reviews and updates them to ensure formatting consistency and content appropriateness. This review process includes verifying that all data aligns with the established reporting cut-off date and that any updates or changes from prior periods are accurately reflected.
+The review process follows the IAG Approval Matrix with multiple checkpoints. After initial VP review, materials undergo detailed CAE review with incorporated changes tracked throughout. Final approval comes via email from the CAE, which the team retains as evidence. No materials can be distributed without this documented approval. The approved packages are submitted to the Corporate Secretary's Office, who uploads them to BoardVantage four business days before the meeting.
 
-### Phase 4: Data Validation and Reconciliation (2 Weeks Prior)
+### International Committee Coordination
 
-The data validation phase represents one of the most critical control points in the process. After the reporting cut-off period, the team extracts automated reporting from Veracity by navigating to the Committee – Audit Plan & Findings Related screen through the link https://veracity.aexp.com/#/iag/committee. Using the "Print All Pages" function from the right-hand side arrow down menu, they capture comprehensive data for the reporting period.
+Cynthia explained her role in coordinating international committee reporting, which operates as an extension of the domestic process rather than a separate function. Regional audit teams receive the base U.S. materials and adapt them for local requirements while maintaining global consistency. The standing agenda includes audit plan status, findings summaries, and subsidiary-specific highlights. Most materials remain in English, though teams in certain markets like Russia may prepare complete packages in local languages when necessary.
 
-The cornerstone of data accuracy lies in the manual reconciliation process. The team validates all committee deck data against three manually-managed Excel reports maintained by the Professional Practices team. The Issue Management Report on Findings provides comprehensive tracking of all audit findings, including status, aging, past due indicators, bank impact assessments, and potential customer harm evaluations. This report is stored at \\nyc-fs01.aexp.com\Group30\IAG\Reporting\Monthly Reports. The Regulatory Report – RAP All Report offers complete regulatory action plan tracking, covering all regulatory findings, management action plan status, implementation timelines, and validation results. The Audit Reports Issued Log serves as the master record of all audit reports issued during the reporting period, including report dates, ratings, key findings, and follow-up requirements.
+## Key Systems and Infrastructure
 
-Cynthia walked us through the error resolution process, demonstrating how the team addresses any discrepancies identified during reconciliation. Edits are made to address inaccuracies or incomplete information, with clear documentation of changes and rationale. For system modifications or automation errors, the team contacts the appropriate support group, who creates user stories and requirements before collaborating with the technology team to implement fixes. This structured approach to error resolution ensures that data integrity is maintained throughout the reporting process.
-
-### Phase 5: Content Development and Structure
-
-The content development phase transforms validated data into comprehensive committee materials. Each reporting cycle follows a consistent deliverable format that has been refined over multiple iterations. The Executive Summary, typically spanning 1-6 pages, contains the CAE's key messages on overall audit results, audit plan status, and key risk framework assessments. It includes the CAE's evaluation of the design and ongoing effectiveness of the Risk Governance Framework, IAG's regulatory update with MRA validation status and corrective actions progress, and ad hoc coverage of industry hot topics or company initiatives as relevant.
-
-The Full Committee Report, ranging from 60-80 pages, provides detailed coverage of audit activities and results. This section includes audit plan results with variance analysis, IAG reports issued summary with rating distributions, internal audit findings summary with significant findings tracking, regulatory findings validation updates, IAG administration updates covering staffing and organizational changes, and the annual internal audit plan, budget, and risk assessment when applicable.
-
-Appendices vary in length and content based on committee requirements and may include the IAG Charter, Internal Audit Policy, and other reference materials. Executive Session materials are prepared as separate documents and include reports of investigations, fraud incidents, whistleblower complaints, and significant ethical violations requiring confidential discussion.
-
-The team emphasized that while the core template remains consistent, each committee report is customized and updated to reflect current issues and developments. The main company report is generally created first and serves as the template for other entity-specific reports, with appropriate modifications for scope and regulatory requirements.
-
-### Phase 6: Review and Approval Process (1 Week Prior)
-
-The review and approval phase demonstrates strong governance over the committee reporting process. Materials undergo multiple levels of review as specified in the IAG Approval Matrix. The process begins with the Vice President's review of draft materials, followed by structured review sessions with the CAE to ensure all requested changes are captured and key messages are appropriately emphasized.
-
-Final CAE approval is obtained via email and retained in the team's shared drive as evidence of authorization to proceed with distribution. This approval must be received before any materials can be submitted to the CSO for processing. The team maintains clear documentation of all approval steps, including reviewer comments and resolution of any identified issues.
-
-Quality assurance activities during this phase include verification that all required elements from the Committee Charter Checklist are addressed. The package undergoes review against regulatory requirements to ensure comprehensive coverage. Required elements are systematically verified, including audit plan results, reports issued summary, audit findings summary with appropriate detail, regulatory findings summary with current status, administrative updates reflecting organizational changes, staffing summary with key metrics, initiative updates on strategic projects, audit plan changes with supporting rationale, and reports of whistleblower claims, fraud situations, and significant ethics violations as applicable.
-
-Preparation for committee presentations includes conducting prep sessions before the formal briefing meetings and developing talking points for presenters. The team noted that presenter assignments vary by committee, with Eduardo presenting to bank committees on behalf of the CAE, while the CAE presents directly to the main company committee.
-
-### Phase 7: Distribution and Storage
-
-The distribution process operates under strict controls to ensure authorized and timely delivery of committee materials. Final approved materials are submitted to the Corporate Secretary's Office via email, with copies retained in the Professional Practices team shared drive. The CSO uploads materials to BoardVantage four business days prior to each meeting, providing committee members adequate time for review while maintaining security over sensitive information.
-
-Document management follows structured protocols for retention and access control. All committee material drafts, final versions, and approval documentation are stored in designated shared drive locations according to IAG's retention policy. The primary storage location at \\nyc-fs01.aexp.com\Group30\IAG\2. Departmental Management & Administration maintains restricted access limited to Professional Practices team members. Source reports used for validation are maintained at \\nyc-fs01.aexp.com\Group30\IAG\Reporting\Monthly Reports.
-
-Version control procedures ensure clear identification of final approved versions, preventing inadvertent distribution of draft materials. The team demonstrated how version naming conventions and folder structures support easy retrieval of historical materials when needed for reference or regulatory examination.
-
-## International Committee Coordination
-
-The international committee reporting process operates as an extension of the domestic process, with Cynthia serving as the process owner. She explained the partnership model used to collaborate with regional audit leads in replicating U.S. committee content while addressing local requirements and regulations.
-
-International committee materials follow the same quality standards as domestic reports but are tailored to address specific regional considerations. The standing agenda items include audit plan status sourced from the Professional Practices team, audit findings summary sourced from Veracity and validated with the Issue Management Report, Data Driven Continuous Audits (DDCA) information from the DDCA team, identification of any "Needs Improvement" audits, administration and staffing updates extracted from the parent company deck, and key finding highlights specific to each subsidiary.
-
-The process accommodates language requirements, with most materials prepared in English but allowing for local market teams to prepare materials end-to-end in local languages when necessary, such as for Russia. Regional teams maintain flexibility to adjust materials based on local regulatory requirements and committee expectations while ensuring consistency with global IAG standards. Quality control is maintained through the partnership approach, with regional teams able to modify content as needed before formal submission and presentation to their respective committees.
-
-## Key Systems and Technology
-
-The committee reporting process relies on several critical systems and technology platforms. Veracity serves as the primary system for automated reporting extraction and data management, providing standardized reports that form the foundation for committee materials. The team uses structured shared drives for document storage, collaboration, and version control, with defined folder structures and access restrictions. BoardVantage functions as the final distribution platform, providing secure access for committee members to review materials before meetings.
-
-The data flow follows a systematic path from extraction through final distribution. Automated data is pulled from Veracity using standardized procedures and preset queries. This data undergoes manual reconciliation against Excel-based tracking reports to ensure accuracy and completeness. Validated information is then integrated into PowerPoint format for final presentation, maintaining consistency with established templates while allowing for period-specific updates and enhancements.
-
-## Meeting Cadence and Special Considerations
-
-Meeting frequency is determined by each committee's charter, with most committees meeting quarterly. The CSO defines the official schedule on a quarterly basis, including coordination with the overall corporate calendar. The team noted that 2025 presented unique challenges, with five meetings held instead of the usual four due to heavy fourth-quarter reporting requirements. This led to the introduction of an October mini-update to help manage workload distribution and ensure timely delivery of all required information.
-
-Special processes exist for certain reporting requirements. The Comprehensive Capital Analysis and Review (CCAR) process requires additional coordination, with the Board Reporting team facilitating timing and scheduling rather than performing traditional control activities. The team sets up CAE review sessions and issues reminders to relevant audit teams to ensure all CCAR-related content is prepared according to regulatory timelines.
+The process relies on three primary technology platforms. Veracity serves as the central data repository and reporting engine. The shared drive infrastructure provides controlled document storage, with primary materials at \\nyc-fs01.aexp.com\Group30\IAG\2. Departmental Management & Administration and source reports at \\nyc-fs01.aexp.com\Group30\IAG\Reporting\Monthly Reports. BoardVantage provides the secure distribution platform for committee member access.
 
 ## Improvements Since Prior Review
 
-The walkthrough revealed substantial improvements in the committee reporting process since the prior review conducted four years ago. These enhancements directly address previous audit findings and demonstrate the team's commitment to continuous improvement.
+The walkthrough revealed substantial enhancements addressing previous audit findings. The team has created detailed standard operating procedures that resolve the prior finding regarding "IAG manual inconsistencies and lack of desk procedures." They've implemented formal regulatory mapping that explicitly connects requirements to report content, replacing the previous informal approach. Quality assurance now includes systematic multi-source reconciliation with documented error resolution procedures. The approval process has been strengthened with comprehensive evidence retention requirements.
 
-Documentation has been significantly enhanced with the creation of detailed standard operating procedures that provide step-by-step guidance for all aspects of the process. This addresses the prior finding regarding "IAG manual inconsistencies and lack of desk procedures." A formal Committee Reporting Checklist now ensures comprehensive coverage of all required elements, while the updated Risk Control Matrix reflects current processes and control points.
-
-Regulatory compliance has been strengthened through the implementation of formal mapping that explicitly links regulatory requirements to specific report components. The team has established a regular validation process to verify that all regulatory requirements are addressed in each reporting cycle. External validation through the EY quality assessment provided independent confirmation of the effectiveness of these improvements.
-
-Quality assurance procedures now include enhanced multi-source reconciliation against multiple data repositories, ensuring data accuracy and completeness. The team has implemented a systematic process for identifying and correcting inaccuracies, with clear escalation procedures for system-related issues. Evidence retention has been improved with comprehensive documentation of approval processes and maintenance of all supporting materials in structured shared drive locations.
+These improvements demonstrate the team's commitment to continuous enhancement and their responsiveness to audit recommendations. The external validation through EY's quality assessment provides independent confirmation of the process's effectiveness.
 
 ## Observations and Assessment
 
-The committee reporting process demonstrates strong design and operational effectiveness. The team has successfully addressed previous audit findings through comprehensive process improvements and enhanced documentation. The multi-layered approach to data validation, regulatory compliance verification, and approval workflows provides reasonable assurance that committee materials are accurate, complete, and delivered timely.
+The committee reporting process operates with strong design and execution. The multi-layered data validation approach effectively prevents errors from reaching committee materials. The regulatory compliance framework ensures comprehensive coverage of requirements while the approval workflow maintains appropriate oversight and accountability.
 
-Key strengths observed during the walkthrough include the systematic approach to regulatory compliance with formal mapping and external validation, robust data validation procedures incorporating multiple source reconciliation, clear approval workflows with appropriate segregation of duties and evidence retention, effective coordination between domestic and international reporting processes, and comprehensive documentation supporting process consistency and knowledge transfer.
+Enhancement opportunities include formalizing the evidence of annual documentation reviews, developing key performance indicators for process monitoring, and creating standardized tracking for improvement implementations. These represent refinements to an already effective process rather than necessary remediations.
 
-While the process operates effectively, opportunities for enhancement exist in formalizing annual review evidence to better demonstrate completion of documentation updates, implementing standardized tracking mechanisms for process improvements and their implementation status, and developing key performance indicators to monitor process efficiency and effectiveness over time.
-
-The walkthrough confirmed that the Board Reporting Team has established a mature, well-controlled process that effectively supports IAG's governance responsibilities and regulatory compliance requirements. The significant improvements implemented since the prior review demonstrate the team's commitment to continuous enhancement and responsiveness to audit recommendations.
+The Board Reporting Team has established a mature, well-controlled process that effectively supports IAG's board reporting obligations while maintaining compliance with regulatory requirements.
